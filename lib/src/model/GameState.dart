@@ -1,38 +1,22 @@
 import 'package:uttt/src/controller/GameStateController.dart';
 
 class GameState extends Grid {
-  GameState() : super(GameStateController.newGame());
+  Move lastMove;
+  GameState() : super(GameStateController.newGame()) {
+    lastMove = null;
+  }
+}
 
-  @override
-  String toString() {
-    String s = "";
-    for (int i = 0; i < 132; i++) {
-      int row = i ~/ 12;
-      int column = i % 12;
-      if (column == 11) {
-        s += "\n";
-        continue;
-      }
-      if ((column + 1) % 4 == 0) {
-        s += " ";
-        continue;
-      }
-      if ((row + 1) % 4 == 0) {
-        s += " ";
-        continue;
-      }
-      int subrow = (row - row ~/ 4) ~/ 3;
-      int subcolumn = (column - column ~/ 4) ~/ 3;
-      int subsubrow = (row - row ~/ 4) % 3;
-      int subsubcolumn = (column - column ~/ 4) % 3;
-      //print((subrow * 3 + subcolumn).toString() + ":" + (subsubrow * 3 + subsubcolumn).toString());
-      s += (tiles.elementAt(subrow * 3 + subcolumn) as BigTile)
-          .tiles
-          .elementAt(subsubrow * 3 + subsubcolumn)
-          .state
-          .toString();
-    }
-    return s;
+class Move {
+  State state;
+  int xBigTile;
+  int yBigTile;
+  int xTile;
+  int yTile;
+
+  Move(this.state, this.xTile, this.yTile) {
+    xBigTile = 0;
+    yBigTile = 0;
   }
 }
 
