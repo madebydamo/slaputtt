@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Programming/Coding Assignment
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Ted Pavlic (http://www.tedpavlic.com)
+%
+% Note:
+% The \lipsum[#] commands throughout this template generate dummy text
+% to fill the template out. These commands should all be removed when 
+% writing assignment content.
+%
+% This template uses a Perl script as an example snippet of code, most other
+% languages are also usable. Configure them in the "CODE INCLUSION 
+% CONFIGURATION" section.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{xcolor} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{wrapfig} % Wraping text around images
+\usepackage{listings} % Required for insertion of code
+\usepackage{courier} % Required for the courier font
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage[utf8]{inputenc} % UTF8 for öäöüéè...
+\usepackage[T1]{fontenc} % Wordsplitting
+\usepackage[many]{tcolorbox} % Textbox
+\usepackage{xargs} % For more then one optional Argument
+\usepackage{ngerman} % German Captures
+\usepackage[autostyle=true,german=quotes]{csquotes} % Anführungszeichen nach Deutschem Norm
+\usepackage[sort]{acro} %Fussnote mit Verzeichnis
+\usepackage{pgfgantt}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[useregional]{datetime2}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{csvsimple}
+\usepackage{longtable}
+\usepackage{uarial}
+\usepackage{upquote}
+\usepackage{enumitem}
+\usepackage{nameref}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{microtype}
+\usepackage{multimedia}
+\usepackage{array}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.16}
+\renewcommand{\familydefault}{\sfdefault}
+
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in %6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1} % Line spacing
+\setlist[1]{nolistsep}
+
+%\renewcommand{\familydefault}{\sfdefault}
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkCompany} % Top center head
+\rhead{\nouppercase{\rightmark}} % Top right header \firstxmark
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{\vspace*{-1.88\baselineskip}\includegraphics[scale=0.33]{abacuslogo}\vspace*{1.88\baselineskip}} % Bottom center footer
+\rfoot{Seite\ \thepage\ von\ \protect\pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+%\setcounter{tocdepth}{2}
+%\setcounter{secnumdepth}{0} % Removes default section numbers
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+%----------------------------------------------------------------------------------------
+%	CODE INCLUSION CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
+\lstloadlanguages{Java} % Load Perl syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+\lstset{frame=single, % Single frame around code
+		inputencoding={utf8},
+		extendedchars=false,  
+        basicstyle=\small\ttfamily, % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf, % Perl functions bold and blue
+        keywordstyle=[2]\color{Purple}, % Perl function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar, % Custom functions underlined and blue
+        identifierstyle=, % Nothing special about identifiers                                         
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, % Comments small dark green courier font
+        stringstyle=\color{Purple}, % Strings are purple
+        showstringspaces=false, % Don't put marks in string spaces
+        tabsize=4, % 5 spaces per tab
+        %
+        % Put standard Perl functions not included in the default language here
+        %morekeywords={rand},
+        %
+        % Put Perl function parameters here
+        %morekeywords=[2]{on, off, interp},
+        %
+        % Put user defined functions here
+        %morekeywords=[3]{test},
+       	%
+        morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+        numbers=left, % Line numbers on left
+        firstnumber=1, % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue}, % Line numbers are blue and small
+        stepnumber=5, % Line numbers go in steps of 5
+        captionpos=b% Position of the Caption
+}
+\renewcommand{\lstlistingname}{Codebeispiel}
+
+% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
+\newcommand{\perlscript}[2]{
+\begin{itemize}
+\item[]\lstinputlisting[caption=#2,label=#1]{#1.pl}
+\end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%	Skip this unless you know what you're doing
+%----------------------------------------------------------------------------------------
+
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{W. #1 geht auf der nächsten Seite weiter\ldots}\nobreak
+\nobreak\extramarks{#1 (fortgesetzt)}{W. #1 geht auf der nächsten Seite weiter\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (fortgesetzt)}{#1 geht auf der nächsten Seite weiter\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+\newcounter{Wochencounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{Woche}[1][Woche \arabic{Wochencounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
+\stepcounter{Wochencounter} % Increase counter for number of problems
+\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
+\section{\homeworkProblemName} % Make a section in the document with the custom problem count
+\enterProblemHeader{\arabic{Wochencounter}} % Header and footer within the environment
+}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+}
+
+\newcommand{\homeworkSectionName}{}
+%\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+%\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+%\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+%\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+%}{
+%\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+%}
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkCompany}{Abacus\ Research\ AG}
+\newcommand{\hmwkAuthorName}{Damian\ Moser} % Your name
+\newcommand{\titleOfDocument}{Technische Dokumentation}
+\newcommand{\startDateOfJournal}{22.05.2018}
+\newcommand{\finishDateOfJournal}{26.06.2018}
+\renewcommand{\Nameref}[1]{`\nameref{#1}' auf der Seite~\pageref{#1}}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{0.8in}
+\includegraphics[width=\textwidth]{abacus}
+\vspace{0.5in}\Huge{\textbf{\titleOfDocument}}\\
+\vspace{0.3in}\large{\textbf{Evaluation und Analyse von \enquote{Test-Methodiken} in der Abacus}}\\
+\large{Individuelle Produktivarbeit}\\
+\vspace{1in}
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\textbf{Autor}          & Damian Moser            \\
+\textbf{Kandidaten Nr.} & n/a                     \\
+\textbf{Experten}       & Marius Germann          \\
+\textbf{Zeitraum}       & 22.05.2018 - 19.06.2018
+\end{tabular}
+\end{table}
+\vspace{0.6in}
+\begin{footnotesize}
+\begin{flushleft}
+Diese Unterlagen sind urheberrechtlich geschützt. \\
+Insbesondere das Recht, die Unterlagen mittels irgendeines Mediums (grafisch, technisch, elektronisch und/oder
+digital, einschliesslich Fotokopie und downloading) ganz oder teilweise zu vervielfältigen, vorzutragen, zu verbreiten,
+zu bearbeiten, zu übersetzen, zu übertragen oder zu speichern, liegt ausschliesslich bei Abacus Research AG.
+Jede Verwertung in den genannten oder in anderen als den gesetzlich zugelassenen Fällen, namentlich jede
+kommerzielle Nutzung, bedarf der vorherigen schriftlichen Einwilligung von Abacus Research AG.
+Die gewerbsmässige Verletzung der Urheberrechte kann gemäss Art. 67 Abs. 2 URG bestraft werden.
+Copyright © 2018 by Abacus Research AG, CH-9301 Wittenbach-St.Gallen
+\end{flushleft}
+\end{footnotesize}
+}
+
+%\author{\textbf{\hmwkAuthorName}}
+\author{}
+\date{} % Insert date here if you want it to appear below your name
+
+%----------------------------------------------------------------------------------------
+
+\graphicspath{{./img/}}
+\newcommand\todo[1]{\textcolor{red}{\\\\//TODO #1\\}}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\input{textbox} % Configure Textbox
+\input{wortdefinitionen} % Configure wortdefinitionen
+\input{gantt} % Configure Gantt Diagramm
+\input{jira} % Alle Jirakonfigurationen
+\input{pgfplotlistdefinition}
+
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC
+
+\newpage
+\tableofcontents
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+% To have just one problem per page, simply put a \clearpage after each problem
+
+\input{journal}
+
+\clearpage
+\listoffigures
+\pagebreak
+\listoftables
+\pagebreak
+\bibliographystyle{unsrtdin}
+\bibliography{literatur}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

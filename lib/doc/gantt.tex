@@ -1,0 +1,35 @@
+
+\newenvironment{Wochentabelle}{
+\subsection{Arbeit der \homeworkProblemName}
+\noindent
+\begin{figure}[H]
+\begin{center}
+\begin{ganttchart}[y unit title=0.4cm,
+y unit chart=0.5cm,
+x unit=0.3cm,
+vgrid,%hgrid, 
+title label anchor/.style={below=-1.6ex},
+title left shift=.05,
+title right shift=-.05,
+title height=1,
+bar/.style={fill=gray!50},
+incomplete/.style={fill=white},
+progress label text={},
+bar height=0.7,
+group right shift=0,
+group top shift=.6,
+group height=.3,
+group peaks height=.2]{1}{40}
+%labels
+\gantttitle{\homeworkProblemName}{40} \\
+\gantttitle{Montag}{8} 
+\gantttitle{Dienstag}{8} 
+\gantttitle{Mittwoch}{8} 
+\gantttitle{Donnerstag}{8} 
+\gantttitle{Freitag}{8} \\
+}{
+\end{ganttchart}
+\end{center}
+\caption{Wochenplan \arabic{Wochencounter}}
+\end{figure}
+}

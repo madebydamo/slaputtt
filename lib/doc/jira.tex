@@ -1,0 +1,13 @@
+\newcommand{\jira}[1]{\href{https://jira.abacus.ch/browse/#1}{#1}}
+
+%\newenvironment{jirasection}[2][]{
+%	\titleformat{\subsection}[runin]{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+%	\subsection{#1} \def\temp{#2}\ifx\temp\empty \else - #2\fi
+%	\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+%}{}
+
+\newcommand{\jirasubsection}[2]{
+	\titleformat{\subsection}[runin]{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+	\subsection{#1}\normalfont\large\bfseries -\ \href{https://jira.abacus.ch/browse/#1}{#2} \normalsize\normalfont\\
+	\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+}
