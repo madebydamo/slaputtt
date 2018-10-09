@@ -62,6 +62,7 @@
 \usepackage{multimedia}
 \usepackage{array}
 \usepackage{pgfplotstable}
+\usepackage{eso-pic} % Background image
 \pgfplotsset{compat=1.16}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -151,6 +152,15 @@
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
+\newcommand\BackgroundPic{
+\put(0,-100){%
+\parbox[b][\textheight]{\textwidth}{%
+\vfill
+\centering
+\includegraphics[width=\textwidth,height=\textheight,%
+keepaspectratio]{background2.jpg}%
+\vfill
+}}}
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 \title{ \normalsize \textsc{Project sketch\\IDPA}
 		\\ [2.0cm]
@@ -190,7 +200,7 @@
 \input{pgfplotlistdefinition}
 
 \begin{document}
-
+\AddToShipoutPicture*{\BackgroundPic}
 \maketitle
 
 %----------------------------------------------------------------------------------------
