@@ -38,7 +38,7 @@
 \usepackage[T1]{fontenc} % Wordsplitting
 \usepackage[many]{tcolorbox} % Textbox
 \usepackage{xargs} % For more then one optional Argument
-\usepackage{ngerman} % German Captures
+%\usepackage{ngerman} % German Captures
 \usepackage[autostyle=true,german=quotes]{csquotes} % Anführungszeichen nach Deutschem Norm
 \usepackage[sort]{acro} %Fussnote mit Verzeichnis
 \usepackage{pgfgantt}
@@ -85,7 +85,9 @@
 \chead{IDPA} % Top center head
 \rhead{\nouppercase{\rightmark}} % Top right header \firstxmark
 \lfoot{\lastxmark} % Bottom left footer
-\cfoot{\vspace*{-1.88\baselineskip}\includegraphics[scale=0.33]{abacuslogo}\vspace*{1.88\baselineskip}} % Bottom center footer
+% Neues Logo suchen
+\cfoot{}
+% \cfoot{\vspace*{-1.88\baselineskip}\includegraphics[scale=0.33]{abacuslogo}\vspace*{1.88\baselineskip}} % Bottom center footer
 \rfoot{Seite\ \thepage\ von\ \protect\pageref{LastPage}} % Bottom right footer
 \renewcommand\headrulewidth{0.4pt} % Size of the header rule
 \renewcommand\footrulewidth{0.4pt} % Size of the footer rule
@@ -149,14 +151,31 @@
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\title{ \normalsize \textsc{Project sketch\\IDPA}
+		\\ [2.0cm]
+		\HRule{2pt} \\
+		\LARGE \textbf{\uppercase{Target oriented application of a self-learning alpha-beta search algorithm for Ultimate Tic Tac Toe}}
+		\HRule{2pt} \\ [0.5cm]
+		\normalsize  \vspace*{5\baselineskip}}
 
-\title{
-\LARGE{Projektskizze}
-}
+\date{}
 
-%\author{\textbf{\hmwkAuthorName}}
-\author{}
-\date{} % Insert date here if you want it to appear below your name
+\author{
+		Stefan Jampen \\ 
+        Damian Moser \\
+		Guided By - Alejandro González and Barbara Becher \\
+		Gewerbliche Berufsschule St.Gallen}
+
+
+
+%\title{
+%\LARGE{Projektskizze}
+%}
+%
+%%\author{\textbf{\hmwkAuthorName}}
+%\author{}
+%\date{} % Insert date here if you want it to appear below your name
 
 %----------------------------------------------------------------------------------------
 
