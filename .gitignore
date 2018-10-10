@@ -19,5 +19,7 @@ pubspec.lock
 *.pdf
 *.gz
 *.toc
+*.bak
+*.tks
 # Directory created by dartdoc
 doc/api/

@@ -1,6 +1,6 @@
 import 'package:uttt/src/controller/GameStateController.dart';
 
-class GameState extends Grid {
+class GameState extends Grid<BigTile> {
   Move lastMove;
   GameState() : super(GameStateController.newGame()) {
     lastMove = null;
@@ -28,7 +28,7 @@ class Tile {
   }
 }
 
-class BigTile extends Grid implements Tile {
+class BigTile extends Grid<Tile> implements Tile {
   @override
   State state;
 
@@ -37,16 +37,16 @@ class BigTile extends Grid implements Tile {
   }
 }
 
-class Grid {
-  List<Tile> tiles;
+class Grid<T extends Tile> {
+  List<T> tiles;
 
-  Grid(List<Tile> this.tiles);
+  Grid(List<T> this.tiles);
 }
 
 class State {
-  static State none = new State(".");
-  static State p1 = new State("X");
-  static State p2 = new State("O");
+  static final State none = new State(".");
+  static final State p1 = new State("X");
+  static final State p2 = new State("O");
 
   String _s;
 
