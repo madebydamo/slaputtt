@@ -38,7 +38,7 @@
 \usepackage[T1]{fontenc} % Wordsplitting
 \usepackage[many]{tcolorbox} % Textbox
 \usepackage{xargs} % For more then one optional Argument
-\usepackage{ngerman} % German Captures
+%\usepackage{ngerman} % German Captures
 \usepackage[autostyle=true,german=quotes]{csquotes} % Anführungszeichen nach Deutschem Norm
 \usepackage[sort]{acro} %Fussnote mit Verzeichnis
 \usepackage{pgfgantt}
@@ -62,6 +62,7 @@
 \usepackage{multimedia}
 \usepackage{array}
 \usepackage{pgfplotstable}
+\usepackage{eso-pic} % Background image
 \pgfplotsset{compat=1.16}
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -81,11 +82,13 @@
 
 % Set up the header and footer
 \pagestyle{fancy}
-\lhead{\hmwkAuthorName} % Top left header
-\chead{\hmwkCompany} % Top center head
+\lhead{Stefan Jampen \& Damian Moser} % Top left header
+\chead{IDPA} % Top center head
 \rhead{\nouppercase{\rightmark}} % Top right header \firstxmark
 \lfoot{\lastxmark} % Bottom left footer
-\cfoot{\vspace*{-1.88\baselineskip}\includegraphics[scale=0.33]{abacuslogo}\vspace*{1.88\baselineskip}} % Bottom center footer
+% Neues Logo suchen
+\cfoot{}
+% \cfoot{\vspace*{-1.88\baselineskip}\includegraphics[scale=0.33]{abacuslogo}\vspace*{1.88\baselineskip}} % Bottom center footer
 \rfoot{Seite\ \thepage\ von\ \protect\pageref{LastPage}} % Bottom right footer
 \renewcommand\headrulewidth{0.4pt} % Size of the header rule
 \renewcommand\footrulewidth{0.4pt} % Size of the footer rule
@@ -100,8 +103,6 @@
 %	CODE INCLUSION CONFIGURATION
 %----------------------------------------------------------------------------------------
 
-\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
-\lstloadlanguages{Java} % Load Perl syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
 \lstset{frame=single, % Single frame around code
 		inputencoding={utf8},
 		extendedchars=false,  
@@ -110,7 +111,7 @@
         keywordstyle=[2]\color{Purple}, % Perl function arguments purple
         keywordstyle=[3]\color{Blue}\underbar, % Custom functions underlined and blue
         identifierstyle=, % Nothing special about identifiers                                         
-        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, % Comments small dark green courier font
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{Green}\small, % Comments small dark green courier font
         stringstyle=\color{Purple}, % Strings are purple
         showstringspaces=false, % Don't put marks in string spaces
         tabsize=4, % 5 spaces per tab
@@ -131,66 +132,18 @@
         stepnumber=5, % Line numbers go in steps of 5
         captionpos=b% Position of the Caption
 }
-\renewcommand{\lstlistingname}{Codebeispiel}
 
-% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
-\newcommand{\perlscript}[2]{
-\begin{itemize}
-\item[]\lstinputlisting[caption=#2,label=#1]{#1.pl}
-\end{itemize}
-}
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT STRUCTURE COMMANDS
 %	Skip this unless you know what you're doing
 %----------------------------------------------------------------------------------------
 
-% Header and footer for when a page split occurs within a problem environment
-\newcommand{\enterProblemHeader}[1]{
-\nobreak\extramarks{#1}{W. #1 geht auf der nächsten Seite weiter\ldots}\nobreak
-\nobreak\extramarks{#1 (fortgesetzt)}{W. #1 geht auf der nächsten Seite weiter\ldots}\nobreak
-}
-
-% Header and footer for when a page split occurs between problem environments
-\newcommand{\exitProblemHeader}[1]{
-\nobreak\extramarks{#1 (fortgesetzt)}{#1 geht auf der nächsten Seite weiter\ldots}\nobreak
-\nobreak\extramarks{#1}{}\nobreak
-}
-
-\newcounter{Wochencounter} % Creates a counter to keep track of the number of problems
-
-\newcommand{\homeworkProblemName}{}
-\newenvironment{Woche}[1][Woche \arabic{Wochencounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
-\stepcounter{Wochencounter} % Increase counter for number of problems
-\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
-\section{\homeworkProblemName} % Make a section in the document with the custom problem count
-\enterProblemHeader{\arabic{Wochencounter}} % Header and footer within the environment
-}{
-\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
-}
-
-\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
-\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
-}
-
-\newcommand{\homeworkSectionName}{}
-%\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
-%\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
-%\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
-%\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
-%}{
-%\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
-%}
 
 %----------------------------------------------------------------------------------------
 %	NAME AND CLASS SECTION
 %----------------------------------------------------------------------------------------
 
-\newcommand{\hmwkCompany}{Abacus\ Research\ AG}
-\newcommand{\hmwkAuthorName}{Damian\ Moser} % Your name
-\newcommand{\titleOfDocument}{Technische Dokumentation}
-\newcommand{\startDateOfJournal}{22.05.2018}
-\newcommand{\finishDateOfJournal}{26.06.2018}
 \renewcommand{\Nameref}[1]{`\nameref{#1}' auf der Seite~\pageref{#1}}
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -199,41 +152,40 @@
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
-
-\title{
-\vspace{0.8in}
-\includegraphics[width=\textwidth]{abacus}
-\vspace{0.5in}\Huge{\textbf{\titleOfDocument}}\\
-\vspace{0.3in}\large{\textbf{Evaluation und Analyse von \enquote{Test-Methodiken} in der Abacus}}\\
-\large{Individuelle Produktivarbeit}\\
-\vspace{1in}
-\begin{table}[h]
+\newcommand\BackgroundPic{
+\put(0,-100){%
+\parbox[b][\textheight]{\textwidth}{%
+\vfill
 \centering
-\begin{tabular}{ll}
-\textbf{Autor}          & Damian Moser            \\
-\textbf{Kandidaten Nr.} & n/a                     \\
-\textbf{Experten}       & Marius Germann          \\
-\textbf{Zeitraum}       & 22.05.2018 - 19.06.2018
-\end{tabular}
-\end{table}
-\vspace{0.6in}
-\begin{footnotesize}
-\begin{flushleft}
-Diese Unterlagen sind urheberrechtlich geschützt. \\
-Insbesondere das Recht, die Unterlagen mittels irgendeines Mediums (grafisch, technisch, elektronisch und/oder
-digital, einschliesslich Fotokopie und downloading) ganz oder teilweise zu vervielfältigen, vorzutragen, zu verbreiten,
-zu bearbeiten, zu übersetzen, zu übertragen oder zu speichern, liegt ausschliesslich bei Abacus Research AG.
-Jede Verwertung in den genannten oder in anderen als den gesetzlich zugelassenen Fällen, namentlich jede
-kommerzielle Nutzung, bedarf der vorherigen schriftlichen Einwilligung von Abacus Research AG.
-Die gewerbsmässige Verletzung der Urheberrechte kann gemäss Art. 67 Abs. 2 URG bestraft werden.
-Copyright © 2018 by Abacus Research AG, CH-9301 Wittenbach-St.Gallen
-\end{flushleft}
-\end{footnotesize}
-}
+\includegraphics[width=\textwidth,height=\textheight,%
+keepaspectratio]{background2.jpg}%
+\vfill
+}}}
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\title{ \normalsize \textsc{Documentation\\IDPA}
+		\\ [2.0cm]
+		\HRule{2pt} \\
+		\LARGE \textbf{\uppercase{Target oriented application of a self-learning alpha-beta search algorithm for Ultimate Tic Tac Toe}}
+		\HRule{2pt} \\ [0.5cm]
+		\normalsize  \vspace*{5\baselineskip}}
 
-%\author{\textbf{\hmwkAuthorName}}
-\author{}
-\date{} % Insert date here if you want it to appear below your name
+\date{}
+
+\author{
+		Stefan Jampen \\ 
+        Damian Moser \\
+		Guided By - Alejandro González and Barbara Becher \\
+		Gewerbliche Berufsschule St.Gallen}
+
+
+
+%\title{
+%\LARGE{Dokumentation}
+%}
+%
+%%\author{\textbf{\hmwkAuthorName}}
+%\author{}
+%\date{} % Insert date here if you want it to appear below your name
 
 %----------------------------------------------------------------------------------------
 
@@ -244,14 +196,11 @@ Copyright © 2018 by Abacus Research AG, CH-9301 Wittenbach-St.Gallen
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
-\input{textbox} % Configure Textbox
 \input{wortdefinitionen} % Configure wortdefinitionen
-\input{gantt} % Configure Gantt Diagramm
-\input{jira} % Alle Jirakonfigurationen
 \input{pgfplotlistdefinition}
 
 \begin{document}
-
+\AddToShipoutPicture*{\BackgroundPic}
 \maketitle
 
 %----------------------------------------------------------------------------------------
