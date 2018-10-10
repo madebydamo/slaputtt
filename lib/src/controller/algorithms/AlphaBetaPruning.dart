@@ -6,11 +6,11 @@ import 'dart:math';
 class AlphaBetaPrunning implements Algorithm {
   @override
   GameState getNextMove(GameState state) {
-    if (GameStateController.isGameFinished(state)) return state;
+    if (isGameFinished(state)) return state;
     GameState returnState = state;
     double value = double.negativeInfinity;
-    for (Move move in GameStateController.getAllPossibleMoves(state)) {
-      GameState newState = GameStateController.playMove(state, move);
+    for (Move move in getAllPossibleMoves(state)) {
+      GameState newState = playMove(state, move);
       double alphabeta = _alphabeta(
           newState, 6, double.negativeInfinity, double.infinity, true);
       if (alphabeta > value) {
@@ -22,12 +22,12 @@ class AlphaBetaPrunning implements Algorithm {
   }
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {
-    if (depth == 0 || GameStateController.isGameFinished(state))
-      return GameStateController.evaluateValue(state);
+    if (depth == 0 || isGameFinished(state))
+      return evaluateValue(state);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
-      for (Move move in GameStateController.getAllPossibleMoves(state)) {
-        GameState newState = GameStateController.playMove(state, move);
+      for (Move move in getAllPossibleMoves(state)) {
+        GameState newState = playMove(state, move);
         value = max(value, _alphabeta(newState, depth - 1, alpha, beta, false));
         alpha = max(alpha, value);
         if (alpha >= beta) {
@@ -37,8 +37,8 @@ class AlphaBetaPrunning implements Algorithm {
       return value;
     } else {
       double value = double.infinity;
-      for (Move move in GameStateController.getAllPossibleMoves(state)) {
-        GameState newState = GameStateController.playMove(state, move);
+      for (Move move in getAllPossibleMoves(state)) {
+        GameState newState = playMove(state, move);
         value = max(value, _alphabeta(newState, depth - 1, alpha, beta, true));
         beta = max(beta, value);
         if (alpha >= beta) {
