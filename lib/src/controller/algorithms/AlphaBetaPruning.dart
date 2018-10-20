@@ -9,7 +9,7 @@ class AlphaBetaPrunning implements Algorithm {
     if (isGameFinished(state)) return state;
     GameState returnState = state;
     double value = double.negativeInfinity;
-    for (Move move in getAllPossibleMoves(state)) {
+    for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
       GameState newState = playMove(state, move);
       double alphabeta = _alphabeta(
           newState, 6, double.negativeInfinity, double.infinity, true);
@@ -26,7 +26,7 @@ class AlphaBetaPrunning implements Algorithm {
       return evaluateValue(state);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
-      for (Move move in getAllPossibleMoves(state)) {
+      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
         GameState newState = playMove(state, move);
         value = max(value, _alphabeta(newState, depth - 1, alpha, beta, false));
         alpha = max(alpha, value);
@@ -37,7 +37,7 @@ class AlphaBetaPrunning implements Algorithm {
       return value;
     } else {
       double value = double.infinity;
-      for (Move move in getAllPossibleMoves(state)) {
+      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
         GameState newState = playMove(state, move);
         value = max(value, _alphabeta(newState, depth - 1, alpha, beta, true));
         beta = max(beta, value);
