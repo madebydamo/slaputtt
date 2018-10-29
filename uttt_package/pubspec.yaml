@@ -1,11 +1,11 @@
-name: uttt
+name: uttt_package
 description: A starting point for Dart libraries or applications.
 version: 0.0.1
 #homepage: https://www.example.com
 #author: moserd <email@example.com>
 
 environment:
-  sdk: '>=1.20.1 <2.0.0'
+  sdk: '>=2.0.0 <3.0.0'
 
 #dependencies:
 #  path: ^1.4.1
