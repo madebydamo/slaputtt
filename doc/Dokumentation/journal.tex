@@ -59,7 +59,7 @@ Das Wasserfallmodell ist ein lineares Modell. Es wird primär in der Softwareent
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{wasserfallmodell}
-	\caption{Wasserfallmodell, \cite{wiki:Wasserfallmodellimage}}
+	\caption{Wasserfallmodell, \protect\citeA{wiki:Wasserfallmodellimage}}
 \end{figure}
 \subsubsection{Pro}
 \begin{itemize}
@@ -69,14 +69,14 @@ Das Wasserfallmodell ist ein lineares Modell. Es wird primär in der Softwareent
 \begin{itemize}
 \item Aufgaben können nicht parallel ausgeführt werden, Phasen können sich nicht überschneiden.
 \item Fehler in der Planung lassen sich erst spät erkennen.
-\item Bei einer falschen Planung kann ein Projekt schnell ausarten. \cite{wiki:Wasserfallmodell}
+\item Bei einer falschen Planung kann ein Projekt schnell ausarten. \citeA{wiki:Wasserfallmodell}
 \end{itemize}
 \subsection{IPERKA}
 IPERKA steht für Informieren, Planen, Entscheiden, Realisieren, Kontrollieren und Auswerten. Dies sind die Schritte, welche nacheinander ausgeführt werden. Diese Schritte werden klar voneinander abgegrenzt. Der Schwerpunkt liegt hier vor allem auf der Planung, da häufig schon zu früh mit der Realisierung begonnen wird.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{iperka}
-	\caption{IPERKA-Modell, \cite{web:iperkaimage}}
+	\caption{IPERKA-Modell, \protect\citeA{web:iperkaimage}}
 \end{figure}
 \subsubsection{Pro}
 \begin{itemize}
@@ -87,14 +87,14 @@ IPERKA steht für Informieren, Planen, Entscheiden, Realisieren, Kontrollieren u
 \end{itemize}
 \subsubsection{Contra}
 \begin{itemize}
-\item Aufgaben können nicht parallel ausgeführt werden, Phasen können sich nicht überschneiden. \cite{web:iperka}
+\item Aufgaben können nicht parallel ausgeführt werden, Phasen können sich nicht überschneiden. \citeA{web:iperka}
 \end{itemize}
 \subsection{Scrum}
 Scrum ist eine iterative Methode, welche für Teams besonders geeignet ist. Einzelne Tasks werden gesammelt und im Produkt-Backlog gehalten. Der Scrummaster entscheidet dann, welche Tasks als nächstes realisiert werden soll. Dafür wird ein Sprint erstellt. Dieser Sprint beinhaltet einen abgegrenzten Zeitraum und den Sprint-Backlog mit der Arbeit, welche als nächstes erledigt werden muss. Nach dem Sprint hat man wieder ein Produkt, welches ausgeliefert werden könnte. Auch hat man nach dem Sprint die Möglichkeit, die getane Arbeit zu realisieren und Änderungen in der Planung zu machen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{scrum}
-	\caption{Scrum-Modell, \cite{web:scrumimage}}
+	\caption{Scrum-Modell, \protect\citeA{web:scrumimage}}
 \end{figure}
 \subsubsection{Pro}
 \begin{itemize}
@@ -202,7 +202,7 @@ Tests gibt es in verschiedenen Formen und Grössen. Dabei gibt es verschiedene T
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{vmodell}
-	\caption{V-Modell, \cite{wiki:vmodellimage}}
+	\caption{V-Modell, \protect\citeA{wiki:vmodellimage}}
 \end{figure}
 
 \subsubsection{Komponententest}
@@ -213,13 +213,13 @@ Ein Integrationstest testet die Zusammenarbeit voneinander abhängiger Komponent
 Ein Systemtest testet im Vergleich zum Integrationstest nicht nur die Zusammenarbeit von abhängigen Komponenten sondern gleich das gesamte System. Dabei werden alle funktionalen und nicht-funktionalen Anforderungen getestet. Dieser läuft im Normalfall mit Testdaten auf einem Testsystem ab. Dabei wird die Umgebung des Kunden simuliert.
 \subsubsection{Abnahmetest}
 Der Abnahmetest ist die letzte Teststufe. Hier wird eine Abnahme der Software simuliert und von Grund auf aufgesetzt, so wie der Kunde es machen wird, wenn er die Software erhält. Ist dieser Test erfolgreich, ist die Software bereit zur Auslieferung.
-\cite{wiki:Softwaretest}
+\citeA{wiki:Softwaretest}
 \subsection{ISO/IEC 9126}
 Um eine Softwarequalität zu testen, gibt es verschiedene Qualitätsmerkmale. Der ISO-Norm 9126 stellt dabei eines von mehreren Modellen dar.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{isonorm}
-	\caption{ISO-Norm 9126, \cite{wiki:ISOimage}}
+	\caption{ISO-Norm 9126, \protect\citeA{wiki:ISOimage}}
 \end{figure}
 Dabei gibt es verschiedene Merkmale, welche die Qualität bestimmen.
 \subsubsection{Änderbarkeit/Wartbarkeit} 
@@ -234,7 +234,7 @@ Decken die Funktionalitäten die Anforderungen an die Software? Dabei spielen au
 Funktioniert die Software auch auf anderen Umgebungen. Dabei wird zwischen Softwareumgebung (z.B. Betriebssystem), Hardwareumgebung (verschieden Computer) und organisatorischer Umgebung unterschieden. So ist es für eine Software von Vorteil, wenn sie nicht auf ein Unternehmen, sondern auf eine Branche massgeschneidert wird. Ebenfalls wird gemessen, ob die Software sich mit anderen Software parallel funktionieren kann oder nicht.
 \subsubsection{Zuverlässigkeit} 
 Hier sind Punkte wichtig wie die Lauffähigkeit auf Zeit. Oder ob eine gewisse Fehlertoleranz geduldet wird, oder die Software bei einer Nichteinhaltung einer Spezifikation gleich abstürzt. Auch zählen Kriterien wie die Versagenshäufigkeit durch fehlerhafte Zustände.
-\cite{wiki:ISO}
+\citeA{wiki:ISO}
 
 \subsection{Good Practice vs. Bad Practice} \label{goodvsbad}
 Wie ich bereits erläuterte, sind Tests der Grund, weshalb wir unseren Code überhaupt ändern können. Damit die Tests uns aber dabei unterstützte, gibt es zwei grundlegende Fragen an die Tests.
@@ -314,7 +314,7 @@ public void createReport() {
 Bei diesem Beispiel sieht man, dass die Richtigkeit vom Test selber überprüft wird.
 \paragraph{Timely - Zeitgereicht}
 Ein Test sollte immer zusammen mit dem Produktivcode geschrieben werden. Dafür gibt es zwei verschiedene Methoden. Zum einen gibt es die TDD-Methode (Test-Driven Development), bei der man den Test schon vor der eigentlichen Implementierung schriebt. Und dann gibt es die TAD-Methode (Test-After Development), bei der man den Test nach der abgeschlossenen Entwicklung schreibt. Der Vorteil von TDD ist, dass man so gleichzeitig auch die Spezifikationen des Codes festlegt. Natürlich will man das mit TAD auch erzielen, in der Praxis funktioniert das aber eher weniger. Man neigt eher dazu, den Code nur zu verifizieren, statt zu spezifizieren. 
-\cite{web:unittestsfirst}
+\citeA{web:unittestsfirst}
 \subsubsection{Bad Practices}
 Um schlechte Tests zu vermeiden, gibt es einen guten Merksatz: Binde deine Tests nicht an Implementierungsdetails. Das bedeutet so viel wie, man soll das Resultat überprüfen, nicht den Weg zum Resultat. Der Weg kann und darf bei einem Objekt ändern, ohne dass sich für Benutzer der Klasse was ändert.
 \paragraph{Keine privaten Methoden testen}
@@ -361,10 +361,10 @@ public class Car {
 }
 \end{lstlisting}
 Der Motor des Autos wird erst initialisiert, wenn der Motor gebraucht wird. Dies kann aus Performance-technischen Gründen sein. Der Test schlägt nun aber fehl, obwohl das Auto immer noch gleich funktioniert. Deshalb sollte man nicht den Konstruktor testen, sondern nur die öffentlichen Methoden. Hat man nun aber mehrerer Konstruktoren und will wissen ob alle funktionieren, dann kann man das auf folgende Variante tun. Die Tests der öffentlichen Methode werden mit mehreren Instanzen der Klasse ausgeführt. Jede Instanz wird durch einen anderen Konstruktor instanziiert. So sieht man, ob alle Konstruktoren ein korrektes Verhalten hervorrufen.
-\cite{web:badpractices}
+\citeA{web:badpractices}
 \paragraph{AssertTrue mit Wertevergleiche}
 Leserlicher Code zu produzieren ist eines der wichtigsten Ziele der Programmierer. Dazu gehören intuitive Namensgebungen und einfache Operationen. So kann man auch beim Testen einige Sachen unnötig verkomplizieren, wie zum Beispiel folgendes Beispiel.
-\begin{lstlisting}[language=Java, caption={assertTrue falsch eingesetzt \cite{web:abawikijunit5}}]
+\begin{lstlisting}[language=Java, caption={assertTrue falsch eingesetzt \protect\citeA{web:abawikijunit5}}]
 //Schlechtes Beispiel
 Object o = dataProvider.getValue(...);
 Assertions.assertTrue(o != null && o instanceof AbaNumber);
@@ -396,7 +396,7 @@ try {
 }
 \end{lstlisting}
 \paragraph{DeleteAllRecords}
-Dieser Fall ist zwar Abacus-spezifisch, aber dennoch wichtig. Und zwar ist das ein Fehler der sehr viel Zeit kosten kann. Wird in einem Test ein \texttt{deleteAllRecords()} auf einer grossen Tabelle aufgerufen, braucht das enorm viel Zeit. Besser ist es, wenn man die benötigten Datensätze entweder dazu fügt oder einfach bearbeitet. Ein Warnzeichen für ein vergehen ist, wenn ein Test überraschend lange braucht. \cite{web:abawikijunit5}
+Dieser Fall ist zwar Abacus-spezifisch, aber dennoch wichtig. Und zwar ist das ein Fehler der sehr viel Zeit kosten kann. Wird in einem Test ein \texttt{deleteAllRecords()} auf einer grossen Tabelle aufgerufen, braucht das enorm viel Zeit. Besser ist es, wenn man die benötigten Datensätze entweder dazu fügt oder einfach bearbeitet. Ein Warnzeichen für ein vergehen ist, wenn ein Test überraschend lange braucht. \citeA{web:abawikijunit5}
 \begin{lstlisting}[language=Java, caption={}]
 //Schlechtes Beispiel
 table.deleteAllRecords(null);
