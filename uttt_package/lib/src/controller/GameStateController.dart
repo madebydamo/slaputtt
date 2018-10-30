@@ -1,5 +1,5 @@
-import 'package:uttt/src/model/GameState.dart';
-import 'package:uttt/src/controller/GridCache.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/controller/GridCache.dart';
 
 void visualize(GameState state) {
   String s = "";

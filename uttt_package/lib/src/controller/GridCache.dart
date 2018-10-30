@@ -1,4 +1,4 @@
-import 'package:uttt/src/model/GameState.dart';
+import 'package:uttt_package/src/model/GameState.dart';
 
 Map<int, _GridInfo> cache = _getCache();
 

@@ -1,6 +1,6 @@
-import 'package:uttt/src/model/Algorithm.dart';
-import 'package:uttt/src/model/GameState.dart';
-import 'package:uttt/src/model/Player.dart';
+import 'package:uttt_package/src/model/Algorithm.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/model/Player.dart';
 
 class Computer implements Player {
 

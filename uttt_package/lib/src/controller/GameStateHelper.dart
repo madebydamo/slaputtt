@@ -1,5 +1,5 @@
-import 'package:uttt/src/controller/GameStateController.dart';
-import 'package:uttt/src/model/GameState.dart';
+import 'package:uttt_package/src/controller/GameStateController.dart';
+import 'package:uttt_package/src/model/GameState.dart';
 import 'dart:math';
 
 class GameStateHelper {

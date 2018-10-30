@@ -1,13 +1,11 @@
-import 'package:uttt/src/model/GameState.dart';
+import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
+import 'package:uttt_package/src/controller/players/Computer.dart';
+import 'package:uttt_package/src/model/Game.dart';
+import 'package:uttt_package/src/model/Player.dart';
 
 main() {
-  var gs = new GameState();
-  (gs.tiles.elementAt(0) as Grid).tiles.elementAt(0).state = State.p1;
-  (gs.tiles.elementAt(0) as Grid).tiles.elementAt(4).state = State.p1;
-  (gs.tiles.elementAt(0) as Grid).tiles.elementAt(8).state = State.p1;
-  (gs.tiles.elementAt(2) as Grid).tiles.elementAt(2).state = State.p1;
-  (gs.tiles.elementAt(3) as Grid).tiles.elementAt(3).state = State.p1;
-  (gs.tiles.elementAt(4) as Grid).tiles.elementAt(4).state = State.p1;
-  (gs.tiles.elementAt(8) as Grid).tiles.elementAt(8).state = State.p1;
-  print(gs);
+  Player p1 = Computer(RandomMove());
+  Player p2 = Computer(RandomMove());
+  Game game = Game(p1, p2);
+  game.start();
 }

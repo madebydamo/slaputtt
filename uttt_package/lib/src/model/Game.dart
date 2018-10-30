@@ -1,7 +1,7 @@
-import 'package:uttt/src/model/GameState.dart';
-import 'package:uttt/src/model/Player.dart';
-import 'package:uttt/src/controller/GameStateController.dart';
-import 'package:uttt/src/controller/GridCache.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/model/Player.dart';
+import 'package:uttt_package/src/controller/GameStateController.dart';
+import 'package:uttt_package/src/controller/GridCache.dart';
 
 class Game {
   Player _player1;
