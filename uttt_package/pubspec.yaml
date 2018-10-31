@@ -1,5 +1,5 @@
 name: uttt_package
-description: A starting point for Dart libraries or applications.
+description: A package, which provides usefull stuff for programming a Ultimate Tic Tac Toe game
 version: 0.0.2
 #homepage: https://www.example.com
 #author: moserd <email@example.com>

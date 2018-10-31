@@ -69,7 +69,8 @@ List<Grid> _getAllGrids() {
   List<Grid> grids = List();
   while (states[9] == State.none) {
     Grid grid =
-        BigTile.withTiles(List.from(states.map((s) => Tile.fromState(s))));
+    BigTile.withTiles(
+        List.from(states.sublist(0, 9).map((s) => Tile.fromState(s))));
     grids.add(grid);
     states = _nextState(states, 0);
   }
