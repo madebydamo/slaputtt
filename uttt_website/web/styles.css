@@ -13,24 +13,22 @@ html, body {
      padding: 20px;
 }
 #tileWrapper {
-  width: 366px;
-  height: 366px;
+  width: 360px;
+  height: 360px;
+  text-align: center;
   margin: auto;
-  background-color: black;
 }
 
 .bigTile {
-    width: 120px;
-    height: 120px;
+    width: 32.5%;
+    height: 32.5%;
     float: left;
-    margin: 1px;
-    background-color: black;
+    padding: auto;
 }
 .tile {
-    width: 38px;
-    height: 38px;
+    width: 32.5%;
+    height: 32.5%;
     float: left;
-    margin: 1px;
     background-color: white;
 }
 
@@ -50,4 +48,45 @@ html, body {
     background-color: blue;
 }
 
+.top.tile {
+    border-bottom: 1px  solid black;
+}
 
+.top.bigTile{
+    border-bottom: 3px solid black;
+}
+
+.bottom.tile{
+       border-top: 1px  solid black;
+}
+
+.bottom.bigTile{
+    border-top: 3px  solid black;
+}
+
+.left.tile{
+    border-right: 1px  solid black;
+ }
+
+.left.bigTile{
+     border-right: 3px  solid black;
+  }
+
+
+.right.tile{
+    border-left: 1px  solid black;
+}
+
+.right.bigTile{
+    border-left: 3px  solid black;
+}
+
+.yellow {
+    background: yellow;
+}
+
+.wrapper {
+    width: 90%;
+    height: 90%;
+    margin: 5% auto;
+}
