@@ -3,9 +3,11 @@ import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'dart:math';
 
+/// Implementation of a Random Algorithm, which plays a random possible move
 class RandomMove extends Algorithm {
   Random r;
 
+  /// Initialises a new Random Algorithm
   RandomMove() {
     r = Random();
   }

@@ -1,6 +1,6 @@
 import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
-import 'package:uttt_package/src/model/Game.dart';
+import 'package:uttt_package/src/controller/Game.dart';
 import 'package:uttt_package/src/model/Player.dart';
 
 main() {

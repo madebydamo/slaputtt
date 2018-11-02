@@ -20,6 +20,14 @@ class GameState extends Grid<BigTile> {
         ]) {
     lastMove = Move.init;
   }
+
+  @override
+  bool operator ==(other) {
+    bool equal = other is GameState;
+    equal = equal && (other as GameState).tiles == tiles;
+    equal = equal && (other as GameState).lastMove == lastMove;
+    return equal;
+  }
 }
 
 /// The Model for a Move. Provides x and y for the big grid [GameState] and the
@@ -29,12 +37,16 @@ class Move {
 
   ///State of the player
   State state;
+
   /// X-coordinate of the big grid
   int xBigTile;
+
   /// Y-coordinate of the big grid
   int yBigTile;
+
   /// X-coordinate of the sub grid
   int xTile;
+
   /// Y-coordinate of the sub grid
   int yTile;
 
@@ -88,6 +100,13 @@ class Tile {
   String toString() {
     return state.toString();
   }
+
+  @override
+  bool operator ==(other) {
+    bool equal = other is Tile;
+    equal = equal && (other as Tile).state == state;
+    return equal;
+  }
 }
 
 /// The Model for a BigTile. It represents a sub grid with a [state]
@@ -115,6 +134,14 @@ class BigTile extends Grid<Tile> implements Tile {
         ]) {
     state = State.none;
   }
+
+  @override
+  bool operator ==(other) {
+    bool equal = other is BigTile;
+    equal = equal && (other as BigTile).state == state;
+    equal = equal && (other as BigTile).tiles == tiles;
+    return equal;
+  }
 }
 
 /// The Model for a Grid. It represents a 3x3 grid with Tiles as elements
@@ -123,7 +150,9 @@ abstract class Grid<T extends Tile> {
   List<T> tiles;
 
   /// Initialises a Grid with the given Tiles
-  Grid(this.tiles) : assert(tiles.length == 9, "The tiles list has a length of ${tiles.length}");
+  Grid(this.tiles)
+      : assert(tiles.length == 9,
+            "The tiles list has a length of ${tiles.length}");
 
   /// returns a number that only a identical [Grid] could return
   get value => _getHashFrag(0);

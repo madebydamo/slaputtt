@@ -1,5 +1,6 @@
 import 'package:uttt_package/src/model/GameState.dart';
 
+/// A cache with [_GridInfo] of all possible Grids
 Map<int, _GridInfo> cache = _getCache();
 
 class _GridInfo {
@@ -16,7 +17,8 @@ class _GridInfo {
   get winner => _winner;
 }
 
-//ONLY FOR GENERATING CACHE FILE
+/// ONLY FOR GENERATING CACHE FILE
+/// Creates a cache with [_GridInfo] of all possible Grids
 Map<int, _GridInfo> _getCache() {
   Map<int, _GridInfo> cache = Map();
   _getAllGrids().forEach((g) {
@@ -53,6 +55,7 @@ Map<int, _GridInfo> _getCache() {
   return cache;
 }
 
+/// Creates all possible Grids
 List<Grid> _getAllGrids() {
   List<State> states = [
     State.none,
@@ -77,6 +80,7 @@ List<Grid> _getAllGrids() {
   return grids;
 }
 
+/// Used to create the next possible grid.
 List<State> _nextState(List<State> states, int index) {
   if (states[index] == State.none) {
     states[index] = State.p1;
@@ -89,15 +93,16 @@ List<State> _nextState(List<State> states, int index) {
   return states;
 }
 
+/// Helper class to evaluate a grid and all his rows.
 class _Searcher {
-  static final _Searcher h1 = new _Searcher(1, 2, 3); //Horizontal First Row
-  static final _Searcher h2 = new _Searcher(4, 5, 6); //Horizontal Second Row
-  static final _Searcher h3 = new _Searcher(7, 8, 9); //Horizontal Third Row
-  static final _Searcher v1 = new _Searcher(1, 4, 7); //Vertical First Row
-  static final _Searcher v2 = new _Searcher(2, 5, 8); //Vertical Second Row
-  static final _Searcher v3 = new _Searcher(3, 6, 9); //Vertical Third Row
-  static final _Searcher c1 = new _Searcher(1, 5, 9); //Cross First
-  static final _Searcher c2 = new _Searcher(3, 5, 7); //Cross Second
+  static final _Searcher h1 = new _Searcher._(1, 2, 3); //Horizontal First Row
+  static final _Searcher h2 = new _Searcher._(4, 5, 6); //Horizontal Second Row
+  static final _Searcher h3 = new _Searcher._(7, 8, 9); //Horizontal Third Row
+  static final _Searcher v1 = new _Searcher._(1, 4, 7); //Vertical First Row
+  static final _Searcher v2 = new _Searcher._(2, 5, 8); //Vertical Second Row
+  static final _Searcher v3 = new _Searcher._(3, 6, 9); //Vertical Third Row
+  static final _Searcher c1 = new _Searcher._(1, 5, 9); //Cross First
+  static final _Searcher c2 = new _Searcher._(3, 5, 7); //Cross Second
   static final List<_Searcher> all = [
     h1,
     h2,
@@ -111,7 +116,8 @@ class _Searcher {
 
   final List<int> _points;
 
-  _Searcher(int first, int second, int third)
+  /// Initialises a  
+  _Searcher._(int first, int second, int third)
       : _points = [first - 1, second - 1, third - 1];
 
   int getP1(Grid grid) {

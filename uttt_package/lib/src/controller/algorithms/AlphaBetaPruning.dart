@@ -3,7 +3,12 @@ import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'dart:math';
 
-class AlphaBetaPrunning implements Algorithm {
+/// Implementation of a Alpha Beta Pruning Algorithm
+class AlphaBetaPruning implements Algorithm {
+  int _depth;
+
+  AlphaBetaPruning(this._depth);
+
   @override
   GameState getNextMove(GameState state) {
     if (isGameFinished(state)) return state;
@@ -12,7 +17,7 @@ class AlphaBetaPrunning implements Algorithm {
     for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
       GameState newState = playMove(state, move);
       double alphabeta = _alphabeta(
-          newState, 6, double.negativeInfinity, double.infinity, true);
+          newState, _depth, double.negativeInfinity, double.infinity, true);
       if (alphabeta > value) {
         value = alphabeta;
         returnState = newState;
