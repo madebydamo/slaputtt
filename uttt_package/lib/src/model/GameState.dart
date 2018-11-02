@@ -81,6 +81,17 @@ class Move {
 
   /// Getter method for the small index, usually used in [BigTile]
   get smallIndex => yTile * 3 + xTile;
+
+  @override
+  bool operator ==(other) {
+    bool equal = other is Move;
+    equal = equal && xBigTile == (other as Move).xBigTile;
+    equal = equal && yBigTile == (other as Move).yBigTile;
+    equal = equal && xTile== (other as Move).xTile;
+    equal = equal && yTile == (other as Move).yTile;
+    equal = equal && state == (other as Move).state;
+    return equal;
+  }
 }
 
 /// The model for one Tile, a sub element of the grid with a [state]
