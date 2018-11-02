@@ -9,19 +9,24 @@ class Game {
   Player _player2;
   GameState gameState;
   int _move;
-  State winner;
+  Player winner;
+  Map<State, Player> playerFromState;
 
   /// Initialises a new Game
   Game(this._player1, this._player2) {
     gameState = GameState();
     _move = 0;
-    winner = State.none;
+    playerFromState = {
+      State.p1: _player1,
+      State.p2: _player2,
+      State.none: null
+    };
   }
 
   /// Starts the game
   void start() {
     _p2Played(gameState);
-    winner = cache[gameState.value].winner;
+    winner = playerFromState[cache[gameState.value].winner];
   }
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play
@@ -48,7 +53,7 @@ class Game {
     print("");
     print("-----------| Winner ${cache[state.value].winner} |-----------");
     print("");
-    if(_move == 1 || playMove(gameState, state.lastMove) == state) {
+    if (_move == 1 || playMove(gameState, state.lastMove) == state) {
       gameState = state;
       return true;
     } else {
