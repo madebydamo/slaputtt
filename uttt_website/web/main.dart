@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
-import 'package:uttt_package/src/model/player.dart';
+import 'package:uttt_package/src/model/Player.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
 import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
 import 'package:uttt_package/src/controller/Game.dart';
@@ -9,7 +9,7 @@ import 'package:uttt_package/src/controller/Game.dart';
 void main() {
   WebPlayer p1 = WebPlayer();
   Computer p2 = Computer(RandomMove());
-  Game game = Game(p2, p1);
+  Game game = Game(p1, p2);
   game.start();
 }
 
@@ -66,5 +66,6 @@ class WebPlayer implements Player {
   playMove(GameState state, GameStateArgument s) {
     _state = state;
     _s = s;
+    visualize(state);
   }
 }
