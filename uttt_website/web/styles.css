@@ -6,9 +6,48 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+
+}
+#output {
+     text-align: center;
+     padding: 20px;
+}
+#tileWrapper {
+  width: 366px;
+  height: 366px;
+  margin: auto;
+  background-color: black;
 }
 
-#output {
-  padding: 20px;
-  text-align: center;
+.bigTile {
+    width: 120px;
+    height: 120px;
+    float: left;
+    margin: 1px;
+    background-color: black;
 }
+.tile {
+    width: 38px;
+    height: 38px;
+    float: left;
+    margin: 1px;
+    background-color: white;
+}
+
+.p1BigTile {
+    background-color: #ff6666;
+}
+
+.p2BigTile {
+    background-color: #85e0e0;
+}
+
+.p1SmallTile {
+    background-color: red;
+}
+
+.p2SmallTile {
+    background-color: blue;
+}
+
+

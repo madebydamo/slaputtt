@@ -116,10 +116,11 @@ class _Searcher {
 
   final List<int> _points;
 
-  /// Initialises a  
+  /// Initialises a  Searcher
   _Searcher._(int first, int second, int third)
       : _points = [first - 1, second - 1, third - 1];
 
+  /// Returns the number of fields from [Player] 1
   int getP1(Grid grid) {
     int counter = 0;
     State s = State.p1;
@@ -131,6 +132,7 @@ class _Searcher {
     return counter;
   }
 
+  /// Returns the number of fields from [Player] 2
   int getP2(Grid grid) {
     int counter = 0;
     State s = State.p2;
@@ -142,6 +144,7 @@ class _Searcher {
     return counter;
   }
 
+  /// Returns the number of fields, which were n
   int getNone(Grid grid) {
     int counter = 0;
     State s = State.none;
