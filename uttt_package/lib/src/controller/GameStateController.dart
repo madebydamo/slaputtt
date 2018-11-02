@@ -38,12 +38,6 @@ bool isGameFinished(GameState state) {
   return getAllPossibleMoves(state).length == 0;
 }
 
-double evaluateValue(GameState state) {
-  //TODO implement
-  //TODO Extraclass with Organism
-  return 0.0;
-}
-
 List<Move> getAllPossibleMoves(GameState state) {
   List<Move> moves = [];
   if (state.lastMove == Move.init ||

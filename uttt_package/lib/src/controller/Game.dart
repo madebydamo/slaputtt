@@ -9,16 +9,19 @@ class Game {
   Player _player2;
   GameState gameState;
   int _move;
+  State winner;
 
   /// Initialises a new Game
   Game(this._player1, this._player2) {
     gameState = GameState();
     _move = 0;
+    winner = State.none;
   }
 
   /// Starts the game
   void start() {
     _p2Played(gameState);
+    winner = cache[gameState.value].winner;
   }
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play

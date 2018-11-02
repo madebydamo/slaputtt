@@ -6,3 +6,8 @@ abstract class Algorithm {
   //TODO Probably change to Returntype Move
   GameState getNextMove(GameState state);
 }
+
+abstract class Heuristic {
+
+  double evaluateState(GameState state, State primaryState);
+}

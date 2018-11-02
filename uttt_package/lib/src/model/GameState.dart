@@ -142,6 +142,11 @@ class BigTile extends Grid<Tile> implements Tile {
     equal = equal && (other as BigTile).tiles == tiles;
     return equal;
   }
+
+  @override
+  String toString() {
+    return "BigTile $value";
+  }
 }
 
 /// The Model for a Grid. It represents a 3x3 grid with Tiles as elements
