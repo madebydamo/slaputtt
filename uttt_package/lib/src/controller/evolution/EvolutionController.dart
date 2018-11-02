@@ -52,7 +52,7 @@ void trainGeneration(Era era) {
   List<Stats> origin = List.from(stats);
   stats.sort((s1, s2) => s1.value > s2.value ? 1 : s1.value == s2.value ? 0 : -1);
   stats.forEach((s) {
-    generation.order[origin.indexOf(s)]
+    generation.order[origin.indexOf(s)];
   });
 }
 

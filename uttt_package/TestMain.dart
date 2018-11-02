@@ -15,7 +15,5 @@ main() {
   for(int i = 0; i < 20; i++) {
     Game game = Game(p1, p2);
     game.start();
-    winners.add(game.winner);
   }
-  winners.forEach((s) => print("And the winner is..... $s"));
 }
