@@ -22,7 +22,7 @@ class AlphaBetaPruning implements Algorithm {
       Move oldMove = state.lastMove;
       GameState newState = playMove(state, move);
       double alphabeta = _alphabeta(
-          newState, _depth, double.negativeInfinity, double.infinity, true);
+          newState, _depth, double.negativeInfinity, double.infinity, false);
       if (alphabeta > value) {
         value = alphabeta;
         returnMove = move;
@@ -53,9 +53,9 @@ class AlphaBetaPruning implements Algorithm {
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
         Move oldMove = state.lastMove;
         GameState newState = playMove(state, move);
-        value = max(value, _alphabeta(newState, depth - 1, alpha, beta, true));
+        value = min(value, _alphabeta(newState, depth - 1, alpha, beta, true));
         _revertMove(state, oldMove);
-        beta = max(beta, value);
+        beta = min(beta, value);
         if (alpha >= beta) {
           break;
         }
