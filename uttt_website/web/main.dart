@@ -1,14 +1,18 @@
 import 'dart:html';
-import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
-import 'package:uttt_package/src/model/Player.dart';
-import 'package:uttt_package/src/controller/players/Computer.dart';
-import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
+
 import 'package:uttt_package/src/controller/Game.dart';
+import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
+import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
+import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
+import 'package:uttt_package/src/controller/players/Computer.dart';
+import 'package:uttt_package/src/model/Evolution.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/model/Player.dart';
 
 void main() {
   WebPlayer p1 = WebPlayer();
-  Computer p2 = Computer(RandomMove());
+  Computer p2 = Computer(AlphaBetaPruning(
+      3, HeuristicAlphaBeta(DNA(1.0, 4.0, 20.0, 80.0, 500.0))));
   Game game = Game(p1, p2);
   game.start();
 }
@@ -36,7 +40,7 @@ class WebPlayer implements Player {
             Move m = Move.ofIndex(State.p1, i, j);
             if (GameController.getAllPossibleMoves(_state).contains(m)) {
               GameController.playMove(_state, m);
-              visualize(_state);
+              _visualize(_state, false);
               _s(_state);
             }
           }
@@ -51,7 +55,7 @@ class WebPlayer implements Player {
     }
   }
 
-  void visualize(GameState state) {
+  void _visualize(GameState state, [bool possibleMoves = true]) {
     for (int i = 0; i < 9; i++) {
       BigTile bigTile = state.tiles[i];
       String playerCSS;
@@ -72,10 +76,12 @@ class WebPlayer implements Player {
       }
     }
     querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
-    GameController.getAllPossibleMoves(state).forEach((m){
-      querySelector(".bigTile${m.bigIndex} > .wrapper > .tile${m.smallIndex}").classes.add("yellow");
-
-    });
+    if(possibleMoves) {
+      GameController.getAllPossibleMoves(state).forEach((m) {
+        querySelector(".bigTile${m.bigIndex} > .wrapper > .tile${m.smallIndex}")
+            .classes.add("yellow");
+      });
+    }
 
   }
 
@@ -83,6 +89,6 @@ class WebPlayer implements Player {
   playMove(GameState state, GameStateArgument s) {
     _state = state;
     _s = s;
-    visualize(state);
+    _visualize(state);
   }
 }
