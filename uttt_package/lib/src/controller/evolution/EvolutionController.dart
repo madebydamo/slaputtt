@@ -1,17 +1,17 @@
+import 'dart:math';
+
 import 'package:uttt_package/src/controller/Game.dart';
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
-import 'dart:math';
-
 import 'package:uttt_package/src/model/Player.dart';
 
 Era initialiseEra(int size, depth) {
-  Era era = Era();
-  Generation gen1 = Generation(List.generate(size, (i) => _randomDNA()));
+  Era era = Era(depth);
+  Generation gen1 = Generation(
+      List.generate(size, (i) => Rating(_randomDNA())));
   era.generations.add(gen1);
-  //TODO abfüllen
   return era;
 }
 
@@ -26,46 +26,80 @@ DNA _randomDNA() {
   return DNA(smallOne, smallTwo, bigOne, bigTwo, bigThree);
 }
 
-void trainGeneration(Era era) {
-  Generation generation = era.generations[era.generations.length];
-  List<Stats> stats = List.generate(generation.organism.length, (i) => Stats());
-  for (int i = 0; i < generation.organism.length; i++) {
-    for (int j = i + 1; j < generation.organism.length; i++) {
-      DNA dna1 = generation.organism[i];
-      DNA dna2 = generation.organism[j];
-      Player p1 = Computer(AlphaBetaPruning(era.depth, HeuristicAlphaBeta(dna1)));
-      Player p2 = Computer(AlphaBetaPruning(era.depth, HeuristicAlphaBeta(dna2)));
+void train(Era era) {
+  Generation generation = era.lastGen;
+  _trainGeneration(generation, era.depth);
+}
+
+void _trainGeneration(Generation generation, int depth) {
+  generation.ratings.forEach((r) => r.stats = Stats());
+  for (int i = 0; i < generation.ratings.length; i++) {
+    for (int j = i + 1; j < generation.ratings.length; j++) {
+      Rating rating1 = generation.ratings[i];
+      Rating rating2 = generation.ratings[j];
+      Player p1 = Computer(
+          AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna)));
+      Player p2 = Computer(
+          AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna)));
       Game game = Game(p1, p2);
       game.start();
       if (game.winner == null) {
-        stats[i].draws = stats[i].draws + 1;
-        stats[j].draws = stats[j].draws + 1;
+        rating1.stats.draws = rating1.stats.draws + 1;
+        rating2.stats.draws = rating2.stats.draws + 1;
       } else if(game.winner == p1) {
-        stats[i].wins = stats[i].wins + 1;
-        stats[j].loses = stats[j].loses + 1;
+        rating1.stats.wins = rating1.stats.wins + 1;
+        rating2.stats.loses = rating2.stats.loses + 1;
       } else if(game.winner == p2) {
-        stats[i].loses = stats[i].loses + 1;
-        stats[j].wins = stats[j].wins + 1;
+        rating1.stats.loses = rating1.stats.loses + 1;
+        rating2.stats.wins = rating2.stats.wins + 1;
       }
     }
   }
-  List<Stats> origin = List.from(stats);
-  stats.sort((s1, s2) => s1.value > s2.value ? 1 : s1.value == s2.value ? 0 : -1);
-  stats.forEach((s) {
-    generation.order[origin.indexOf(s)];
-  });
 }
 
-class Stats {
-  int wins;
-  int draws;
-  int loses;
+void trainAndMutate(Era era) {
+  train(era);
+  mutate(era);
+}
 
-  State() {
-    wins = 0;
-    draws = 0;
-    loses = 0;
+void mutate(Era era) {
+  Generation generation = era.lastGen;
+  era.generations.add(_mutateGeneration(generation));
+}
+
+Generation _mutateGeneration(Generation generation) {
+  List<Rating> list = [];
+  generation.ratings.sort();
+  if (generation.ratings.length.isEven) {
+    for (int i = generation.ratings.length ~/ 2 + 1; i <
+        generation.ratings.length; i++) {
+      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
+      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
+    }
+    list.add(Rating(
+        _mutateDNA(generation.ratings[generation.ratings.length ~/ 2].dna)));
+    list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
+  } else {
+    for (int i = (generation.ratings.length + 1) ~/ 2; i <
+        generation.ratings.length; i++) {
+      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
+      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
+    }
+    list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
   }
-
-  get value => wins * 3 + draws;
+  assert(list.length == generation.ratings
+      .length, "Old generation and mutated generation doesn't have the same size");
+  return Generation(list);
 }
+
+DNA _mutateDNA(DNA dna) {
+  return DNA(_mutateNumber(dna.smallOne), _mutateNumber(dna.smallTwo),
+      _mutateNumber(dna.bigOne), _mutateNumber(dna.bigTwo),
+      _mutateNumber(dna.bigThree));
+}
+
+double _mutateNumber(double d) {
+  Random r = Random();
+  return d * (r.nextDouble() * 0.4 + 0.8);
+}
+
