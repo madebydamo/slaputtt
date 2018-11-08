@@ -27,6 +27,7 @@ class Game {
   void start() {
     _p2Played(gameState);
     winner = playerFromState[cache[gameState.value].winner];
+//    print("-----------| Winner ${cache[gameState.value].winner} |-----------");
   }
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play
@@ -48,11 +49,12 @@ class Game {
 
   /// Validates whether the played Move was valid or not.
   bool _validate(GameState state) {
-    print("-----------| Move ${_move++} |-----------");
-    visualize(state);
-    print("");
-    print("-----------| Winner ${cache[state.value].winner} |-----------");
-    print("");
+    _move++;
+//    print("-----------| Move ${_move++} |-----------");
+//    visualize(state);
+//    print("");
+//    print("-----------| Winner ${cache[state.value].winner} |-----------");
+//    print("");
     if (_move == 1 || playMove(gameState, state.lastMove) == state) {
       gameState = state;
       return true;
