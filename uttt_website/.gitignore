@@ -9,3 +9,8 @@ build/
 
 # Directory created by dartdoc
 doc/api/
+
+# Firebase hosting
+.firebaserc
+firebase.json
+.firebase
