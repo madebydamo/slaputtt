@@ -83,6 +83,13 @@ html, body {
 
 .yellow {
     background: yellow;
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.4;
+  }
 }
 
 .wrapper {
