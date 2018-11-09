@@ -10,9 +10,11 @@ import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';
 
 void main() {
+  Worker worker = new Worker("workerScript.js");
+  worker.onMessage.listen((e) => print(e.data));
   WebPlayer p1 = WebPlayer();
   Computer p2 = Computer(AlphaBetaPruning(
-      3, HeuristicAlphaBeta(DNA(1.0, 4.0, 20.0, 80.0, 500.0))));
+      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
   Game game = Game(p1, p2);
   game.start();
 }
