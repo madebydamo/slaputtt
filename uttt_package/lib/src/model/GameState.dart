@@ -1,6 +1,10 @@
 import 'dart:math';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'GameState.g.dart';
 
 /// The Model for the big Tic Tac Toe field
+@JsonSerializable()
 class GameState extends Grid<BigTile> {
   /// The last played move
   Move lastMove;
@@ -21,6 +25,10 @@ class GameState extends Grid<BigTile> {
     lastMove = Move.init;
   }
 
+  factory GameState.fromJson(Map<String, dynamic> json) => _$GameStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GameStateToJson(this);
+
   @override
   bool operator ==(other) {
     bool equal = other is GameState;
@@ -32,6 +40,7 @@ class GameState extends Grid<BigTile> {
 
 /// The Model for a Move. Provides x and y for the big grid [GameState] and the
 /// sub grid [BigTile]
+@JsonSerializable()
 class Move {
   static final Move init = Move(State.p2, 99, 99, 99, 99);
 
@@ -82,6 +91,10 @@ class Move {
   /// Getter method for the small index, usually used in [BigTile]
   get smallIndex => yTile * 3 + xTile;
 
+  factory Move.fromJson(Map<String, dynamic> json) => _$MoveFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MoveToJson(this);
+
   @override
   bool operator ==(other) {
     bool equal = other is Move;
@@ -95,6 +108,7 @@ class Move {
 }
 
 /// The model for one Tile, a sub element of the grid with a [state]
+@JsonSerializable()
 class Tile {
   /// The actual state of the Tile
   State state;
@@ -112,6 +126,10 @@ class Tile {
     return state.toString();
   }
 
+  factory Tile.fromJson(Map<String, dynamic> json) => _$TileFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TileToJson(this);
+
   @override
   bool operator ==(other) {
     bool equal = other is Tile;
@@ -120,7 +138,27 @@ class Tile {
   }
 }
 
+class _TileConverter<T extends Tile> implements JsonConverter<T , Object> {
+  const _TileConverter();
+
+  @override
+  fromJson(Object json) {
+    if(json is Map<String, dynamic> &&
+        json.containsKey('tiles')) {
+      return BigTile.fromJson(json) as Tile; // Bug in Dart, unnecessary cast
+    } else {
+      return Tile.fromJson(json);
+    }
+  }
+
+  @override
+  Object toJson(object) {
+    return object;
+  }
+}
+
 /// The Model for a BigTile. It represents a sub grid with a [state]
+@JsonSerializable()
 class BigTile extends Grid<Tile> implements Tile {
   @override
   State state;
@@ -154,6 +192,10 @@ class BigTile extends Grid<Tile> implements Tile {
     return equal;
   }
 
+  factory BigTile.fromJson(Map<String, dynamic> json) => _$BigTileFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BigTileToJson(this);
+
   @override
   String toString() {
     return "BigTile $value";
@@ -161,8 +203,11 @@ class BigTile extends Grid<Tile> implements Tile {
 }
 
 /// The Model for a Grid. It represents a 3x3 grid with Tiles as elements
-abstract class Grid<T extends Tile> {
+@JsonSerializable()
+class Grid<T extends Tile> {
   /// A list with length of 9, which contains the data
+  @JsonKey(name: "tiles")
+  @_TileConverter()
   List<T> tiles;
 
   /// Initialises a Grid with the given Tiles
@@ -178,6 +223,10 @@ abstract class Grid<T extends Tile> {
     return State.valueOf(tiles[index].state) * pow(3, index) +
         _getHashFrag(index + 1);
   }
+
+  factory Grid.fromJson(Map<String, dynamic> json) => _$GridFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GridToJson(this);
 }
 
 /// The Model for a State. It represents a player
@@ -211,4 +260,12 @@ class State {
     if (s == p2) return p1;
     return none;
   }
+
+  factory State.fromJson(Map<String, dynamic> json) {
+    if(json["state"] == p1._s) return p1;
+    if(json["state"] == p2._s) return p2;
+    return none;
+  }
+
+  Map<String, dynamic> toJson() => {"state": this._s};
 }

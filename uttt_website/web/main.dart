@@ -10,7 +10,7 @@ import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';
 
 void main() {
-  Worker worker = new Worker("workerScript.js");
+  Worker worker = new Worker("worker/workerScript.js");
   worker.onMessage.listen((e) => print(e.data));
   WebPlayer p1 = WebPlayer();
   Computer p2 = Computer(AlphaBetaPruning(

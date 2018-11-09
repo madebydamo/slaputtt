@@ -11,9 +11,11 @@ environment:
 #  path: ^1.4.1
 
 dev_dependencies:
-  build_runner: ^0.10.0
+  build_runner: ^1.0.0
   build_web_compilers: ^0.4.0
+  json_serializable: ^2.0.0
 
 dependencies:
   uttt_package:
     path: ../uttt_package
+  json_annotation: ^2.0.0
