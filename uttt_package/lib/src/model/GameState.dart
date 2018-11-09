@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'GameState.g.dart';
+part 'GameState.g.dart'; //regenerate with "pub run build_runner build"
 
 /// The Model for the big Tic Tac Toe field
 @JsonSerializable()
