@@ -29,6 +29,7 @@ DNA _randomDNA() {
 void train(Era era) {
   Generation generation = era.lastGen;
   _trainGeneration(generation, era.depth);
+  era.currentState = trained;
 }
 
 void _trainGeneration(Generation generation, int depth) {
@@ -63,8 +64,10 @@ void trainAndMutate(Era era) {
 }
 
 void mutate(Era era) {
-  Generation generation = era.lastGen;
+  assert(era.currentState == trained, "You have to train your generation first!");
+  Generation generation = era.lastTrainedGen;
   era.generations.add(_mutateGeneration(generation));
+  era.currentState = mutated;
 }
 
 Generation _mutateGeneration(Generation generation) {

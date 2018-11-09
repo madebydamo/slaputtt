@@ -1,3 +1,6 @@
+const String mutated = "MUTATED";
+const String trained = "TRAINED";
+
 class DNA {
   double smallOne;
   double smallTwo;
@@ -22,13 +25,21 @@ class Generation {
 class Era {
   List<Generation> generations;
   int depth;
+  String currentState;
 
   Era(this.depth) {
     generations = [];
+    currentState = mutated;
+  }
+
+  Generation get lastTrainedGen {
+    assert(currentState == mutated || currentState == trained, "Invalid CurrentState in Era!");
+    int index = currentState == mutated ? generations.length - 2 : generations.length - 1;
+    return generations[index];
   }
 
   Generation get lastGen {
-    return generations[generations.length -1];
+    return generations[generations.length - 1];
   }
 }
 
