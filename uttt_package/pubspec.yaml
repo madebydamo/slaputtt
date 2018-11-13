@@ -7,8 +7,11 @@ version: 0.0.2
 environment:
   sdk: '>=2.0.0 <3.0.0'
 
-#dependencies:
-#  path: ^1.4.1
+dependencies:
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
+
 
 dev_dependencies:
   test: any
+  json_annotation: ^2.0.0

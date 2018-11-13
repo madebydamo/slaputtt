@@ -15,7 +15,7 @@ main() {
 //  }
 //  winners.forEach((s) => print(s));
 
-  Era era = initialiseEra(20, 3);
+  Era era = initialiseEra(10, 3);
   do {
     int startTime = new DateTime.now().millisecondsSinceEpoch;
     trainAndMutate(era);
