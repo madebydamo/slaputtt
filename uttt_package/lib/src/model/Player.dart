@@ -8,4 +8,8 @@ abstract class Player {
   ///Gives the [Player] the current [state] of the [Game] and a function, where
   ///they can return the new [GameState].
   playMove(GameState state, GameStateArgument s);
+
+  ///Gets invoked, when the game has finished. [won] contains the information
+  ///whether the [Player] have won the game. [state] is the current GameState.
+  terminate(GameState state, bool won);
 }

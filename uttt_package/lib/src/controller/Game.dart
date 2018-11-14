@@ -27,6 +27,8 @@ class Game {
   void start() {
     _p2Played(gameState);
     winner = playerFromState[cache[gameState.value].winner];
+    _player1.terminate(gameState, winner == _player1);
+    _player2.terminate(gameState, winner == _player2);
 //    print("-----------| Winner ${cache[gameState.value].winner} |-----------");
   }
 

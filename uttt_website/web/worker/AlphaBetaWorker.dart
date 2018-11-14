@@ -13,4 +13,9 @@ class AlphaBetaWorker implements Player {
     // TODO: implement playMove
   }
 
+  @override
+  terminate(GameState state, bool won) {
+    // TODO: implement terminate
+  }
+
 }

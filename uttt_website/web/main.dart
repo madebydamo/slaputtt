@@ -8,13 +8,15 @@ import 'package:uttt_package/src/controller/players/Computer.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';
+import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
 
 void main() {
   Worker worker = new Worker("worker/workerScript.js");
   worker.onMessage.listen((e) => print(e.data));
   WebPlayer p1 = WebPlayer();
-  Computer p2 = Computer(AlphaBetaPruning(
-      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
+//  Computer p2 = Computer(AlphaBetaPruning(
+//      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
+  Player p2 = Computer(RandomMove());
   Game game = Game(p1, p2);
   game.start();
 }
@@ -77,13 +79,21 @@ class WebPlayer implements Player {
         }
       }
     }
-    querySelectorAll(".bounce-top").forEach((e) => e.classes.remove("bounce-top"));
+    _visualizeLastPlayedMove(state);
+    _visualizePossibleMoves(possibleMoves, state);
+  }
+
+  void _visualizeLastPlayedMove(GameState state) {
+    querySelectorAll(".swing-in-top-fwd").forEach((e) => e.classes.remove("swing-in-top-fwd"));
     if (state.lastMove != Move.init) {
       querySelector(
           ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
               .smallIndex}")
-          .classes.add("bounce-top");
+          .classes.add("swing-in-top-fwd");
     }
+  }
+
+  void _visualizePossibleMoves(bool possibleMoves, GameState state) {
     querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
     if(possibleMoves) {
       GameController.getAllPossibleMoves(state).forEach((m) {
@@ -91,7 +101,6 @@ class WebPlayer implements Player {
             .classes.add("yellow");
       });
     }
-
   }
 
   @override
@@ -99,5 +108,11 @@ class WebPlayer implements Player {
     _state = state;
     _s = s;
     _visualize(state);
+  }
+
+  @override
+  terminate(GameState state, bool won) {
+    _visualize(state);
+
   }
 }
