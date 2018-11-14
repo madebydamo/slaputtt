@@ -73,14 +73,21 @@ class WebPlayer implements Player {
         if (tile.state == State.p1) playerCSS = "p1SmallTile";
         if (tile.state == State.p2) playerCSS = "p2SmallTile";
         if (playerCSS != null) {
-          querySelector(".bigTile$i > .wrapper > .tile$j").classes.add(playerCSS);
+          querySelector(".bigTile$i .tile$j").classes.add(playerCSS);
         }
       }
+    }
+    querySelectorAll(".bounce-top").forEach((e) => e.classes.remove("bounce-top"));
+    if (state.lastMove != Move.init) {
+      querySelector(
+          ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
+              .smallIndex}")
+          .classes.add("bounce-top");
     }
     querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
     if(possibleMoves) {
       GameController.getAllPossibleMoves(state).forEach((m) {
-        querySelector(".bigTile${m.bigIndex} > .wrapper > .tile${m.smallIndex}")
+        querySelector(".bigTile${m.bigIndex} .tile${m.smallIndex}")
             .classes.add("yellow");
       });
     }
