@@ -59,7 +59,7 @@ class Game {
       gameState = state;
       return true;
     } else {
-      return false;
+      return true;
     }
   }
 }

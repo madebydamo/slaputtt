@@ -1,6 +1,11 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Evolution.g.dart'; //regenerate with "pub run build_runner build"
+
 const String mutated = "MUTATED";
 const String trained = "TRAINED";
 
+@JsonSerializable()
 class DNA {
   double smallOne;
   double smallTwo;
@@ -9,6 +14,10 @@ class DNA {
   double bigThree;
 
   DNA(this.smallOne, this.smallTwo, this.bigOne, this.bigTwo, this.bigThree);
+
+  factory DNA.fromJson(Map<String, dynamic> json) => _$DNAFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DNAToJson(this);
 }
 
 class Generation {

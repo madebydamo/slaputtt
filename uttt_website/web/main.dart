@@ -1,7 +1,8 @@
 import 'dart:html';
 
 import 'package:uttt_package/src/controller/Game.dart';
-import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
+import 'package:uttt_package/src/controller/GameStateController.dart'
+    as GameController;
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
@@ -9,13 +10,14 @@ import 'package:uttt_package/src/model/Evolution.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';
 
+import 'worker/AlphaBetaWorker.dart';
+
 void main() {
-  Worker worker = new Worker("worker/workerScript.js");
-  worker.onMessage.listen((e) => print(e.data));
+  AlphaBetaWorker worker = AlphaBetaWorker(DNA(1.0, 1.0, 1.0, 1.0, 1.0));
   WebPlayer p1 = WebPlayer();
-  Computer p2 = Computer(AlphaBetaPruning(
-      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
-  Game game = Game(p1, p2);
+//  Computer p2 = Computer(AlphaBetaPruning(
+//      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
+  Game game = Game(p1, worker);
   game.start();
 }
 
@@ -73,18 +75,20 @@ class WebPlayer implements Player {
         if (tile.state == State.p1) playerCSS = "p1SmallTile";
         if (tile.state == State.p2) playerCSS = "p2SmallTile";
         if (playerCSS != null) {
-          querySelector(".bigTile$i > .wrapper > .tile$j").classes.add(playerCSS);
+          querySelector(".bigTile$i > .wrapper > .tile$j")
+              .classes
+              .add(playerCSS);
         }
       }
     }
     querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
-    if(possibleMoves) {
+    if (possibleMoves) {
       GameController.getAllPossibleMoves(state).forEach((m) {
         querySelector(".bigTile${m.bigIndex} > .wrapper > .tile${m.smallIndex}")
-            .classes.add("yellow");
+            .classes
+            .add("yellow");
       });
     }
-
   }
 
   @override
