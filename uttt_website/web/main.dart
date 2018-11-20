@@ -1,8 +1,7 @@
 import 'dart:html';
 
 import 'package:uttt_package/src/controller/Game.dart';
-import 'package:uttt_package/src/controller/GameStateController.dart'
-    as GameController;
+import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
@@ -75,20 +74,33 @@ class WebPlayer implements Player {
         if (tile.state == State.p1) playerCSS = "p1SmallTile";
         if (tile.state == State.p2) playerCSS = "p2SmallTile";
         if (playerCSS != null) {
-          querySelector(".bigTile$i > .wrapper > .tile$j")
-              .classes
-              .add(playerCSS);
+          querySelector(".bigTile$i .tile$j").classes.add(playerCSS);
         }
       }
     }
+    _visualizeLastPlayedMove(state);
+    _visualizePossibleMoves(possibleMoves, state);
+  }
+
+  void _visualizeLastPlayedMove(GameState state) {
+    querySelectorAll(".swing-in-top-fwd").forEach((e) => e.classes.remove("swing-in-top-fwd"));
+    if (state.lastMove != Move.init) {
+      querySelector(
+          ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
+              .smallIndex}")
+          .classes.add("swing-in-top-fwd");
+    }
+  }
+
+  void _visualizePossibleMoves(bool possibleMoves, GameState state) {
     querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
     if (possibleMoves) {
       GameController.getAllPossibleMoves(state).forEach((m) {
-        querySelector(".bigTile${m.bigIndex} > .wrapper > .tile${m.smallIndex}")
-            .classes
-            .add("yellow");
+        querySelector(".bigTile${m.bigIndex} .tile${m.smallIndex}")
+            .classes.add("yellow");
       });
     }
+
   }
 
   @override
@@ -96,5 +108,11 @@ class WebPlayer implements Player {
     _state = state;
     _s = s;
     _visualize(state);
+  }
+
+  @override
+  terminate(GameState state, bool won) {
+    _visualize(state);
+
   }
 }

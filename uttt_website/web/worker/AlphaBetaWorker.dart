@@ -40,4 +40,10 @@ class AlphaBetaWorker implements Player {
     _s = s;
     _worker.postMessage(Transmission.playMove(state).toTransmittable());
   }
+
+  @override
+  terminate(GameState state, bool won) {
+    _worker.terminate();
+  }
+
 }

@@ -12,4 +12,9 @@ class Computer implements Player {
   playMove(GameState state, GameStateArgument s) {
     s(algorithm.getNextMove(state));
   }
+
+  @override
+  terminate(GameState state, bool won) {
+    //Nothing to do here
+  }
 }
