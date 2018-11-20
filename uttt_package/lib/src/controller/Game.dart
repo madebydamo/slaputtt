@@ -26,10 +26,12 @@ class Game {
   /// Starts the game
   void start() {
     _p2Played(gameState);
+  }
+
+  void terminate() {
     winner = playerFromState[cache[gameState.value].winner];
     _player1.terminate(gameState, winner == _player1);
     _player2.terminate(gameState, winner == _player2);
-//    print("-----------| Winner ${cache[gameState.value].winner} |-----------");
   }
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play
@@ -39,6 +41,7 @@ class Game {
       _p1Played(state);
     }
     if (!isGameFinished(state)) _player2.playMove(state, _p2Played);
+    else terminate();
   }
 
   /// Gets called, when [_player2] had played and it's [_player1]'s turn to play
@@ -47,6 +50,7 @@ class Game {
       _p2Played(state);
     }
     if (!isGameFinished(state)) _player1.playMove(state, _p1Played);
+    else terminate();
   }
 
   /// Validates whether the played Move was valid or not.
@@ -61,6 +65,7 @@ class Game {
       gameState = state;
       return true;
     } else {
+      gameState = state;
       return true;
     }
   }

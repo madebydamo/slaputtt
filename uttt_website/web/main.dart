@@ -1,7 +1,8 @@
 import 'dart:html';
 
 import 'package:uttt_package/src/controller/Game.dart';
-import 'package:uttt_package/src/controller/GameStateController.dart' as GameController;
+import 'package:uttt_package/src/controller/GameStateController.dart'
+    as GameController;
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/controller/players/Computer.dart';
@@ -12,7 +13,12 @@ import 'package:uttt_package/src/model/Player.dart';
 import 'worker/AlphaBetaWorker.dart';
 
 void main() {
-  AlphaBetaWorker worker = AlphaBetaWorker(DNA(1.0, 1.0, 1.0, 1.0, 1.0));
+  AlphaBetaWorker worker = AlphaBetaWorker(DNA(
+      15.515486642969375,
+      81.51786860231158,
+      136.90917992046127,
+      2139.7204623955636,
+      13378.653412586225));
   WebPlayer p1 = WebPlayer();
 //  Computer p2 = Computer(AlphaBetaPruning(
 //      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));
@@ -23,8 +29,28 @@ void main() {
 class WebPlayer implements Player {
   GameState _state;
   GameStateArgument _s;
-  static final List<String> tilePositionHorizontal =  ["top", "top", "top", "middle", "middle", "middle", "bottom", "bottom", "bottom"];
-  static final List<String> tilePositionVertical = ["left", "center", "right", "left", "center", "right", "left", "center", "right"];
+  static final List<String> tilePositionHorizontal = [
+    "top",
+    "top",
+    "top",
+    "middle",
+    "middle",
+    "middle",
+    "bottom",
+    "bottom",
+    "bottom"
+  ];
+  static final List<String> tilePositionVertical = [
+    "left",
+    "center",
+    "right",
+    "left",
+    "center",
+    "right",
+    "left",
+    "center",
+    "right"
+  ];
 
   WebPlayer() {
     for (int i = 0; i < 9; i++) {
@@ -83,12 +109,16 @@ class WebPlayer implements Player {
   }
 
   void _visualizeLastPlayedMove(GameState state) {
-    querySelectorAll(".swing-in-top-fwd").forEach((e) => e.classes.remove("swing-in-top-fwd"));
-    if (state.lastMove != Move.init) {
-      querySelector(
-          ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
-              .smallIndex}")
-          .classes.add("swing-in-top-fwd");
+    if(!GameController.isGameFinished(state)) {
+      querySelectorAll(".swing-in-top-fwd")
+          .forEach((e) => e.classes.remove("swing-in-top-fwd"));
+      if (state.lastMove != Move.init) {
+        querySelector(
+            ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
+                .smallIndex}")
+            .classes
+            .add("swing-in-top-fwd");
+      }
     }
   }
 
@@ -97,10 +127,10 @@ class WebPlayer implements Player {
     if (possibleMoves) {
       GameController.getAllPossibleMoves(state).forEach((m) {
         querySelector(".bigTile${m.bigIndex} .tile${m.smallIndex}")
-            .classes.add("yellow");
+            .classes
+            .add("yellow");
       });
     }
-
   }
 
   @override
@@ -112,7 +142,8 @@ class WebPlayer implements Player {
 
   @override
   terminate(GameState state, bool won) {
+    print("Terminated, you have won: $won");
+    querySelector("#winner").innerHtml = won ? "Congrats, you have won!" : "Maybe next time...";
     _visualize(state);
-
   }
 }
