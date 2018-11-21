@@ -8,15 +8,22 @@
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>uttt</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="icon" href="favicon.ico">
     <script defer src="main.dart.js"></script>
 </head>
 
 <body>
 
-    <div id="output">
+    <div id="output" class="container center-align">
         <h1>Ultimate Tic-Tac-Toe</h1>
-        <div id="tileWrapper"></div>
+        <div class="row">
+            <div class="col s12 m10 l8 xl6 offset-m1 offset-l2 offset-xl3">
+                <div class="square">
+                    <div id="tileWrapper" class="grid-container"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

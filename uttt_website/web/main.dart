@@ -33,6 +33,7 @@ class WebPlayer implements Player {
       DivElement tileHolder = new DivElement();
       bigTile.children.add(tileHolder);
       tileHolder.classes.add("wrapper");
+      tileHolder.classes.add("grid-container");
       bigTile.classes.add("bigTile$i");
       bigTile.classes.add("bigTile");
       bigTile.classes.add(tilePositionHorizontal[i]);
