@@ -23,4 +23,6 @@ function getMyGlobalScope() {
 
 console.log("Worker started");
 myRequire("BackgroundWorker.dart.js");
-require(['BackgroundWorker.dart.bootstrap']);
+if(typeof require === "function") {
+    require(['BackgroundWorker.dart.bootstrap']);
+}

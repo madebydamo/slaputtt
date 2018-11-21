@@ -5,18 +5,9 @@ import 'dart:html';
 
 import '../transmission/Transmission.dart';
 
-//typedef void PostMessageMethod(Object message, List<Object> transfer);
-
 void _log(e) => print("Frontend: $e");
 
 class AlphaBetaWorker implements Player {
-
-  static final List<String> tilePositionHorizontal =  ["top", "top", "top", "middle", "middle", "middle", "bottom", "bottom", "bottom"];
-  static final List<String> tilePositionVertical = ["left", "center", "right", "left", "center", "right", "left", "center", "right"];
-
-  WebPlayer() {
-
-  }
 
   Worker _worker;
   GameStateArgument _s;

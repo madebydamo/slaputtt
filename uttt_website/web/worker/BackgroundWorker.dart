@@ -17,7 +17,6 @@ external DedicatedWorkerGlobalScope getMyGlobalScope();
 
 // Reminder: ServiceWorker mustn't use async in the [main] method.
 void main(List<String> args) {
-//  _log(getPreamble());
   DedicatedWorkerGlobalScope _self = getMyGlobalScope();
   _log('SW started.');
   Algorithm algo;
