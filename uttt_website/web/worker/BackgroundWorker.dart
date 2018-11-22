@@ -16,7 +16,7 @@ void _log(e) => print("Backend: $e");
 external DedicatedWorkerGlobalScope getMyGlobalScope();
 
 // Reminder: ServiceWorker mustn't use async in the [main] method.
-void main(List<String> args) {
+void main() {
   DedicatedWorkerGlobalScope _self = getMyGlobalScope();
   _log('SW started.');
   Algorithm algo;
