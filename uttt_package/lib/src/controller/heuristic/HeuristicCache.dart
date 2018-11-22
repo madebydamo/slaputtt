@@ -4,6 +4,10 @@ import 'package:uttt_package/src/controller/GridCache.dart' as GridCache;
 
 Map<int, Map<State, _HeuristicInfo>> cache = _getCache();
 
+Map<int, Map<State, _HeuristicInfo>> initCache() {
+  return cache;
+}
+
 Map<int, Map<State, _HeuristicInfo>> _getCache() {
   Map<int, Map<State, _HeuristicInfo>> map = Map();
   getAllGrids().forEach((grid) {

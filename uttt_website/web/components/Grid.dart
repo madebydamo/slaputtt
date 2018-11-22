@@ -1,9 +1,11 @@
 import 'dart:html';
 import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/controller/GameStateController.dart' as GC;
 
-typedef void MouseEventHandler(MouseEvent e, int big, int small);
+typedef void MouseEventHandler(MouseEvent e, int bigIndex, int smallIndex);
 
-class GridElement extends DivElement {
+class GridElement {
+  static GridElement _gridElement;
 
   static final List<String> tilePositionHorizontal = [
     "top",
@@ -28,7 +30,15 @@ class GridElement extends DivElement {
     "right"
   ];
 
-  GridElement(MouseEventHandler handler) : super.created() {
+  factory GridElement(MouseEventHandler handler) {
+    if (_gridElement == null) {
+      _gridElement = GridElement._internal(handler);
+    }
+    _gridElement.clear();
+    return _gridElement;
+  }
+
+  GridElement._internal(MouseEventHandler handler) {
     for (int i = 0; i < 9; i++) {
       DivElement bigTile = new DivElement();
       DivElement tileHolder = new DivElement();
@@ -41,7 +51,7 @@ class GridElement extends DivElement {
       bigTile.classes.add(tilePositionVertical[i]);
       for (int j = 0; j < 9; j++) {
         DivElement tile = new DivElement();
-        tile.onClick.listen(handler(e, i, j));
+        tile.onClick.listen((e) => handler(e, i, j));
         tile.classes.add("tile$j");
         tile.classes.add("tile");
         tileHolder.children.add(tile);
@@ -76,14 +86,23 @@ class GridElement extends DivElement {
     _visualizePossibleMoves(possibleMoves, state);
   }
 
+  void clear() {
+    _clearClass("p1BigTile");
+    _clearClass("p2BigTile");
+    _clearClass("p1SmallTile");
+    _clearClass("p2SmallTile");
+    _clearClass("flip-in-hor-bottom");
+    _clearClass("yellow");
+
+
+  }
+
   void _visualizeLastPlayedMove(GameState state) {
-    if(!GameController.isGameFinished(state)) {
-      querySelectorAll(".flip-in-hor-bottom")
-          .forEach((e) => e.classes.remove("flip-in-hor-bottom"));
+    _clearClass("flip-in-hor-bottom");
+    if (!GC.isGameFinished(state)) {
       if (state.lastMove != Move.init) {
         querySelector(
-            ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove
-                .smallIndex}")
+                ".bigTile${state.lastMove.bigIndex} .tile${state.lastMove.smallIndex}")
             .classes
             .add("flip-in-hor-bottom");
       }
@@ -91,9 +110,9 @@ class GridElement extends DivElement {
   }
 
   void _visualizePossibleMoves(bool possibleMoves, GameState state) {
-    querySelectorAll(".yellow").forEach((e) => e.classes.remove("yellow"));
+    _clearClass("yellow");
     if (possibleMoves) {
-      GameController.getAllPossibleMoves(state).forEach((m) {
+      GC.getAllPossibleMoves(state).forEach((m) {
         querySelector(".bigTile${m.bigIndex} .tile${m.smallIndex}")
             .classes
             .add("yellow");
@@ -101,4 +120,8 @@ class GridElement extends DivElement {
     }
   }
 
+  void _clearClass(String classname) {
+    querySelectorAll(".$classname")
+        .forEach((e) => e.classes.remove(classname));
+  }
 }

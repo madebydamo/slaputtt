@@ -34,9 +34,9 @@ class WebPlayer implements Player {
 
 
   WebPlayer() {
-    _grid =  GridElement((event) {
+    _grid =  GridElement((event, bigIndex, smallIndex) {
       if (_state != null) {
-        Move m = Move.ofIndex(State.p1, i, j);
+        Move m = Move.ofIndex(State.p1, bigIndex, smallIndex);
         if (GameController.getAllPossibleMoves(_state).contains(m)) {
           GameController.playMove(_state, m);
           _grid.visualize(_state, false);
@@ -59,6 +59,6 @@ class WebPlayer implements Player {
   terminate(GameState state, bool won) {
     print("Terminated, you have won: $won");
     querySelector("#winner").innerHtml = won ? "Congrats, you have won!" : "Maybe next time...";
-    _grid.visualize(state);
+    _grid.visualize(state, false);
   }
 }

@@ -16,4 +16,3 @@ dependencies:
   uttt_package:
     path: ../uttt_package
   json_annotation: ^2.0.0
-  uuid: ^1.0.3

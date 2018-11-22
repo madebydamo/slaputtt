@@ -6,7 +6,9 @@ import 'package:uttt_package/src/controller/heuristic/HeuristicCache.dart';
 class HeuristicAlphaBeta implements Heuristic {
   DNA dna;
 
-  HeuristicAlphaBeta(this.dna);
+  HeuristicAlphaBeta(this.dna) {
+    initCache();
+  }
 
   @override
   double evaluateState(GameState state, State primaryState) {
