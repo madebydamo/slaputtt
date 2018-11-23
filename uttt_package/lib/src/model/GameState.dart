@@ -107,6 +107,13 @@ class Move {
   }
 }
 
+class RevertMove {
+  Move lastMove;
+  State bigTileState;
+
+  RevertMove(this.lastMove, this.bigTileState);
+}
+
 /// The model for one Tile, a sub element of the grid with a [state]
 @JsonSerializable()
 class Tile {

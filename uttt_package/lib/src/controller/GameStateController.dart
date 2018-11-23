@@ -62,6 +62,18 @@ List<Move> getAllPossibleMovesWithStates(GameState state, State s) {
   return moves;
 }
 
+RevertMove getRevertMove(GameState state, Move move) {
+  return RevertMove(state.lastMove, state.tiles[move.bigIndex].state);
+}
+
+GameState revertMove(GameState state, RevertMove revertMove) {
+  Move moveToDelete = state.lastMove;
+  state.tiles[moveToDelete.bigIndex].tiles[moveToDelete.smallIndex].state = State.none;
+  state.lastMove = revertMove.lastMove;
+  state.tiles[moveToDelete.bigIndex].state = revertMove.bigTileState;
+  return state;
+}
+
 GameState playMove(GameState state, Move move) {
   state.tiles[move.bigIndex].tiles[move.smallIndex].state = move.state;
   state.lastMove = move;

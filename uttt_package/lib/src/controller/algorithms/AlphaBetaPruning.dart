@@ -19,15 +19,15 @@ class AlphaBetaPruning implements Algorithm {
     Move returnMove;
     double value = double.negativeInfinity;
     for (Move move in getAllPossibleMovesWithStates(state, _ourState)) {
-      Move oldMove = state.lastMove;
-      GameState newState = playMove(state, move);
+      RevertMove revert = getRevertMove(state, move);
+      state = playMove(state, move);
       double alphabeta = _alphabeta(
-          newState, _depth, double.negativeInfinity, double.infinity, false);
+          state, _depth, double.negativeInfinity, double.infinity, false);
       if (alphabeta > value) {
         value = alphabeta;
         returnMove = move;
       }
-      _revertMove(newState, oldMove);
+      revertMove(state, revert);
     }
     return playMove(state, returnMove);
   }
@@ -38,10 +38,10 @@ class AlphaBetaPruning implements Algorithm {
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
-        Move oldMove = state.lastMove;
-        GameState newState = playMove(state, move);
-        value = max(value, _alphabeta(newState, depth - 1, alpha, beta, false));
-        _revertMove(state, oldMove);
+        RevertMove revert = getRevertMove(state, move);
+        state = playMove(state, move);
+        value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
+        revertMove(state, revert);
         alpha = max(alpha, value);
         if (alpha >= beta) {
           break;
@@ -51,10 +51,10 @@ class AlphaBetaPruning implements Algorithm {
     } else {
       double value = double.infinity;
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
-        Move oldMove = state.lastMove;
-        GameState newState = playMove(state, move);
-        value = min(value, _alphabeta(newState, depth - 1, alpha, beta, true));
-        _revertMove(state, oldMove);
+        RevertMove revert = getRevertMove(state, move);
+        state = playMove(state, move);
+        value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));
+        revertMove(state, revert);
         beta = min(beta, value);
         if (alpha >= beta) {
           break;
@@ -62,13 +62,5 @@ class AlphaBetaPruning implements Algorithm {
       }
       return value;
     }
-  }
-
-  void _revertMove(GameState state, Move oldMove) {
-    Move revertMove = state.lastMove;
-    state.tiles[revertMove.bigIndex].tiles[revertMove.smallIndex].state = State.none;
-    state.lastMove = oldMove;
-    var _gridInfo = cache[state.tiles[revertMove.bigIndex].value];
-    state.tiles[revertMove.bigIndex].state = _gridInfo.winner;
   }
 }
