@@ -1,11 +1,12 @@
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
+import 'package:uttt_package/src/model/Algorithm.dart';
 import 'dart:convert';
 
 const String typ_initialised = "INITIALISED";
 const String typ_playMove = "PLAYMOVE";
 const String typ_movePlayed = "MOVEPLAYED";
-const String typ_config = "CONFIG";
+const String typ_configAlgorithm = "CONFIGALGORITHM";
 const String typ_unknown = "UNKNOWN";
 
 class Transmission {
@@ -18,7 +19,7 @@ class Transmission {
 
   Transmission.movePlayed(GameState obj) : this._(typ_movePlayed, obj);
 
-  Transmission.config(DNA obj) : this._(typ_config, obj);
+  Transmission.configAlgorithm(Algorithm obj) : this._(typ_configAlgorithm, obj);
 
   Transmission._(this.typ, this.object);
 
@@ -29,8 +30,10 @@ class Transmission {
       return Transmission._(json["typ"], GameState.fromJson(json["object"]));
     }else if (json["typ"] == typ_movePlayed) {
       return Transmission._(json["typ"], GameState.fromJson(json["object"]));
-    }else if (json["typ"] == typ_config) {
-      return Transmission._(json["typ"], DNA.fromJson(json["object"]));
+//    }else if (json["typ"] == typ_config) {
+//      return Transmission._(json["typ"], DNA.fromJson(json["object"]));
+    } else if (json["typ"] == typ_configAlgorithm) {
+      return Transmission._(json["typ"], Algorithm.fromJson(json["object"]));
     }
     return Transmission._(typ_unknown, null);
   }
@@ -50,10 +53,15 @@ class Transmission {
         "typ": typ,
         "object": (object as GameState).toJson(),
       };
-    } else if (typ == typ_config) {
+//    } else if (typ == typ_config) {
+//      return {
+//        "typ": typ,
+//        "object": (object as DNA).toJson(),
+//      };
+    } else if (typ == typ_configAlgorithm) {
       return {
         "typ": typ,
-        "object": (object as DNA).toJson(),
+        "object": (object as Algorithm).toJson(),
       };
     }
     return {

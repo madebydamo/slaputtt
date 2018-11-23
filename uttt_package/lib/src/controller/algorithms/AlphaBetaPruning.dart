@@ -1,28 +1,31 @@
+import 'dart:math';
+
+import 'package:json_annotation/json_annotation.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/controller/GridCache.dart';
-import 'dart:math';
 
 /// Implementation of a Alpha Beta Pruning Algorithm
+///
+@JsonSerializable()
 class AlphaBetaPruning implements Algorithm {
-  int _depth;
+  int depth;
   Heuristic heuristic;
-  State _ourState;
+  State ourState;
 
-  AlphaBetaPruning(this._depth, this.heuristic);
+  AlphaBetaPruning(this.depth, this.heuristic);
 
   @override
   GameState getNextMove(GameState state) {
     if (isGameFinished(state)) return state;
-    _ourState = State.flip(state.lastMove.state);
+    ourState = State.flip(state.lastMove.state);
     Move returnMove;
     double value = double.negativeInfinity;
-    for (Move move in getAllPossibleMovesWithStates(state, _ourState)) {
+    for (Move move in getAllPossibleMovesWithStates(state, ourState)) {
       RevertMove revert = getRevertMove(state, move);
       state = playMove(state, move);
       double alphabeta = _alphabeta(
-          state, _depth, double.negativeInfinity, double.infinity, false);
+          state, depth, double.negativeInfinity, double.infinity, false);
       if (alphabeta > value) {
         value = alphabeta;
         returnMove = move;
@@ -34,7 +37,7 @@ class AlphaBetaPruning implements Algorithm {
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {
     if (depth == 0 || isGameFinished(state))
-      return heuristic.evaluateState(state, _ourState);
+      return heuristic.evaluateState(state, ourState);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
@@ -62,5 +65,17 @@ class AlphaBetaPruning implements Algorithm {
       }
       return value;
     }
+  }
+
+  factory AlphaBetaPruning.fromJson(Map<String, dynamic> json) {
+    return AlphaBetaPruning(json["depth"], Heuristic.fromJson(json["heuristic"]));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+        "depth": depth,
+        "heuristic": heuristic.toJson(),
+        "class": "AlphaBetaPruning",
+      };
   }
 }

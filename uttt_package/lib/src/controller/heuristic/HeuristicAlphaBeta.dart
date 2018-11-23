@@ -26,4 +26,14 @@ class HeuristicAlphaBeta implements Heuristic {
     value += cache[state.value][primaryState].three * dna.bigThree;
     return value;
   }
+
+  factory HeuristicAlphaBeta.fromJson(Map<String, dynamic> json) {
+    return HeuristicAlphaBeta(DNA.fromJson(json["dna"]));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"dna": dna.toJson(),};
+  }
 }
+
+

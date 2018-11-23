@@ -1,7 +1,8 @@
+import 'dart:math';
+
+import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/controller/GameStateController.dart';
-import 'dart:math';
 
 /// Implementation of a Random Algorithm, which plays a random possible move
 class RandomMove extends Algorithm {
@@ -18,4 +19,13 @@ class RandomMove extends Algorithm {
     int randomIndex = r.nextInt(moves.length);
     return playMove(state, moves[randomIndex]);
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "class": "RandomMove",
+    };
+  }
+
+  RandomMove.fromJson(Map<String, dynamic> json) : this();
 }

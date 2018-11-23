@@ -5,21 +5,22 @@ import 'package:uttt_package/src/controller/GameStateController.dart'
     as GameController;
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
-import 'package:uttt_package/src/controller/players/Computer.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';
 
 import 'components/Grid.dart';
-import 'worker/AlphaBetaWorker.dart';
+import 'worker/algorithm/AlgorithmWorker.dart';
+import 'worker/game/GameSimulator.dart';
 
 void main() {
-  AlphaBetaWorker worker = AlphaBetaWorker(DNA(
-      15.515486642969375,
-      81.51786860231158,
-      136.90917992046127,
-      2139.7204623955636,
-      13378.653412586225));
+  AlphaBetaWorker worker = AlphaBetaWorker(
+      AlphaBetaPruning(3, HeuristicAlphaBeta(DNA(
+          15.515486642969375,
+          81.51786860231158,
+          136.90917992046127,
+          2139.7204623955636,
+          13378.653412586225))));
   WebPlayer p1 = WebPlayer();
 //  Computer p2 = Computer(AlphaBetaPruning(
 //      3, HeuristicAlphaBeta(DNA(17.512972423617676, 82.19404297705043, 108.1606648120098, 2188.1665543419103, 19116.077182562596))));

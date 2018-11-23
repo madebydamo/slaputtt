@@ -1,25 +1,27 @@
-import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/model/Player.dart';
-import 'package:uttt_package/src/model/Evolution.dart';
 import 'dart:html';
 
-import '../transmission/Transmission.dart';
+import 'package:uttt_package/src/model/Algorithm.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/model/Player.dart';
+
+import '../../transmission/Transmission.dart';
 
 void _log(e) => print("Frontend: $e");
 
 class AlphaBetaWorker implements Player {
-
   Worker _worker;
   GameStateArgument _s;
-  AlphaBetaWorker(DNA dna) {
-    _worker = new Worker("worker/workerScript.js");
+
+  AlphaBetaWorker(Algorithm algorithm) {
+    _worker = new Worker("worker/algorithm/workerScript.js");
     _worker.onMessage.listen((e) {
       _log(e.data);
       Transmission transmission = Transmission.fromTransmittable(e.data);
       if(transmission.typ == typ_movePlayed) {
         _s(transmission.object);
       } else if (transmission.typ == typ_initialised) {
-        dynamic json = Transmission.config(dna).toTransmittable();
+        dynamic json = Transmission.configAlgorithm(algorithm)
+            .toTransmittable();
         _log(json);
         _worker.postMessage(json);
       }
