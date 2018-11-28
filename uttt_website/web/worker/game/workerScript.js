@@ -24,5 +24,6 @@ function getMyGlobalScope() {
 console.log("Worker started");
 myRequire("BackgroundGameSimulator.dart.js");
 if(typeof require === "function") {
+    console.log("no release");
     require(['BackgroundGameSimulator.dart.bootstrap']);
 }

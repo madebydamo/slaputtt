@@ -28,11 +28,6 @@ class GameState extends Grid<BigTile> {
 
   String toCompactString() {
     StringBuffer buffer = StringBuffer();
-    int playedMoves = 0;
-    tiles.forEach((bigTile) => playedMoves+= bigTile.playedMoves);
-    if(playedMoves < 10)
-      buffer.write(0);
-    buffer.write(playedMoves);
     tiles.forEach((bigTile) => buffer.writeAll(bigTile.tiles));
     buffer.write(lastMove);
     return buffer.toString();
