@@ -9,34 +9,42 @@ import 'package:uttt_package/src/controller/algorithms/AlphaBetaCache.dart';
 /// Implementation of a Alpha Beta Pruning Algorithm
 ///
 @JsonSerializable()
-class AlphaBetaPruning implements Algorithm {
+class AlphaBetaPruningIterative implements Algorithm {
   int _startTime;
   int milliseconds;
   Heuristic heuristic;
-  State ourState;
+  State _ourState;
   AlphaBetaCache _cache;
 
-  AlphaBetaPruning(this.milliseconds, this.heuristic) {
+  AlphaBetaPruningIterative(this.milliseconds, this.heuristic) {
      _cache = AlphaBetaCache();
   }
 
   @override
   GameState getNextMove(GameState state) {
+    _cache.clear(state.playedMoves + 1);
     _startTime = DateTime.now().millisecondsSinceEpoch;
     if (isGameFinished(state)) return state;
-    ourState = State.flip(state.lastMove.state);
+    _ourState = State.flip(state.lastMove.state);
     Move returnMove;
-    double value = double.negativeInfinity;
-    for (Move move in getAllPossibleMovesWithStates(state, ourState)) {
-      RevertMove revert = getRevertMove(state, move);
-      state = playMove(state, move);
-      double alphabeta = _alphabeta(
-          state, milliseconds, double.negativeInfinity, double.infinity, false);
-      if (alphabeta > value) {
-        value = alphabeta;
-        returnMove = move;
+    for(int depth = 0; depth < 20; depth++) {
+      Move localBestMove;
+      double value = double.negativeInfinity;
+      for (Move move in getAllPossibleMovesWithStates(state, _ourState)) {
+        RevertMove revert = getRevertMove(state, move);
+        state = playMove(state, move);
+        double alphabeta = _alphabeta(
+            state, depth, double.negativeInfinity, double.infinity,
+            false);
+        if (alphabeta > value) {
+          value = alphabeta;
+          localBestMove = move;
+        }
+        revertMove(state, revert);
+        if (_timeUp()) return playMove(state, returnMove);
       }
-      revertMove(state, revert);
+      returnMove = localBestMove;
+      print("depth: $depth, cachesize: ${_cache.size}");
     }
     return playMove(state, returnMove);
   }
@@ -45,15 +53,15 @@ class AlphaBetaPruning implements Algorithm {
     if(_cache.hasAlphaBetaStored(state, depth, alpha, beta, maximizingPlayer))
       return _cache.getAlphaBeta(state, depth, alpha, beta, maximizingPlayer);
     if (depth == 0 || isGameFinished(state))
-      return _cache.storeAlphaBeta(heuristic.evaluateState(state, ourState), state, depth, alpha, beta, maximizingPlayer);
+      return _cache.storeAlphaBeta(heuristic.evaluateState(state, _ourState), state, depth, alpha, beta, maximizingPlayer);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
-        if(_timeUp()) return double.negativeInfinity;
         revertMove(state, revert);
+        if(_timeUp()) return value;
         alpha = max(alpha, value);
         if (alpha >= beta) {
           break;
@@ -66,8 +74,8 @@ class AlphaBetaPruning implements Algorithm {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));
-        if(_timeUp()) return double.infinity;
         revertMove(state, revert);
+        if(_timeUp()) return value;
         beta = min(beta, value);
         if (alpha >= beta) {
           break;
@@ -81,15 +89,15 @@ class AlphaBetaPruning implements Algorithm {
     return DateTime.now().millisecondsSinceEpoch - _startTime > milliseconds;
   }
 
-  factory AlphaBetaPruning.fromJson(Map<String, dynamic> json) {
-    return AlphaBetaPruning(json["depth"], Heuristic.fromJson(json["heuristic"]));
+  factory AlphaBetaPruningIterative.fromJson(Map<String, dynamic> json) {
+    return AlphaBetaPruningIterative(json["milliseconds"], Heuristic.fromJson(json["heuristic"]));
   }
 
   Map<String, dynamic> toJson() {
     return {
-        "depth": milliseconds,
+        "milliseconds": milliseconds,
         "heuristic": heuristic.toJson(),
-        "class": "AlphaBetaPruning",
+        "class": "AlphaBetaPruningIterative",
       };
   }
 }

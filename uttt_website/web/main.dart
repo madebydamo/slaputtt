@@ -3,7 +3,7 @@ import 'dart:html';
 import 'package:uttt_package/src/controller/Game.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart'
     as GameController;
-import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
+import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruningIterative.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 import 'package:uttt_package/src/model/GameState.dart';
@@ -15,7 +15,7 @@ import 'worker/game/GameSimulator.dart';
 
 void main() {
   AlphaBetaWorker worker = AlphaBetaWorker(
-      AlphaBetaPruning(3, HeuristicAlphaBeta(DNA(
+      AlphaBetaPruningIterative(5000, HeuristicAlphaBeta(DNA(
           15.515486642969375,
           81.51786860231158,
           136.90917992046127,

@@ -1,4 +1,5 @@
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
+import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruningIterative.dart';
 import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/GameState.dart';
@@ -12,9 +13,10 @@ abstract class Algorithm {
   Map<String, dynamic> toJson();
 
   static Algorithm fromJson(Map<String, dynamic> json) {
-    if (json["class"] == "AlphaBetaPruning") {
+    if (json["class"] == "AlphaBetaPruning")
       return AlphaBetaPruning.fromJson(json);
-    }
+    if (json["class"] == "AlphaBetaPruningIterative")
+      return AlphaBetaPruningIterative.fromJson(json);
     return RandomMove.fromJson(json);
   }
 }

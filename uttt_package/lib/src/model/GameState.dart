@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'GameState.g.dart'; //regenerate with "pub run build_runner build"
@@ -23,6 +24,18 @@ class GameState extends Grid<BigTile> {
           BigTile(), //9
         ]) {
     lastMove = Move.init;
+  }
+
+  String toCompactString() {
+    StringBuffer buffer = StringBuffer();
+    int playedMoves = 0;
+    tiles.forEach((bigTile) => playedMoves+= bigTile.playedMoves);
+    if(playedMoves < 10)
+      buffer.write(0);
+    buffer.write(playedMoves);
+    tiles.forEach((bigTile) => buffer.writeAll(bigTile.tiles));
+    buffer.write(lastMove);
+    return buffer.toString();
   }
 
   factory GameState.fromJson(Map<String, dynamic> json) => _$GameStateFromJson(json);
@@ -90,6 +103,12 @@ class Move {
 
   /// Getter method for the small index, usually used in [BigTile]
   get smallIndex => yTile * 3 + xTile;
+
+
+  @override
+  String toString() {
+    return "$state$xBigTile$yBigTile$xTile$yTile";
+  }
 
   factory Move.fromJson(Map<String, dynamic> json) => _$MoveFromJson(json);
 
@@ -224,6 +243,15 @@ class Grid<T extends Tile> {
 
   /// returns a number that only a identical [Grid] could return
   get value => _getHashFrag(0);
+
+  get playedMoves {
+    int i = 0;
+    tiles.forEach((t) {
+      if (t.state != State.none)
+        i++;
+    });
+    return i;
+  }
 
   int _getHashFrag(int index) {
     if (index == 9) return 0;
