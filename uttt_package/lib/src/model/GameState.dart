@@ -26,6 +26,14 @@ class GameState extends Grid<BigTile> {
     lastMove = Move.init;
   }
 
+
+  @override
+  get playedMoves {
+    int i = 0;
+    tiles.forEach((bigTile) => i = bigTile.playedMoves);
+    return i;
+  }
+
   String toCompactString() {
     StringBuffer buffer = StringBuffer();
     tiles.forEach((bigTile) => buffer.writeAll(bigTile.tiles));

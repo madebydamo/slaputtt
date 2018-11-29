@@ -50,10 +50,10 @@ class AlphaBetaPruningIterative implements Algorithm {
   }
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {
+    if (depth == 0 || isGameFinished(state))
+      return heuristic.evaluateState(state, _ourState);
     if(_cache.hasAlphaBetaStored(state, depth, alpha, beta, maximizingPlayer))
       return _cache.getAlphaBeta(state, depth, alpha, beta, maximizingPlayer);
-    if (depth == 0 || isGameFinished(state))
-      return _cache.storeAlphaBeta(heuristic.evaluateState(state, _ourState), state, depth, alpha, beta, maximizingPlayer);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
@@ -61,7 +61,7 @@ class AlphaBetaPruningIterative implements Algorithm {
         state = playMove(state, move);
         value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
         revertMove(state, revert);
-        if(_timeUp()) return value;
+        if(depth > 3 && _timeUp()) return value;
         alpha = max(alpha, value);
         if (alpha >= beta) {
           break;
@@ -75,7 +75,7 @@ class AlphaBetaPruningIterative implements Algorithm {
         state = playMove(state, move);
         value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));
         revertMove(state, revert);
-        if(_timeUp()) return value;
+        if(depth > 3 && _timeUp()) return value;
         beta = min(beta, value);
         if (alpha >= beta) {
           break;

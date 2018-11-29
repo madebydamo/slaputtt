@@ -18,7 +18,7 @@ class _GridInfo {
   get winner => _winner;
 }
 
-/// ONLY FOR GENERATING CACHE FILE
+/// ONLY FOR GENERATING CACHE
 /// Creates a cache with [_GridInfo] of all possible Grids
 Map<int, _GridInfo> _getCache() {
   Map<int, _GridInfo> cache = Map();
@@ -51,6 +51,9 @@ Map<int, _GridInfo> _getCache() {
         }
       }
     }
+    moves.sort((a, b) {
+      return getMoveValue(a).compareTo(getMoveValue(b));
+    });
     cache.putIfAbsent(g.value, () => _GridInfo(isFinished, moves, winner));
   });
   return cache;

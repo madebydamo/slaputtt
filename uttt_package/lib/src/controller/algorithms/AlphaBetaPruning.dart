@@ -12,11 +12,13 @@ class AlphaBetaPruning implements Algorithm {
   int depth;
   Heuristic heuristic;
   State ourState;
+  int _starttime;
 
   AlphaBetaPruning(this.depth, this.heuristic);
 
   @override
   GameState getNextMove(GameState state) {
+    _starttime = DateTime.now().millisecondsSinceEpoch;
     if (isGameFinished(state)) return state;
     ourState = State.flip(state.lastMove.state);
     Move returnMove;
@@ -32,6 +34,7 @@ class AlphaBetaPruning implements Algorithm {
       }
       revertMove(state, revert);
     }
+    print("${DateTime.now().millisecondsSinceEpoch - _starttime} Millisecconds");
     return playMove(state, returnMove);
   }
 

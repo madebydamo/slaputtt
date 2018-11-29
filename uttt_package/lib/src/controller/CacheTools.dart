@@ -99,3 +99,10 @@ class Searcher {
     return counter;
   }
 }
+
+int getMoveValue(Move m) {
+  if([1, 3, 5, 7].contains(m.smallIndex)) return 0;
+  if([0, 2, 6, 8].contains(m.smallIndex)) return 1;
+  if(4 == m.smallIndex) return 2;
+  return -1;
+}
