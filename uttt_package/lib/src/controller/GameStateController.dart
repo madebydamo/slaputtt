@@ -38,7 +38,8 @@ bool isGameFinished(GameState state) {
   return getAllPossibleMoves(state).length == 0;
 }
 
-List<Move> getAllPossibleMoves(GameState state) {
+List<Move> getAllPossibleMoves(GameState state, [State s]) {
+  if (cache[state.value].isFinished) return [];
   List<Move> moves = [];
   if (state.lastMove == Move.init ||
       cache[state.tiles[state.lastMove.smallIndex].value].isFinished) {
@@ -53,6 +54,8 @@ List<Move> getAllPossibleMoves(GameState state) {
     moves.addAll(m.map((m) => Move.ofIndex(State.flip(state.lastMove.state),
         state.lastMove.smallIndex, m.smallIndex)));
   }
+  if (s != null)
+    moves.forEach((m) => m.state = s);
   return moves;
 }
 
