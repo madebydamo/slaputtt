@@ -20,6 +20,7 @@ class DNA {
   Map<String, dynamic> toJson() => _$DNAToJson(this);
 }
 
+@JsonSerializable()
 class Generation {
   List<Rating> ratings;
 
@@ -29,8 +30,13 @@ class Generation {
     ratings.sort();
     return ratings[ratings.length - 1].dna;
   }
+
+  factory Generation.fromJson(Map<String, dynamic> json) => _$GenerationFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GenerationToJson(this);
 }
 
+@JsonSerializable()
 class Era {
   List<Generation> generations;
   int depth;
@@ -50,8 +56,13 @@ class Era {
   Generation get lastGen {
     return generations[generations.length - 1];
   }
+
+  factory Era.fromJson(Map<String, dynamic> json) => _$EraFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EraToJson(this);
 }
 
+@JsonSerializable()
 class Rating implements Comparable<Rating> {
   Stats stats;
   DNA dna;
@@ -66,8 +77,12 @@ class Rating implements Comparable<Rating> {
     return stats.value.compareTo(other.stats.value);
   }
 
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
+@JsonSerializable()
 class Stats {
   int wins;
   int draws;
@@ -80,4 +95,8 @@ class Stats {
   }
 
   int get  value => wins * 3 + draws;
+
+  factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StatsToJson(this);
 }

@@ -6,9 +6,7 @@ import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaCache.dart';
 
-/// Implementation of a Alpha Beta Pruning Algorithm
-///
-@JsonSerializable()
+/// Implementation of a Alpha Beta Pruning Algorithm Iterative
 class AlphaBetaPruningIterative implements Algorithm {
   int _startTime;
   int milliseconds;
@@ -17,7 +15,7 @@ class AlphaBetaPruningIterative implements Algorithm {
   AlphaBetaCache _cache;
 
   AlphaBetaPruningIterative(this.milliseconds, this.heuristic) {
-     _cache = AlphaBetaCache();
+    _cache = AlphaBetaCache();
   }
 
   @override

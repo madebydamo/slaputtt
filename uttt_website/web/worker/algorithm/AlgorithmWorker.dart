@@ -8,22 +8,31 @@ import '../../transmission/Transmission.dart';
 
 void _log(e) => print("Frontend: $e");
 
-class AlphaBetaWorker implements Player {
+class AlgorithmWorker implements Player {
   Worker _worker;
   GameStateArgument _s;
 
-  AlphaBetaWorker(Algorithm algorithm) {
+  void Function() _afterConfiguration;
+
+  AlgorithmWorker({Algorithm algorithm, Function() afterConfiguration}) {
+    _afterConfiguration = afterConfiguration;
     _worker = new Worker("worker/algorithm/workerScript.js");
     _worker.onMessage.listen((e) {
       _log(e.data);
       Transmission transmission = Transmission.fromTransmittable(e.data);
-      if(transmission.typ == typ_movePlayed) {
+      if (transmission.typ == typ_movePlayed) {
         _s(transmission.object);
       } else if (transmission.typ == typ_initialised) {
-        dynamic json = Transmission.configAlgorithm(algorithm)
-            .toTransmittable();
-        _log(json);
-        _worker.postMessage(json);
+        if (algorithm != null) {
+          dynamic json =
+              Transmission.configAlgorithm(algorithm).toTransmittable();
+          _log(json);
+          _worker.postMessage(json);
+        }
+      } else if (transmission.typ == typ_configured) {
+        if (_afterConfiguration != null) {
+          _afterConfiguration();
+        }
       }
     });
   }
@@ -35,8 +44,12 @@ class AlphaBetaWorker implements Player {
   }
 
   @override
-  terminate(GameState state, bool won) {
-    _worker.terminate();
-  }
+  terminate(GameState state, bool won) {}
 
+  config(Algorithm algorithm, [void Function() startGame]) {
+    dynamic json = Transmission.configAlgorithm(algorithm).toTransmittable();
+    _log(json);
+    _afterConfiguration = startGame;
+    _worker.postMessage(json);
+  }
 }

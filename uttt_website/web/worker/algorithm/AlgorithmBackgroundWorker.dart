@@ -27,8 +27,8 @@ void main() {
       dynamic state = algorithm.getNextMove(transmission.object);
       _self.postMessage(Transmission.movePlayed(state).toTransmittable());
     } else if (transmission.typ == typ_configAlgorithm) {
-      _log("CONFIGURATED");
       algorithm = transmission.object;
+      _self.postMessage(Transmission.configured().toTransmittable());
     }
   });
   _self.postMessage(Transmission.initialised().toTransmittable());

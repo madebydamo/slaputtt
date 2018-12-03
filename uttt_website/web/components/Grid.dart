@@ -60,9 +60,11 @@ class GridElement {
       }
       querySelector("#tileWrapper").children.add(bigTile);
     }
+    querySelector("#tileWrapper").classes.add("flip-in-hor-bottom-big");
   }
 
   void visualize(GameState state, [bool possibleMoves = true]) {
+    clear();
     for (int i = 0; i < 9; i++) {
       BigTile bigTile = state.tiles[i];
       String playerCSS;
@@ -93,8 +95,6 @@ class GridElement {
     _clearClass("p2SmallTile");
     _clearClass("flip-in-hor-bottom");
     _clearClass("yellow");
-
-
   }
 
   void _visualizeLastPlayedMove(GameState state) {

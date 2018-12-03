@@ -6,8 +6,10 @@ import 'package:uttt_package/src/controller/heuristic/HeuristicCache.dart';
 class HeuristicAlphaBeta implements Heuristic {
   DNA dna;
 
-  HeuristicAlphaBeta(this.dna) {
-    initCache();
+  HeuristicAlphaBeta(this.dna);
+
+  void initCache() {
+    cache;
   }
 
   @override
@@ -28,7 +30,9 @@ class HeuristicAlphaBeta implements Heuristic {
   }
 
   factory HeuristicAlphaBeta.fromJson(Map<String, dynamic> json) {
-    return HeuristicAlphaBeta(DNA.fromJson(json["dna"]));
+    HeuristicAlphaBeta heuristic = HeuristicAlphaBeta(DNA.fromJson(json["dna"]));
+    heuristic.initCache();
+    return heuristic;
   }
 
   Map<String, dynamic> toJson() {

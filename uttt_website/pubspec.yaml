@@ -16,3 +16,5 @@ dependencies:
   uttt_package:
     path: ../uttt_package
   json_annotation: ^2.0.0
+  chartjs:
+    git: git://github.com/google/chartjs.dart

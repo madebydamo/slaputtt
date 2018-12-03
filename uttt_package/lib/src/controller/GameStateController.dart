@@ -1,5 +1,6 @@
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/controller/GridCache.dart';
+import 'package:uttt_package/src/controller/CacheTools.dart';
 
 void visualize(GameState state) {
   String s = "";
@@ -49,6 +50,9 @@ List<Move> getAllPossibleMoves(GameState state, [State s]) {
       moves.addAll(m.map((m) =>
           Move.ofIndex(State.flip(state.lastMove.state), i, m.smallIndex)));
     }
+    moves.sort((a, b) {
+      return getMoveValue(a).compareTo(getMoveValue(b));
+    });
   } else {
     List<Move> m = cache[state.tiles[state.lastMove.smallIndex].value].moves;
     moves.addAll(m.map((m) => Move.ofIndex(State.flip(state.lastMove.state),
