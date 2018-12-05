@@ -28,7 +28,7 @@ class AlphaBetaPruningIterative implements Algorithm {
     for(int depth = 0; depth < 20; depth++) {
       Move localBestMove;
       double value = double.negativeInfinity;
-      for (Move move in getAllPossibleMovesWithStates(state, _ourState)) {
+      for (Move move in getAllPossibleMoves(state, _ourState)) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         double alphabeta = _alphabeta(
@@ -54,7 +54,7 @@ class AlphaBetaPruningIterative implements Algorithm {
       return _cache.getAlphaBeta(state, depth, alpha, beta, maximizingPlayer);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
-      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
+      for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
@@ -68,7 +68,7 @@ class AlphaBetaPruningIterative implements Algorithm {
       return _cache.storeAlphaBeta(value, state, depth, alpha, beta, maximizingPlayer);
     } else {
       double value = double.infinity;
-      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
+      for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));

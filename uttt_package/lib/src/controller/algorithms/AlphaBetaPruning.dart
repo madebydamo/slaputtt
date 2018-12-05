@@ -20,7 +20,7 @@ class AlphaBetaPruning implements Algorithm {
     ourState = State.flip(state.lastMove.state);
     Move returnMove;
     double value = double.negativeInfinity;
-    for (Move move in getAllPossibleMovesWithStates(state, ourState)) {
+    for (Move move in getAllPossibleMoves(state, ourState)) {
       RevertMove revert = getRevertMove(state, move);
       state = playMove(state, move);
       double alphabeta = _alphabeta(
@@ -39,7 +39,7 @@ class AlphaBetaPruning implements Algorithm {
       return heuristic.evaluateState(state, ourState);
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
-      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
+      for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
@@ -52,7 +52,7 @@ class AlphaBetaPruning implements Algorithm {
       return value;
     } else {
       double value = double.infinity;
-      for (Move move in getAllPossibleMovesWithStates(state, State.flip(state.lastMove.state))) {
+      for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
         RevertMove revert = getRevertMove(state, move);
         state = playMove(state, move);
         value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));

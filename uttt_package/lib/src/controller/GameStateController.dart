@@ -63,12 +63,6 @@ List<Move> getAllPossibleMoves(GameState state, [State s]) {
   return moves;
 }
 
-List<Move> getAllPossibleMovesWithStates(GameState state, State s) {
-  List<Move> moves = getAllPossibleMoves(state);
-  moves.forEach((m) => m.state = s);
-  return moves;
-}
-
 RevertMove getRevertMove(GameState state, Move move) {
   return RevertMove(state.lastMove, state.tiles[move.bigIndex].state);
 }

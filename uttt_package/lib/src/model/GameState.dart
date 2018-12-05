@@ -48,8 +48,10 @@ class GameState extends Grid<BigTile> {
   @override
   bool operator ==(other) {
     bool equal = other is GameState;
-    equal = equal && (other as GameState).tiles == tiles;
     equal = equal && (other as GameState).lastMove == lastMove;
+    for (int i = 0; i < 9; i++) {
+      equal = equal && (other as GameState).tiles[i].value == tiles[i].value;
+    }
     return equal;
   }
 }
