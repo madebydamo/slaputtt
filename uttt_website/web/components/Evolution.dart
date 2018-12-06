@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import '../controller/GameController.dart';
+import '../controller/EvolutionWebController.dart' as EvolutionController;
 
 class EvolutionElement {
   static EvolutionElement _evolutionElement;
@@ -16,6 +17,29 @@ class EvolutionElement {
     pagination.id = "pagination";
     pagination.classes.add("pagination");
     querySelector("#evolution").children.add(pagination);
+
+    DivElement control = DivElement();
+    control.id = "control";
+    querySelector("#evolution").children.add(control);
+
+
+    AnchorElement train = AnchorElement();
+    train.innerHtml = "Train";
+    train.classes.addAll(["waves-effect", "waves-light", "btn"]);
+    train.onClick.listen((e) {
+      EvolutionController.train(era);
+    });
+
+    AnchorElement mutate = AnchorElement();
+    mutate.innerHtml = "Mutate";
+    mutate.classes.addAll(["waves-effect", "waves-light", "btn"]);
+    mutate.onClick.listen((e) {
+      EvolutionController.mutate(era);
+    });
+
+    control.children.addAll([train, mutate]);
+    querySelector("#evolution").children.add(control);
+
     DivElement generation = DivElement();
     generation.id = "generation";
     generation.classes.add("row");
@@ -122,6 +146,7 @@ class RatingElement {
 
     DivElement action = DivElement()..classes.addAll(["card-action"]);
     AnchorElement play = AnchorElement();
+    play.classes.addAll(["waves-effect", "waves-light", "btn"]);
     play.onClick.listen((event) {
       GameController()
           .config(AlphaBetaPruning(3, HeuristicAlphaBeta(r.dna)), true);

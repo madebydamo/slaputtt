@@ -3,7 +3,7 @@ import 'package:uttt_package/src/model/Player.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/controller/GridCache.dart';
 
-typedef TerminateGameArgument(State winner)
+typedef TerminateGameArgument(State winner);
 
 /// Provides a Game between two [Player]
 class Game {

@@ -24,7 +24,7 @@ void main() {
     Transmission transmission = Transmission.fromTransmittable(e.data);
     if (transmission.typ == typ_playGame) {
       Game game = Game(Computer(transmission.object[0]), Computer(transmission.object[1]), (s) {
-        _self.postMessage(Transmission.gameWinner(s));
+        _self.postMessage(Transmission.gameWinner(s).toTransmittable());
       });
       game.start();
     }

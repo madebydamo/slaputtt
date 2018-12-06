@@ -9,13 +9,13 @@ import 'package:uttt_package/src/model/GameState.dart';
 
 import '../worker/game/GameSimulator.dart';
 
-bool _inTraining;
+bool _inTraining = false;
 List<GameSimulator> _simulators;
 Iterator<List<Algorithm>> _currentIterator;
 Generation _currentGeneration;
-bool _finished;
-int _inEvaluation;
-int _evaluated;
+bool _finished = false;
+int _inEvaluation = 0;
+int _evaluated = 0;
 
 Era initialiseEra(int size, depth) {
   Era era = Era(depth);

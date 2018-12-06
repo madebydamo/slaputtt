@@ -35,7 +35,7 @@ class GameSimulator {
   }
 
   evaluateGame() {
-    List<Algorithm> algos = next();
+    algos = next();
     if(algos != null)
       _worker.postMessage(Transmission.playGame(algos[0], algos[1]).toTransmittable());
   }
