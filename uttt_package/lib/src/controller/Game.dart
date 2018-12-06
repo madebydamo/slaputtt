@@ -3,6 +3,8 @@ import 'package:uttt_package/src/model/Player.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/controller/GridCache.dart';
 
+typedef TerminateGameArgument(State winner)
+
 /// Provides a Game between two [Player]
 class Game {
   Player _player1;
@@ -11,9 +13,10 @@ class Game {
   int _move;
   Player winner;
   Map<State, Player> playerFromState;
+  TerminateGameArgument onTerminate;
 
   /// Initialises a new Game
-  Game(this._player1, this._player2) {
+  Game(this._player1, this._player2, [this.onTerminate]) {
     gameState = GameState();
     _move = 0;
     playerFromState = {
@@ -32,6 +35,8 @@ class Game {
     winner = playerFromState[cache[gameState.value].winner];
     _player1.terminate(gameState, winner == _player1);
     _player2.terminate(gameState, winner == _player2);
+    if (onTerminate != null)
+      onTerminate(cache[gameState.value].winner);
   }
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play

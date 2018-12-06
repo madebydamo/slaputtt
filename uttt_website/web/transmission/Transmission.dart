@@ -1,14 +1,16 @@
-import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/model/Evolution.dart';
-import 'package:uttt_package/src/model/Algorithm.dart';
 import 'dart:convert';
+
+import 'package:uttt_package/src/model/Algorithm.dart';
+import 'package:uttt_package/src/model/GameState.dart';
 
 const String typ_initialised = "INITIALISED";
 const String typ_configured = "CONFIGURED";
 const String typ_playMove = "PLAYMOVE";
 const String typ_movePlayed = "MOVEPLAYED";
 const String typ_configAlgorithm = "CONFIGALGORITHM";
+const String typ_playGame = "PLAYGAME";
 const String typ_unknown = "UNKNOWN";
+const String typ_gameWinner = "GAMEWINNER";
 
 class Transmission {
   String typ;
@@ -24,6 +26,11 @@ class Transmission {
 
   Transmission.configAlgorithm(Algorithm obj) : this._(typ_configAlgorithm, obj);
 
+  Transmission.playGame(Algorithm algo, Algorithm algo2)
+      : this._(typ_playGame, [algo, algo2]);
+
+  Transmission.gameWinner(State obj) : this._(typ_gameWinner, obj);
+
   Transmission._(this.typ, this.object);
 
   factory Transmission.fromJson(Map<dynamic, dynamic> json) {
@@ -37,6 +44,13 @@ class Transmission {
       return Transmission._(json["typ"], Algorithm.fromJson(json["object"]));
     } else if (json["typ"] == typ_configured) {
       return Transmission._(json["typ"], null);
+    } else if (json["typ"] == typ_playGame) {
+      return Transmission._(json["typ"], [
+        Algorithm.fromJson(json["algo1"]),
+        Algorithm.fromJson(json["algo2"]),
+      ]);
+    } else if (json["typ"] == typ_gameWinner) {
+      return Transmission._(json["typ"], State.fromJson(json["object"]));
     }
     return Transmission._(typ_unknown, null);
   }
@@ -64,6 +78,17 @@ class Transmission {
       return {
         "typ": typ,
         "object": (object as Algorithm).toJson(),
+      };
+    } else if (typ == typ_playGame) {
+      return {
+        "typ": typ,
+        "algo1": (object as List<Algorithm>)[0].toJson(),
+        "algo2": (object as List<Algorithm>)[1].toJson(),
+      };
+    } else if (typ == typ_gameWinner) {
+      return {
+        "typ": typ,
+        "object": (object as State).toJson(),
       };
     }
     return {

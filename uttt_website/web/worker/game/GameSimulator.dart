@@ -1,25 +1,42 @@
 import 'dart:html';
 
 import 'package:uttt_package/src/model/Algorithm.dart';
+import 'package:uttt_package/src/model/GameState.dart';
 
 import '../../transmission/Transmission.dart';
+
+typedef List<Algorithm> NextAlgorithms();
+typedef ReturnWinner(State s, List<Algorithm> players);
 
 void _log(e) => print("GameSimulator: $e");
 
 class GameSimulator {
   Worker _worker;
+  NextAlgorithms next;
+  ReturnWinner returner;
+  List<Algorithm> algos;
 
-  GameSimulator(Algorithm algorithm) {
+  GameSimulator(this.next, this.returner) {
     _worker = new Worker("worker/game/workerScript.js");
     _worker.onMessage.listen((e) {
       _log(e.data);
       Transmission transmission = Transmission.fromTransmittable(e.data);
       if (transmission.typ == typ_initialised) {
-        dynamic json = Transmission.configAlgorithm(algorithm)
-            .toTransmittable();
-        _log(json);
-        _worker.postMessage(json);
+        evaluateGame();
+      } else if (transmission.typ == typ_gameWinner) {
+        returner(transmission.object, algos);
+        evaluateGame();
       }
     });
+  }
+
+  playGame(Algorithm algorithm1, Algorithm algorithm2) {
+    _worker.postMessage(Transmission.playGame(algorithm1, algorithm2).toTransmittable());
+  }
+
+  evaluateGame() {
+    List<Algorithm> algos = next();
+    if(algos != null)
+      _worker.postMessage(Transmission.playGame(algos[0], algos[1]).toTransmittable());
   }
 }
