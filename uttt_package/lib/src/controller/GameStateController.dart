@@ -75,12 +75,13 @@ GameState revertMove(GameState state, RevertMove revertMove) {
   return state;
 }
 
-GameState playMove(GameState state, Move move) {
+RevertMove playMove(GameState state, Move move) {
+  RevertMove revertMove = getRevertMove(state, move);
   state.tiles[move.bigIndex].tiles[move.smallIndex].state = move.state;
   state.lastMove = move;
   var _gridInfo = cache[state.tiles[move.bigIndex].value];
   if(_gridInfo.isFinished) {
     state.tiles[move.bigIndex].state = _gridInfo.winner;
   }
-  return state;
+  return revertMove;
 }

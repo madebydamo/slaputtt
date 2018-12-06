@@ -165,30 +165,6 @@ class RatingElement {
     new Chart(area, config);
   }
 
-  double _getMinValue(DNA dna) {
-    List<double> allValues = [
-      dna.smallOne,
-      dna.smallTwo,
-      dna.bigOne,
-      dna.bigTwo,
-      dna.bigThree
-    ];
-    allValues.sort();
-    return allValues[0] * 0.9;
-  }
-
-  double _getMaxValue(DNA dna) {
-    List<double> allValues = [
-      dna.smallOne,
-      dna.smallTwo,
-      dna.bigOne,
-      dna.bigTwo,
-      dna.bigThree
-    ];
-    allValues.sort();
-    return allValues[4] * 1.1;
-  }
-
   factory RatingElement(Rating r) => RatingElement._(r);
 
   get element => root;

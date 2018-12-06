@@ -219,7 +219,8 @@ class BigTile extends Grid<Tile> implements Tile {
   bool operator ==(other) {
     bool equal = other is BigTile;
     equal = equal && (other as BigTile).state == state;
-    equal = equal && (other as BigTile).tiles == tiles;
+    for(int i = 0; i < 9; i++)
+      equal = equal && (other as BigTile).tiles[i] == tiles[i];
     return equal;
   }
 

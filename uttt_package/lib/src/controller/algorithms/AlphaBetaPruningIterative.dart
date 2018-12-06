@@ -29,8 +29,7 @@ class AlphaBetaPruningIterative implements Algorithm {
       Move localBestMove;
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMoves(state, _ourState)) {
-        RevertMove revert = getRevertMove(state, move);
-        state = playMove(state, move);
+        RevertMove revert = playMove(state, move);
         double alphabeta = _alphabeta(
             state, depth, double.negativeInfinity, double.infinity,
             false);
@@ -39,12 +38,16 @@ class AlphaBetaPruningIterative implements Algorithm {
           localBestMove = move;
         }
         revertMove(state, revert);
-        if (_timeUp()) return playMove(state, returnMove);
+        if (_timeUp()) {
+          playMove(state, returnMove);
+          return state;
+        }
       }
       returnMove = localBestMove;
       print("depth: $depth, cachesize: ${_cache.size}");
     }
-    return playMove(state, returnMove);
+    playMove(state, returnMove);
+    return state;
   }
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {
@@ -55,8 +58,7 @@ class AlphaBetaPruningIterative implements Algorithm {
     if (maximizingPlayer) {
       double value = double.negativeInfinity;
       for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
-        RevertMove revert = getRevertMove(state, move);
-        state = playMove(state, move);
+        RevertMove revert = playMove(state, move);
         value = max(value, _alphabeta(state, depth - 1, alpha, beta, false));
         revertMove(state, revert);
         if(depth > 3 && _timeUp()) return value;
@@ -69,8 +71,7 @@ class AlphaBetaPruningIterative implements Algorithm {
     } else {
       double value = double.infinity;
       for (Move move in getAllPossibleMoves(state, State.flip(state.lastMove.state))) {
-        RevertMove revert = getRevertMove(state, move);
-        state = playMove(state, move);
+        RevertMove revert = playMove(state, move);
         value = min(value, _alphabeta(state, depth - 1, alpha, beta, true));
         revertMove(state, revert);
         if(depth > 3 && _timeUp()) return value;

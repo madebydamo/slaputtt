@@ -1,7 +1,6 @@
 import 'package:uttt_package/src/controller/Game.dart';
 import 'package:uttt_package/src/model/Algorithm.dart';
 
-import '../components/Grid.dart';
 import 'WebPlayer.dart';
 import '../worker/algorithm/AlgorithmWorker.dart';
 

@@ -61,7 +61,7 @@ class Game {
 //    print("");
 //    print("-----------| Winner ${cache[state.value].winner} |-----------");
 //    print("");
-    if (_move == 1 || playMove(gameState, state.lastMove) == state) {
+    if (_move == 1) {
       gameState = state;
       return true;
     } else {
