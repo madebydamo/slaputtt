@@ -14,7 +14,7 @@ class GameSimulator {
   Worker _worker;
   NextAlgorithms next;
   ReturnWinner returner;
-  List<Algorithm> algos;
+  List<Algorithm> algorithms;
 
   GameSimulator(this.next, this.returner) {
     _worker = new Worker("worker/game/workerScript.js");
@@ -24,7 +24,7 @@ class GameSimulator {
       if (transmission.typ == typ_initialised) {
         evaluateGame();
       } else if (transmission.typ == typ_gameWinner) {
-        returner(transmission.object, algos);
+        returner(transmission.object, algorithms);
         evaluateGame();
       }
     });
@@ -35,8 +35,8 @@ class GameSimulator {
   }
 
   evaluateGame() {
-    algos = next();
-    if(algos != null)
-      _worker.postMessage(Transmission.playGame(algos[0], algos[1]).toTransmittable());
+    algorithms = next();
+    if(algorithms != null)
+      _worker.postMessage(Transmission.playGame(algorithms[0], algorithms[1]).toTransmittable());
   }
 }

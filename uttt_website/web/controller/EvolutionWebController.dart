@@ -43,20 +43,20 @@ void train(Era era) {
     _evaluated = 0;
     _finished = false;
     _currentGeneration = era.lastGen;
-    _currentIterator = _getAllGames().iterator;
+    _currentIterator = _getAllGames(era.depth).iterator;
     _trainGeneration(era.depth);
     era.currentState = trained;
   }
 }
 
-Iterable<List<Algorithm>> _getAllGames() sync* {
+Iterable<List<Algorithm>> _getAllGames(int depth) sync* {
   for (int i = 0; i < _currentGeneration.ratings.length; i++) {
     for (int j = 0; j < _currentGeneration.ratings.length; j++) {
       if (i != j) {
         Rating rating1 = _currentGeneration.ratings[i];
         Rating rating2 = _currentGeneration.ratings[j];
-        Algorithm algo1 = AlphaBetaPruning(3, HeuristicAlphaBeta(rating1.dna));
-        Algorithm algo2 = AlphaBetaPruning(3, HeuristicAlphaBeta(rating2.dna));
+        Algorithm algo1 = AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna));
+        Algorithm algo2 = AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna));
         yield [algo1, algo2];
       }
     }
