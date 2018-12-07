@@ -25,16 +25,24 @@ class EvolutionElement {
 
     AnchorElement train = AnchorElement();
     train.innerHtml = "Train";
-    train.classes.addAll(["waves-effect", "waves-light", "btn"]);
+    train.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right"]);
     train.onClick.listen((e) {
-      EvolutionController.train(era);
+      train.classes.add("disabled");
+      EvolutionController.train(era, () {
+        train.classes.remove("disabled");
+        _visualize(_selectedGen);
+      });
     });
 
     AnchorElement mutate = AnchorElement();
     mutate.innerHtml = "Mutate";
-    mutate.classes.addAll(["waves-effect", "waves-light", "btn"]);
+    mutate.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right"]);
     mutate.onClick.listen((e) {
-      EvolutionController.mutate(era);
+      mutate.classes.add("disabled");
+      EvolutionController.mutate(era, () {
+        mutate.classes.remove("disabled");
+        _visualizePagination();
+      });
     });
 
     control.children.addAll([train, mutate]);
@@ -146,12 +154,12 @@ class RatingElement {
 
     DivElement action = DivElement()..classes.addAll(["card-action"]);
     AnchorElement play = AnchorElement();
-    play.classes.addAll(["waves-effect", "waves-light", "btn"]);
+    play.classes.addAll(["waves-effect", "waves-light", "btn-flat"]);
     play.onClick.listen((event) {
       GameController()
           .config(AlphaBetaPruning(3, HeuristicAlphaBeta(r.dna)), true);
     });
-    play.innerHtml = "Play against this";
+    play.innerHtml = "Play";
     action.children.add(play);
     root.children.add(action);
   }

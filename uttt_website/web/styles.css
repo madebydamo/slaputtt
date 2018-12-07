@@ -24,6 +24,18 @@ html, body {
   right: 0;
 }
 
+#control {
+    width: 100%;
+    height: 3em;
+}
+
+#pagination {
+    overflow-x: auto;
+    height: 3em;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+
 /*NOT WORKING ON IOS*/
 /*.square{
 	position: relative;

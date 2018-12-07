@@ -16,6 +16,7 @@ Generation _currentGeneration;
 bool _finished = false;
 int _inEvaluation = 0;
 int _evaluated = 0;
+Function _invokeAfterTrain;
 
 Era initialiseEra(int size, depth) {
   Era era = Era(depth);
@@ -36,13 +37,14 @@ DNA _randomDNA() {
   return DNA(smallOne, smallTwo, bigOne, bigTwo, bigThree);
 }
 
-void train(Era era) {
+void train(Era era, [Function invokeAfter]) {
   if (!_inTraining) {
     _inTraining = true;
     _inEvaluation = 0;
     _evaluated = 0;
     _finished = false;
     _currentGeneration = era.lastGen;
+    _invokeAfterTrain = invokeAfter;
     _currentIterator = _getAllGames(era.depth).iterator;
     _trainGeneration(era.depth);
     era.currentState = trained;
@@ -95,6 +97,9 @@ void _saveRating(State s, List<Algorithm> algorithms) {
   _evaluated++;
   if (_finished && _evaluated == _inEvaluation) {
     _inTraining = false;
+    if (_invokeAfterTrain != null) {
+      _invokeAfterTrain();
+    }
   }
 }
 
@@ -114,12 +119,13 @@ void trainAndMutate(Era era) {
   mutate(era);
 }
 
-void mutate(Era era) {
+void mutate(Era era, [Function runAfter]) {
   assert(
       era.currentState == trained, "You have to train your generation first!");
   Generation generation = era.lastTrainedGen;
   era.generations.add(_mutateGeneration(generation));
   era.currentState = mutated;
+  runAfter();
 }
 
 Generation _mutateGeneration(Generation generation) {
