@@ -40,7 +40,8 @@ class EvolutionElement {
     querySelector("#evolution").children.add(generation);
 
     window.onResize.listen((e) {
-      _visualizePagination();
+      if(evolutionController.era != null)
+        _visualizePagination();
     });
   }
 
