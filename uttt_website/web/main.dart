@@ -18,7 +18,7 @@ void main() {
       true);
 
   EvolutionElement element = EvolutionElement();
-  HttpRequest.getString('era.json').then((jsonString) {
+  HttpRequest.getString('era2.json').then((jsonString) {
     Era era = Era.fromJson(json.decode(jsonString));
     element.setEra(era);
   });

@@ -10,7 +10,7 @@ import 'package:js/js.dart';
 //external initModal(List<Element> elem, Options options);
 
 @JS("init")
-external initModal(Element elem, Options options);
+external initModal(Element elem, ModalOptions options);
 
 @JS("getInstance")
 external Modal getInstance(Element elem);
@@ -18,11 +18,12 @@ external Modal getInstance(Element elem);
 
 @JS()
 @anonymous
-class Options {
+class ModalOptions {
   external bool get inDuration;
+
   external bool get outDuration;
 
-  external factory Options({bool inDuration, bool outDuration});
+  external factory ModalOptions({bool inDuration, bool outDuration});
 }
 
 @JS()

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:math';
 
@@ -9,19 +10,18 @@ import 'package:uttt_package/src/model/GameState.dart';
 
 import '../worker/game/GameSimulator.dart';
 
-bool _inTraining = false;
 List<GameSimulator> _simulators;
 Iterator<List<Algorithm>> _currentIterator;
 Generation _currentGeneration;
 bool _finished = false;
 int _inEvaluation = 0;
 int _evaluated = 0;
-Function _invokeAfterTrain;
+Completer _trainComplete;
 
 Era initialiseEra(int size, depth) {
   Era era = Era(depth);
   Generation gen1 =
-      Generation(List.generate(size, (i) => Rating(_randomDNA())));
+  Generation(List.generate(size, (i) => Rating(_randomDNA())));
   era.generations.add(gen1);
   return era;
 }
@@ -37,18 +37,18 @@ DNA _randomDNA() {
   return DNA(smallOne, smallTwo, bigOne, bigTwo, bigThree);
 }
 
-void train(Era era, [Function invokeAfter]) {
-  if (!_inTraining) {
-    _inTraining = true;
+Future<void> train(Era era) async {
+  if (_trainComplete == null || _trainComplete.isCompleted) {
+    _trainComplete = Completer();
     _inEvaluation = 0;
     _evaluated = 0;
     _finished = false;
     _currentGeneration = era.lastGen;
-    _invokeAfterTrain = invokeAfter;
     _currentIterator = _getAllGames(era.depth).iterator;
     _trainGeneration(era.depth);
     era.currentState = trained;
   }
+  return _trainComplete.future.then((d) => _currentGeneration.ratings.sort());
 }
 
 Iterable<List<Algorithm>> _getAllGames(int depth) sync* {
@@ -76,11 +76,11 @@ List<Algorithm> _next() {
 
 void _saveRating(State s, List<Algorithm> algorithms) {
   Rating rating1 = _currentGeneration.ratings.firstWhere((r) =>
-      r.dna ==
+  r.dna ==
       ((algorithms[0] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
   Rating rating2 = _currentGeneration.ratings.firstWhere((r) =>
-      r.dna ==
+  r.dna ==
       ((algorithms[1] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
 
@@ -96,10 +96,7 @@ void _saveRating(State s, List<Algorithm> algorithms) {
   }
   _evaluated++;
   if (_finished && _evaluated == _inEvaluation) {
-    _inTraining = false;
-    if (_invokeAfterTrain != null) {
-      _invokeAfterTrain();
-    }
+    _trainComplete.complete();
   }
 }
 
@@ -107,7 +104,7 @@ void _trainGeneration(int depth) {
   _currentGeneration.ratings.forEach((r) => r.stats = Stats());
   if (_simulators == null) {
     int cores = window.navigator.hardwareConcurrency;
-    List.generate(
+    _simulators = List.generate(
         cores > 2 ? cores - 2 : 1, (i) => GameSimulator(_next, _saveRating));
   } else {
     _simulators.forEach((s) => s.evaluateGame());
@@ -119,13 +116,12 @@ void trainAndMutate(Era era) {
   mutate(era);
 }
 
-void mutate(Era era, [Function runAfter]) {
+mutate(Era era) {
   assert(
-      era.currentState == trained, "You have to train your generation first!");
+    era.currentState == trained, "You have to train your generation first!");
   Generation generation = era.lastTrainedGen;
   era.generations.add(_mutateGeneration(generation));
   era.currentState = mutated;
-  runAfter();
 }
 
 Generation _mutateGeneration(Generation generation) {
@@ -133,8 +129,8 @@ Generation _mutateGeneration(Generation generation) {
   generation.ratings.sort();
   if (generation.ratings.length.isEven) {
     for (int i = generation.ratings.length ~/ 2 + 1;
-        i < generation.ratings.length;
-        i++) {
+    i < generation.ratings.length;
+    i++) {
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
     }
@@ -143,15 +139,15 @@ Generation _mutateGeneration(Generation generation) {
     list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
   } else {
     for (int i = (generation.ratings.length + 1) ~/ 2;
-        i < generation.ratings.length;
-        i++) {
+    i < generation.ratings.length;
+    i++) {
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
     }
     list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
   }
   assert(list.length == generation.ratings.length,
-      "Old generation and mutated generation doesn't have the same size");
+  "Old generation and mutated generation doesn't have the same size");
   return Generation(list);
 }
 

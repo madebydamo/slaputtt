@@ -12,7 +12,7 @@ import 'package:uttt_package/src/model/Evolution.dart';
 
 import '../controller/EvolutionWebController.dart' as EvolutionController;
 import '../controller/GameController.dart';
-import '../jswrapper/MaterializeCss.dart';
+import '../materializecss/modal/Modal.dart';
 
 class EvolutionElement {
   static EvolutionElement _evolutionElement;
@@ -69,7 +69,7 @@ class EvolutionElement {
     root.children.clear();
 
     Generation gen = evolutionController.era.generations[_selectedGen];
-    List<DivElement> elements = gen.ratings
+    List<DivElement> elements = gen.ratings.reversed
         .map((r) => _RatingElement(r).element)
         .map((element) => DivElement()
           ..classes.addAll(["s6", "m4", "l3", "xl2", "col"])
@@ -162,6 +162,23 @@ class _RatingElement {
       ..classes.addAll(["card-content"])
       ..style.padding = "0";
     initChart(content, r.dna);
+    if(r.stats.wins + r.stats.wins + r.stats.wins > 0) {
+      DivElement bar = DivElement();
+      bar.classes.add("bar");
+      bar.style.display = "grid";
+      bar.style.gridTemplateColumns = "${r.stats.wins}fr ${r.stats.draws}fr ${r.stats.loses}fr";
+      DivElement win = DivElement();
+      win.innerHtml = r.stats.wins > 0 ? "${r.stats.wins}" : "";
+      win.classes.addAll(["green", "lighten-1", "wihte-text"]);
+      DivElement draw = DivElement();
+      win.innerHtml = r.stats.draws > 0 ? "${r.stats.draws}" : "";
+      draw.classes.addAll(["gray", "lighten-1", "wihte-text"]);
+      DivElement lose = DivElement();
+      win.innerHtml = r.stats.loses > 0 ? "${r.stats.loses}" : "";
+      lose.classes.addAll(["red", "lighten-1", "wihte-text"]);
+      bar.children.addAll([win, draw, lose]);
+      content.children.add(bar);
+    }
     root.children.add(content);
 
     DivElement action = DivElement()..classes.addAll(["card-action"]);
@@ -170,6 +187,7 @@ class _RatingElement {
     play.onClick.listen((event) {
       GameController()
           .config(AlphaBetaPruning(3, HeuristicAlphaBeta(r.dna)), true);
+      window.scrollTo(0, 0, {"behavior": 'smooth'});
     });
     play.innerHtml = "Play";
     action.children.add(play);
@@ -221,49 +239,46 @@ class _ControlElement {
   AnchorElement _mutate;
 
   _ControlElement(Element root, void Function() visualize) {
-    DivElement modal = DivElement();
-    AnchorElement newEra = AnchorElement(href: "#newEra");
+    AnchorElement newEra = AnchorElement();
     newEra.innerHtml = "Start new Evolution";
     newEra.classes.addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
-    newEra.onClick.listen((e) {
-      getInstance(modal).open();
-    });
 
     _train = AnchorElement();
     _train.innerHtml = "Train";
     _train.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
-    _train.onClick.listen((e) {
-      _train.classes.add("disabled");
-      EvolutionController.train(era, () {
-        visualize();
-        _visualize();
-      });
-    });
 
     _mutate = AnchorElement();
     _mutate.innerHtml = "Mutate";
     _mutate.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
-    _mutate.onClick.listen((e) {
-      _mutate.classes.add("disabled");
-      EvolutionController.mutate(era, () {
-        visualize();
-        _visualize();
-      });
-    });
 
+    LabelElement repeatLabel = LabelElement();
+    InputElement repeat = InputElement(type: "checkbox");
+    repeatLabel.children.addAll([repeat, SpanElement()..innerHtml="Repeat"]);
+    repeatLabel.classes.addAll(["right", "btn-flat"]);
 
+    DivElement modal = DivElement();
     modal.id = "newEra";
     modal.classes.add("modal");
     DivElement content = DivElement();
     content.classes.add("modal-content");
-
+    InputElement population = InputElement(type: "range");
+    population.max = "50";
+    population.min = "6";
+    population.value = "35";
+    population.step = "1";
+    InputElement depth = InputElement(type: "range");
+    depth.max = "7";
+    depth.min = "1";
+    depth.value = "3";
+    depth.step = "1";
+    content.children.addAll([population, depth]);
     DivElement footer = DivElement();
     footer.classes.add("modal-footer");
     AnchorElement create = AnchorElement();
     create.innerHtml = "Start new Evolution";
     create.classes.addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
-      era = EvolutionController.initialiseEra(20, 3);
+      era = EvolutionController.initialiseEra(int.tryParse(population.value), int.tryParse(depth.value));
       visualize();
     });
     AnchorElement abort = AnchorElement();
@@ -273,12 +288,30 @@ class _ControlElement {
 
     modal.children.addAll([content, footer]);
 
-    root.children.addAll([newEra, _train, _mutate, modal]);
-
-    Timer(Duration(seconds: 3), () {
-      print("Modal initialised");
-      initModal(modal, Options());
+    newEra.onClick.listen((e) {
+      getInstance(modal).open();
     });
+    _train.onClick.listen((e) async {
+      _train.classes.add("disabled");
+      await EvolutionController.train(era);
+      visualize();
+      _visualize();
+      if(repeat.checked)
+        _mutate.click();
+    });
+    _mutate.onClick.listen((e) {
+      _mutate.classes.add("disabled");
+      EvolutionController.mutate(era);
+      visualize();
+      _visualize();
+
+      if(repeat.checked)
+        _train.click();
+    });
+
+    root.children.addAll([newEra, _train, _mutate, repeatLabel, modal]);
+
+    initModal(modal, ModalOptions());
   }
 
   set era (Era era) {

@@ -128,3 +128,11 @@ html, body {
     margin: 5% auto;
 }
 
+.modal input {
+    width: 100%;
+}
+
+.bar {
+    display: grid;
+    height: 5px;
+}
