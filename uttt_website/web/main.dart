@@ -5,7 +5,7 @@ import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 
-import 'components/Evolution.dart';
+import 'components/evolution/Evolution.dart';
 import 'controller/GameController.dart';
 
 void main() {
