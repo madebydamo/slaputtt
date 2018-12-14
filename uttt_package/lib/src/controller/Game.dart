@@ -1,7 +1,10 @@
-import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/model/Player.dart';
+import 'dart:collection';
+import 'dart:convert';
+
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/controller/GridCache.dart';
+import 'package:uttt_package/src/model/GameState.dart';
+import 'package:uttt_package/src/model/Player.dart';
 
 typedef TerminateGameArgument(State winner);
 
@@ -14,6 +17,7 @@ class Game {
   Player winner;
   Map<State, Player> playerFromState;
   TerminateGameArgument onTerminate;
+  Queue<RevertMove> playedMoves;
 
   /// Initialises a new Game
   Game(this._player1, this._player2, [this.onTerminate]) {
@@ -24,11 +28,12 @@ class Game {
       State.p2: _player2,
       State.none: null
     };
+    playedMoves = Queue();
   }
 
   /// Starts the game
-  void start() {
-    _p2Played(gameState);
+  void start() async {
+    await _p2Played();
   }
 
   void terminate() {
@@ -41,25 +46,38 @@ class Game {
 
   /// Gets called, when [_player1] had played and it's [_player2]'s turn to play
   /// Also gets called, when the Game starts
-  void _p1Played(GameState state) {
-    if (!_validate(state)) {
-      _p1Played(state);
-    }
-    if (!isGameFinished(state)) _player2.playMove(state, _p2Played);
-    else terminate();
+  void _p1Played() async {
+    if (!isGameFinished(gameState)) {
+      Move move = await _player2.playMove(
+          GameState.fromJson(json.decode(json.encode(gameState.toJson()))));
+      playedMoves.add(playMove(gameState, move));
+      if (!_validate(gameState)) {
+        revertMove(gameState, playedMoves.removeLast());
+        await _p1Played();
+      } else {
+        await _p2Played();
+      }
+    } else terminate();
   }
 
   /// Gets called, when [_player2] had played and it's [_player1]'s turn to play
-  void _p2Played(GameState state) {
-    if (!_validate(state)) {
-      _p2Played(state);
-    }
-    if (!isGameFinished(state)) _player1.playMove(state, _p1Played);
-    else terminate();
+  void _p2Played() async {
+    if (!isGameFinished(gameState)) {
+      Move move = await _player1.playMove(
+          GameState.fromJson(json.decode(json.encode(gameState.toJson()))));
+      playedMoves.add(playMove(gameState, move));
+      if (!_validate(gameState)) {
+        revertMove(gameState, playedMoves.removeLast());
+        await _p2Played();
+      } else {
+        await _p1Played();
+      }
+    } else terminate();
   }
 
   /// Validates whether the played Move was valid or not.
   bool _validate(GameState state) {
+    //TODO
     _move++;
 //    print("-----------| Move ${_move++} |-----------");
 //    visualize(state);
@@ -67,10 +85,8 @@ class Game {
 //    print("-----------| Winner ${cache[state.value].winner} |-----------");
 //    print("");
     if (_move == 1) {
-      gameState = state;
       return true;
     } else {
-      gameState = state;
       return true;
     }
   }

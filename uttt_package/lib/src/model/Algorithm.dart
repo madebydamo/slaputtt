@@ -8,7 +8,7 @@ import 'package:uttt_package/src/model/GameState.dart';
 ///[GameState] and calculate the next move out of that.
 abstract class Algorithm {
 
-  GameState getNextMove(GameState state);
+  Move getNextMove(GameState state);
 
   Map<String, dynamic> toJson();
 

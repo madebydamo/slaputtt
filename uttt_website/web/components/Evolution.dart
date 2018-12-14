@@ -13,6 +13,7 @@ import 'package:uttt_package/src/model/Evolution.dart';
 import '../controller/EvolutionWebController.dart' as EvolutionController;
 import '../controller/GameController.dart';
 import '../materializecss/modal/Modal.dart';
+import '../materializecss/range/Range.dart';
 
 class EvolutionElement {
   static EvolutionElement _evolutionElement;
@@ -244,6 +245,9 @@ class _ControlElement {
     newEra.innerHtml = "Start new Evolution";
     newEra.classes.addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
 
+    DivElement rightWrapper = DivElement();
+    rightWrapper.classes.add("right");
+
     _train = AnchorElement();
     _train.innerHtml = "Train";
     _train.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
@@ -257,22 +261,44 @@ class _ControlElement {
     repeatLabel.children.addAll([repeat, SpanElement()..innerHtml="Repeat"]);
     repeatLabel.classes.addAll(["right", "btn-flat"]);
 
+    rightWrapper.children.addAll([_train, _mutate, repeatLabel]);
+
     DivElement modal = DivElement();
     modal.id = "newEra";
     modal.classes.add("modal");
     DivElement content = DivElement();
     content.classes.add("modal-content");
+    HeadingElement header = HeadingElement.h4();
+    header.innerHtml = "New Evolution";
+    ParagraphElement description = ParagraphElement();
+    description.innerHtml = "You can create your own Era. The larger the " +
+        "population and the depth of search, the longer it takes for generations" +
+        " to develop. Adjust the parameters on your computer.";
+    FormElement form = FormElement();
+    form.action = "";
+    ParagraphElement populationParagraph = ParagraphElement();
+    populationParagraph.innerHtml = "Populationsize";
+    ParagraphElement populationWrapper = ParagraphElement();
+    populationWrapper.classes.add("range-field");
     InputElement population = InputElement(type: "range");
     population.max = "50";
     population.min = "6";
     population.value = "35";
     population.step = "1";
+    populationWrapper.children.add(population);
+    ParagraphElement depthParagraph = ParagraphElement();
+    depthParagraph.innerHtml = "Depth of search";
+    ParagraphElement depthWrapper = ParagraphElement();
+    depthWrapper.classes.add("range-field");
     InputElement depth = InputElement(type: "range");
     depth.max = "7";
     depth.min = "1";
     depth.value = "3";
     depth.step = "1";
-    content.children.addAll([population, depth]);
+    depthWrapper.children.add(depth);
+    form.children.addAll(
+        [populationParagraph, populationWrapper, depthParagraph, depthWrapper]);
+    content.children.addAll([header, description, form]);
     DivElement footer = DivElement();
     footer.classes.add("modal-footer");
     AnchorElement create = AnchorElement();
@@ -286,7 +312,6 @@ class _ControlElement {
     abort.innerHtml = "Abort";
     abort.classes.addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     footer.children.addAll([create, abort]);
-
     modal.children.addAll([content, footer]);
 
     newEra.onClick.listen((e) {
@@ -310,9 +335,15 @@ class _ControlElement {
         _train.click();
     });
 
-    root.children.addAll([newEra, _train, _mutate, repeatLabel, modal]);
+    root.children.addAll([newEra, rightWrapper, modal]);
 
+//    Timer(Duration(seconds: 3), () => initModal(modal, ModalOptions()));
+//    Timer(Duration(seconds: 3), () => initRange(depth));
+//    Timer(Duration(seconds: 3), () => initRange(population));
     initModal(modal, ModalOptions());
+    initRange(depth);
+    initRange(population);
+//    initModal(modal, ModalOptions());
   }
 
   set era (Era era) {

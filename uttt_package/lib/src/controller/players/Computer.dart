@@ -9,8 +9,8 @@ class Computer implements Player {
   Computer(this.algorithm);
 
   @override
-  playMove(GameState state, GameStateArgument s) {
-    s(algorithm.getNextMove(state));
+  Future<Move> playMove(GameState state) {
+    return Future.sync(() => algorithm.getNextMove(state));
   }
 
   @override

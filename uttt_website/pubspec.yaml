@@ -13,6 +13,7 @@ dev_dependencies:
   json_serializable: ^2.0.0
 
 dependencies:
+  js: ^0.6.1+1
   uttt_package:
     path: ../uttt_package
   json_annotation: ^2.0.0

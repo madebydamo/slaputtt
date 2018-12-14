@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:uttt_package/src/model/Algorithm.dart';
@@ -10,7 +11,7 @@ void _log(e) => print("Frontend: $e");
 
 class AlgorithmWorker implements Player {
   Worker _worker;
-  GameStateArgument _s;
+  Completer<Move> _completer;
 
   void Function() _afterConfiguration;
 
@@ -21,7 +22,7 @@ class AlgorithmWorker implements Player {
       _log(e.data);
       Transmission transmission = Transmission.fromTransmittable(e.data);
       if (transmission.typ == typ_movePlayed) {
-        _s(transmission.object);
+        _completer.complete(transmission.object);
       } else if (transmission.typ == typ_initialised) {
         if (algorithm != null) {
           dynamic json =
@@ -38,9 +39,10 @@ class AlgorithmWorker implements Player {
   }
 
   @override
-  playMove(GameState state, GameStateArgument s) {
-    _s = s;
+  Future<Move> playMove(GameState state) {
+    _completer = Completer();
     _worker.postMessage(Transmission.playMove(state).toTransmittable());
+    return _completer.future;
   }
 
   @override

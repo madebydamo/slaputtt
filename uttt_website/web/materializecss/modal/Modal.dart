@@ -1,5 +1,5 @@
 @JS("M.Modal")
-library Modal;
+library modal;
 
 import 'dart:html';
 
@@ -15,15 +15,29 @@ external initModal(Element elem, ModalOptions options);
 @JS("getInstance")
 external Modal getInstance(Element elem);
 
-
 @JS()
 @anonymous
 class ModalOptions {
-  external bool get inDuration;
+  external String get html;
 
-  external bool get outDuration;
+  external num get displayLength;
 
-  external factory ModalOptions({bool inDuration, bool outDuration});
+  external num get inDuration;
+
+  external String get classes;
+
+  external num get outDuration;
+
+  external num get activationPercent;
+
+  external factory ModalOptions({
+    String html,
+    num displayLength,
+    num inDuration,
+    String classes,
+    num outDuration,
+    num activationPercent,
+  });
 }
 
 @JS()

@@ -22,7 +22,7 @@ class Transmission {
 
   Transmission.playMove(GameState obj) : this._(typ_playMove, obj);
 
-  Transmission.movePlayed(GameState obj) : this._(typ_movePlayed, obj);
+  Transmission.movePlayed(Move obj) : this._(typ_movePlayed, obj);
 
   Transmission.configAlgorithm(Algorithm obj) : this._(typ_configAlgorithm, obj);
 
@@ -39,7 +39,7 @@ class Transmission {
     } else if (json["typ"] == typ_playMove) {
       return Transmission._(json["typ"], GameState.fromJson(json["object"]));
     }else if (json["typ"] == typ_movePlayed) {
-      return Transmission._(json["typ"], GameState.fromJson(json["object"]));
+      return Transmission._(json["typ"], Move.fromJson(json["object"]));
     } else if (json["typ"] == typ_configAlgorithm) {
       return Transmission._(json["typ"], Algorithm.fromJson(json["object"]));
     } else if (json["typ"] == typ_configured) {
@@ -68,7 +68,7 @@ class Transmission {
     } else if (typ == typ_movePlayed) {
       return {
         "typ": typ,
-        "object": (object as GameState).toJson(),
+        "object": (object as Move).toJson(),
       };
     } else if (typ == typ_configured) {
       return {

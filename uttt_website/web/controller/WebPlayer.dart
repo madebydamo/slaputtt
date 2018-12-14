@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:uttt_package/src/controller/GameStateController.dart'
@@ -9,7 +10,7 @@ import '../components/Grid.dart';
 
 class WebPlayer implements Player {
   GameState _state;
-  GameStateArgument _s;
+  Completer<Move> _completer;
   GridElement _grid;
 
   WebPlayer() {
@@ -19,17 +20,18 @@ class WebPlayer implements Player {
         if (GameController.getAllPossibleMoves(_state).contains(m)) {
           GameController.playMove(_state, m);
           _grid.visualize(_state, false);
-          _s(_state);
+          _completer.complete(m);
         }
       }
     });
   }
 
   @override
-  playMove(GameState state, GameStateArgument s) {
+  playMove(GameState state) {
+    _completer = Completer();
     _state = state;
-    _s = s;
     _grid.visualize(state);
+    return _completer.future;
   }
 
   @override

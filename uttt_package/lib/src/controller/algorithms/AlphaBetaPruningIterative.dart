@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:json_annotation/json_annotation.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
@@ -19,10 +18,10 @@ class AlphaBetaPruningIterative implements Algorithm {
   }
 
   @override
-  GameState getNextMove(GameState state) {
+  Move getNextMove(GameState state) {
     _cache.clear(state.playedMoves + 1);
     _startTime = DateTime.now().millisecondsSinceEpoch;
-    if (isGameFinished(state)) return state;
+    if (isGameFinished(state)) return null;
     _ourState = State.flip(state.lastMove.state);
     Move returnMove;
     for(int depth = 0; depth < 20; depth++) {
@@ -39,15 +38,13 @@ class AlphaBetaPruningIterative implements Algorithm {
         }
         revertMove(state, revert);
         if (_timeUp()) {
-          playMove(state, returnMove);
-          return state;
+          return returnMove;
         }
       }
       returnMove = localBestMove;
       print("depth: $depth, cachesize: ${_cache.size}");
     }
-    playMove(state, returnMove);
-    return state;
+    return returnMove;
   }
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {

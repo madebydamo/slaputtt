@@ -24,8 +24,8 @@ void main() {
     _log(e.data);
     Transmission transmission = Transmission.fromTransmittable(e.data);
     if(transmission.typ == typ_playMove) {
-      dynamic state = algorithm.getNextMove(transmission.object);
-      _self.postMessage(Transmission.movePlayed(state).toTransmittable());
+      dynamic move = algorithm.getNextMove(transmission.object);
+      _self.postMessage(Transmission.movePlayed(move).toTransmittable());
     } else if (transmission.typ == typ_configAlgorithm) {
       algorithm = transmission.object;
       _self.postMessage(Transmission.configured().toTransmittable());

@@ -14,11 +14,10 @@ class RandomMove extends Algorithm {
   }
 
   @override
-  GameState getNextMove(GameState state) {
+  Move getNextMove(GameState state) {
     List<Move> moves = getAllPossibleMoves(state, State.flip(state.lastMove.state));
     int randomIndex = r.nextInt(moves.length);
-    playMove(state, moves[randomIndex]);
-    return state;
+    return moves[randomIndex];
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:json_annotation/json_annotation.dart';
 import 'package:uttt_package/src/controller/GameStateController.dart';
 import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
@@ -15,8 +14,8 @@ class AlphaBetaPruning implements Algorithm {
   AlphaBetaPruning(this.depth, this.heuristic);
 
   @override
-  GameState getNextMove(GameState state) {
-    if (isGameFinished(state)) return state;
+  Move getNextMove(GameState state) {
+    if (isGameFinished(state)) return null;
     ourState = State.flip(state.lastMove.state);
     Move returnMove;
     double value = double.negativeInfinity;
@@ -30,8 +29,7 @@ class AlphaBetaPruning implements Algorithm {
       }
       revertMove(state, revert);
     }
-    playMove(state, returnMove);
-    return state;
+    return returnMove;
   }
 
   double _alphabeta(GameState state, int depth, double alpha, double beta, maximizingPlayer) {
