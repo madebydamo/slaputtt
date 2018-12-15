@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:uttt_package/src/model/Algorithm.dart';
 import 'package:uttt_package/src/model/GameState.dart';
 import 'package:uttt_package/src/model/Player.dart';

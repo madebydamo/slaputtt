@@ -1,4 +1,4 @@
-@JS("M.Modal")
+@JS()
 library modal;
 
 import 'dart:html';
@@ -9,10 +9,10 @@ import 'package:js/js.dart';
 //@JS("init")
 //external initModal(List<Element> elem, Options options);
 
-@JS("init")
+@JS("M.Modal.init")
 external initModal(Element elem, ModalOptions options);
 
-@JS("getInstance")
+@JS("M.Modal.getInstance")
 external Modal getInstance(Element elem);
 
 @JS()

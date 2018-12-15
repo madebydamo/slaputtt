@@ -6,27 +6,52 @@ class _ControlElement {
   AnchorElement _mutate;
 
   _ControlElement(Element root, void Function() visualize) {
+    DivElement leftWrapper = DivElement();
+    leftWrapper.classes.add("left");
+
     AnchorElement newEra = AnchorElement();
     newEra.innerHtml = "Start new Evolution";
     newEra.classes.addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    InputElement upload = InputElement(type: "file");
+    upload.id = "upload";
+    upload.style.display = "none";
+    upload.accept =".json";
+    upload.classes.addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    AnchorElement uploadFacade = AnchorElement();
+    uploadFacade.innerHtml = "Upload Evolution";
+    uploadFacade.classes
+        .addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    AnchorElement download = AnchorElement();
+    download.innerHtml = "Download Evolution";
+    download.classes
+        .addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    leftWrapper.children.addAll([newEra, upload, uploadFacade, download]);
 
     DivElement rightWrapper = DivElement();
     rightWrapper.classes.add("right");
 
     _train = AnchorElement();
     _train.innerHtml = "Train";
-    _train.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
+    _train.classes.addAll(
+        ["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
 
     _mutate = AnchorElement();
     _mutate.innerHtml = "Mutate";
-    _mutate.classes.addAll(["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
+    _mutate.classes.addAll(
+        ["waves-effect", "waves-light", "btn-flat", "right", "disabled"]);
 
     LabelElement repeatLabel = LabelElement();
     InputElement repeat = InputElement(type: "checkbox");
-    repeatLabel.children.addAll([repeat, SpanElement()..innerHtml="Repeat"]);
+    repeatLabel.children.addAll([repeat, SpanElement()..innerHtml = "Repeat"]);
     repeatLabel.classes.addAll(["right", "btn-flat"]);
 
     rightWrapper.children.addAll([_train, _mutate, repeatLabel]);
+
+    _ProgressBar bar = _ProgressBar();
 
     DivElement modal = DivElement();
     modal.id = "newEra";
@@ -68,50 +93,68 @@ class _ControlElement {
     footer.classes.add("modal-footer");
     AnchorElement create = AnchorElement();
     create.innerHtml = "Start new Evolution";
-    create.classes.addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
+    create.classes
+        .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
-      era = EvolutionController.initialiseEra(int.tryParse(population.value), int.tryParse(depth.value));
+      era = EvolutionController.initialiseEra(
+          int.tryParse(population.value), int.tryParse(depth.value));
       visualize();
     });
     AnchorElement abort = AnchorElement();
     abort.innerHtml = "Abort";
-    abort.classes.addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
+    abort.classes
+        .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     footer.children.addAll([create, abort]);
     modal.children.addAll([content, footer]);
 
     newEra.onClick.listen((e) {
       getInstance(modal).open();
     });
+    download.onClick.listen((e) {
+      _download("evolution.json", json.encode(_era.toJson()));
+    });
+    upload.onChange.listen((e) {
+      File f = upload.files[0];
+      FileReader r = FileReader();
+      r.onLoad.listen((e) {
+        try {
+          EvolutionElement().setEra(Era.fromJson(json.decode(r.result)));
+        } catch (e) {
+          toast(ToastOptions(html: "File could not be parsed, probably some invalid JSON"));
+        }
+      });
+      r.onError
+          .listen((e) => toast(ToastOptions(html: "File could not be readed, ${r.error.message}")));
+      r.readAsText(f);
+      upload.value = "";
+    });
+    uploadFacade.onClick.listen((e) => upload.click());
     _train.onClick.listen((e) async {
       _train.classes.add("disabled");
-      await EvolutionController.train(era);
+      bar.reset();
+      await EvolutionController.train(era, bar.showProgress);
       visualize();
       _visualize();
-      if(repeat.checked)
-        _mutate.click();
+      if (repeat.checked) _mutate.click();
     });
     _mutate.onClick.listen((e) {
       _mutate.classes.add("disabled");
+      bar.reset();
       EvolutionController.mutate(era);
       visualize();
       _visualize();
 
-      if(repeat.checked)
-        _train.click();
+      if (repeat.checked) _train.click();
     });
 
-    root.children.addAll([newEra, rightWrapper, modal]);
+    root.children.addAll([leftWrapper, rightWrapper, bar.bar, modal]);
 
-//    Timer(Duration(seconds: 3), () => initModal(modal, ModalOptions()));
-//    Timer(Duration(seconds: 3), () => initRange(depth));
-//    Timer(Duration(seconds: 3), () => initRange(population));
     initModal(modal, ModalOptions());
     initRange(depth);
     initRange(population);
-//    initModal(modal, ModalOptions());
   }
 
-  set era (Era era) {
+  set era(Era era) {
     _era = era;
     _visualize();
   }
@@ -119,12 +162,29 @@ class _ControlElement {
   Era get era => _era;
 
   _visualize() {
-    if(era.currentState == trained) {
+    if (era.currentState == trained) {
       _mutate.classes.remove("disabled");
     } else {
       assert(era.currentState == mutated);
       _train.classes.remove("disabled");
     }
   }
+
+  _download(filename, text) {
+    Element element = document.createElement('a');
+    element.setAttribute(
+        'href', 'data:text/plain;charset=utf-8,' + Uri.encodeComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.children.add(element);
+
+    element.click();
+
+    document.body.children.remove(element);
+  }
+
+// Start file download.
+//  download("hello.txt","This is the content of my file :)");
 
 }
