@@ -2,6 +2,8 @@ library evolution;
 
 import 'dart:async';
 import 'dart:html';
+import 'dart:core';
+import 'dart:convert';
 
 import 'package:chartjs/chartjs.dart';
 import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
@@ -12,9 +14,11 @@ import '../../controller/EvolutionWebController.dart' as EvolutionController;
 import '../../controller/GameController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
+import '../../materializecss/M.dart';
 
 part 'Controller.dart';
 part 'Rating.dart';
+part 'Progressbar.dart';
 
 class EvolutionElement {
   static EvolutionElement _evolutionElement;

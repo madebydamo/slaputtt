@@ -10,17 +10,16 @@ class _RatingElement {
       ..classes.addAll(["card-content"])
       ..style.padding = "0";
     initChart(content, r.dna);
-    if(r.stats.wins + r.stats.wins + r.stats.wins > 0) {
+    if(r.stats.wins + r.stats.draws + r.stats.loses > 0) {
       DivElement bar = DivElement();
       bar.classes.add("bar");
-      bar.style.display = "grid";
       bar.style.gridTemplateColumns = "${r.stats.wins}fr ${r.stats.draws}fr ${r.stats.loses}fr";
       DivElement win = DivElement();
       win.innerHtml = r.stats.wins > 0 ? "${r.stats.wins}" : "";
       win.classes.addAll(["green", "lighten-1", "wihte-text"]);
       DivElement draw = DivElement();
       win.innerHtml = r.stats.draws > 0 ? "${r.stats.draws}" : "";
-      draw.classes.addAll(["gray", "lighten-1", "wihte-text"]);
+      draw.classes.addAll(["grey", "lighten-4", "white-text"]);
       DivElement lose = DivElement();
       win.innerHtml = r.stats.loses > 0 ? "${r.stats.loses}" : "";
       lose.classes.addAll(["red", "lighten-1", "wihte-text"]);

@@ -1,4 +1,5 @@
 import 'package:uttt_package/src/model/GameState.dart';
+import 'dart:async';
 
 /// A Interface for Players, where they get the current [GameState] and a
 /// function, where they can return the new [GameState].

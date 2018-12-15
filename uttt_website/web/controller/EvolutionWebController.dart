@@ -17,11 +17,12 @@ bool _finished = false;
 int _inEvaluation = 0;
 int _evaluated = 0;
 Completer _trainComplete;
+void Function(int fullSize, int done, int inProgress) _progress;
 
 Era initialiseEra(int size, depth) {
   Era era = Era(depth);
   Generation gen1 =
-  Generation(List.generate(size, (i) => Rating(_randomDNA())));
+      Generation(List.generate(size, (i) => Rating(_randomDNA())));
   era.generations.add(gen1);
   return era;
 }
@@ -37,12 +38,15 @@ DNA _randomDNA() {
   return DNA(smallOne, smallTwo, bigOne, bigTwo, bigThree);
 }
 
-Future<void> train(Era era) async {
+Future<void> train(Era era,
+    [void Function(int fullSize, int done, int inProgress)
+        showProgress]) async {
   if (_trainComplete == null || _trainComplete.isCompleted) {
     _trainComplete = Completer();
     _inEvaluation = 0;
     _evaluated = 0;
     _finished = false;
+    _progress = showProgress;
     _currentGeneration = era.lastGen;
     _currentIterator = _getAllGames(era.depth).iterator;
     _trainGeneration(era.depth);
@@ -57,8 +61,10 @@ Iterable<List<Algorithm>> _getAllGames(int depth) sync* {
       if (i != j) {
         Rating rating1 = _currentGeneration.ratings[i];
         Rating rating2 = _currentGeneration.ratings[j];
-        Algorithm algo1 = AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna));
-        Algorithm algo2 = AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna));
+        Algorithm algo1 =
+            AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna));
+        Algorithm algo2 =
+            AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna));
         yield [algo1, algo2];
       }
     }
@@ -76,11 +82,11 @@ List<Algorithm> _next() {
 
 void _saveRating(State s, List<Algorithm> algorithms) {
   Rating rating1 = _currentGeneration.ratings.firstWhere((r) =>
-  r.dna ==
+      r.dna ==
       ((algorithms[0] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
   Rating rating2 = _currentGeneration.ratings.firstWhere((r) =>
-  r.dna ==
+      r.dna ==
       ((algorithms[1] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
 
@@ -95,6 +101,12 @@ void _saveRating(State s, List<Algorithm> algorithms) {
     rating2.stats.wins = rating2.stats.wins + 1;
   }
   _evaluated++;
+  if(_progress != null) {
+    _progress(_currentGeneration.ratings.length *
+        (_currentGeneration.ratings.length - 1),
+        _evaluated,
+        _inEvaluation - _evaluated);
+  }
   if (_finished && _evaluated == _inEvaluation) {
     _trainComplete.complete();
   }
@@ -118,7 +130,7 @@ void trainAndMutate(Era era) {
 
 mutate(Era era) {
   assert(
-    era.currentState == trained, "You have to train your generation first!");
+      era.currentState == trained, "You have to train your generation first!");
   Generation generation = era.lastTrainedGen;
   era.generations.add(_mutateGeneration(generation));
   era.currentState = mutated;
@@ -129,8 +141,8 @@ Generation _mutateGeneration(Generation generation) {
   generation.ratings.sort();
   if (generation.ratings.length.isEven) {
     for (int i = generation.ratings.length ~/ 2 + 1;
-    i < generation.ratings.length;
-    i++) {
+        i < generation.ratings.length;
+        i++) {
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
     }
@@ -139,15 +151,15 @@ Generation _mutateGeneration(Generation generation) {
     list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
   } else {
     for (int i = (generation.ratings.length + 1) ~/ 2;
-    i < generation.ratings.length;
-    i++) {
+        i < generation.ratings.length;
+        i++) {
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
       list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
     }
     list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
   }
   assert(list.length == generation.ratings.length,
-  "Old generation and mutated generation doesn't have the same size");
+      "Old generation and mutated generation doesn't have the same size");
   return Generation(list);
 }
 

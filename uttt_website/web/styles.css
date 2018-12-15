@@ -26,7 +26,6 @@ html, body {
 
 #control {
     width: 100%;
-    height: 3em;
 }
 
 #pagination {
@@ -132,7 +131,22 @@ html, body {
     width: 100%;
 }
 
-.bar {
+.card-content .bar {
     display: grid;
     height: 5px;
+}
+
+#control .bar {
+    display: grid;
+    height: 20px;
+    width: 100%;
+    border-radius:2px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    margin-bottom: 1em;
+    padding: 0 2%;
+}
+
+.bar > div {
+    height: inherit;
 }

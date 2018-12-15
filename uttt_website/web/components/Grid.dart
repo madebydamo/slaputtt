@@ -121,7 +121,7 @@ class GridElement {
   }
 
   void _clearClass(String classname) {
-    querySelectorAll(".$classname")
+    querySelectorAll("#tileWrapper .$classname")
         .forEach((e) => e.classes.remove(classname));
   }
 }
