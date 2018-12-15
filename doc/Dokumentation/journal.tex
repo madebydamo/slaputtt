@@ -17,6 +17,19 @@ We decided to realise all of that with a modern programming language called Dart
 %to do
 
 \section{Rules}
+To understand to game Ultimate TicTacToe, it is required to  know the rules of the ordinary TicTacToe game. If you know the rules, you can continue reading the next paragraph. 
+
+\subsection {Rules Tic Tac Toe}
+The game Tic Tac Toe consist of a 3-by-3 board. Two players are required while one player represents X and the the other player represents O. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.
+
+\subsection {Rules Ultimate Tic Tac Toe}
+The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe boards, hence there are 81 possible fields.
+Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be called the global board.
+A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board. The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board. 
+
+A victory of a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
+
+If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board. It's possible that the game ends in a draw, because  no more legal moves are allowed.
 
 \section{SLAP Algorithm}
 \subsection{Alpha Beta}
