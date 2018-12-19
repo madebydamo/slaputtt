@@ -46,7 +46,7 @@
 \usepackage{float}
 \usepackage{titlesec}
 \usepackage{hyperref}
-\usepackage[useregional]{datetime2}
+\usepackage[english]{datetime2}
 \usepackage{makecell}
 \usepackage{tabularx}
 \usepackage{csvsimple}
@@ -95,8 +95,8 @@
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 %\setcounter{tocdepth}{2}
-%\setcounter{secnumdepth}{0} % Removes default section numbers
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{0} % Removes default section numbers
+%\setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
 %----------------------------------------------------------------------------------------
@@ -198,6 +198,16 @@ keepaspectratio]{background2.jpg}%
 
 %\input{wortdefinitionen} % Configure wortdefinitionen
 %\input{pgfplotlistdefinition}
+\newenvironment{dayentry}[1]{
+\section{#1}
+\tabularx{\textwidth}{p{4em}|X}
+Editor & Task \\\hline
+}{
+\endtabularx
+}
+\newcommand{\task}[2]{#1 & #2\\}
+
+
 
 \begin{document}
 \AddToShipoutPicture*{\BackgroundPic}
