@@ -197,6 +197,20 @@ keepaspectratio]{background2.jpg}%
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
+
+\abovecaptionskip=3pt % above caption
+\belowcaptionskip=\baselineskip % below caption
+\newenvironment{fixedpic}{
+\break
+\begin{minipage}{\linewidth}
+\abovecaptionskip=3pt % above caption
+\belowcaptionskip=\baselineskip % below caption
+\centering
+}{
+\end{minipage}
+}
+
+
 \input{wortdefinitionen} % Configure wortdefinitionen
 \input{pgfplotlistdefinition}
 

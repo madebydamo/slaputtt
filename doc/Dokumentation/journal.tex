@@ -33,6 +33,84 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 
 \section{SLAP Algorithm}
 \subsection{Alpha Beta}
+Our algorithm takes a score. Each score has a certain number of moves that can be played. These are now tried out one after the other. After each move we get a new score, which also has possible moves again. Even after these moves, we have new scores again. This is how one score after the other is calculated. This can be represented as follows. Each knot (whether round or square) symbolizes a score. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four moves were evaluated from the main node. Now the scores of the lowest row (hands) are evaluated. The score evaluation in the graph is represented by the number in knots (do not get confused by the numbers in the other knots, more on this later). The bigger the number, the better the score for us. Now the tree is evaluated so that in the worst case the score is as high as possible for us. That means as much as assuming that the opponent always makes the move that would be worst for us. This is how the evaluation starts below. The fourth move (branches between the last two levels) is played by the opponent. Of course, this one takes the worst score for us. Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
+\todo{Bild aus Word kopieren oder selber erstellen}
+The opponent has two moves from this score. Either he takes the first move, which leads to a score of 5, or he takes the second move, which leads to a score of 6. The first move is clearly an advantage for the opponent. Therefore, the parent node is given the value five. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. Thus, the procedure repeats itself up to the top node. In this way we get the information which train is best for us. The grey marked nodes and crossed out branches are optimizations of the algorithm. So we do not have to evaluate these areas at all and can save computing time.
+\todo{Bild aus Word kopieren oder selber erstellen}
+\subsection{Heuristic}
+The Alpha Beta pruning decides which move is played. But it needs some information. To be more precise, you need an evaluation for each gamestat, how good it is. The better the gamestat, the higher the score. This is where the heuristic comes into play. This has only the purpose to evaluate the score.
+
+Now to how it works. We award points for certain states. There are exactly five of these states. The check always takes place in a row, a column or a diagonal. The first two states are checked in the small fields.
+\begin{itemize}
+\item One field occupied, two fields empty. The condition occurs three times here. Once in the right column, once in the bottom row and once in the diagonal from top left to bottom right.
+\begin{fixedpic}
+	\includegraphics[width=0.33\textwidth]{con1}
+	\captionof{figure}{Condition one}
+\end{fixedpic}
+\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first state occurs twice again, in the left and middle column.
+\begin{fixedpic}
+	\includegraphics[width=0.33\textwidth]{con2}
+	\captionof{figure}{Condition two}
+\end{fixedpic}
+\end{itemize}
+The following three states are checked in the large field.
+\begin{itemize}
+\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. Here the first two states are no longer considered, a field is won a field is won.
+\begin{fixedpic}
+	\includegraphics[width=0.33\textwidth]{con3}
+	\captionof{figure}{Condition three}
+\end{fixedpic}
+\item Two small fields won, one small field not yet determined. Here is a visualization of this state.
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{con4}
+	\captionof{figure}{Condition four}
+\end{fixedpic}
+\item Three small squares won. This also corresponds to a victory. Here the condition occurs in the right column.
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{con5}
+	\captionof{figure}{Condition five}
+\end{fixedpic}
+\end{itemize}
+Here I have drawn in all occurring states.
+\begin{description}
+\item[State one] Yellow
+\item[State two] Green
+\item[State three] Blue
+\item[State four] Purple
+\item[State five] Light blue
+\end{description}
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{allcons}
+	\captionof{figure}{All Conditions}
+\end{fixedpic}
+The states are determined separately for both colors. Now we take the difference of the states of the two colors. Then we have a certain number for each state. Now we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied.
+Let's do a sample calculation using the picture above. My DNA has the following Numbers.
+\begin{description}
+\item[Factor state one] 1
+\item[Factor state one] 3
+\item[Factor state one] 10
+\item[Factor state one] 30
+\item[Factor state one] 100
+\end{description}
+\begin{tabularx}{\textwidth}{|R|R|R|R|R|R|}
+\hline
+1	& 0	& 11	& -11	& 1 	& -11 \\\hline
+2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
+3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
+4	& 2	& 0 	& 2 	& 30	& 60 \\\hline
+5	& 1	& 0 	& 1 	& 100	& 100 \\\hline
+\end{tabularx}
+The effective score in this case is 183, which is all the heuristic does. Based on this information, the Alpha Beta pruning decides which move to play.
+
+
+
+
+
+
+
 \subsection{Self Learning}
 \subsection{Implementation in Dart}
 
