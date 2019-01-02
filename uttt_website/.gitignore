@@ -12,6 +12,6 @@ testbuild/
 doc/api/
 
 # Firebase hosting
-.firebaserc
-firebase.json
+# .firebaserc
+# firebase.json
 .firebase
