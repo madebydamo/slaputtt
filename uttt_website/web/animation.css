@@ -81,13 +81,13 @@
   }
 }
 
-.yellow {
-    background: yellow;
+.lightRed {
     animation: blinker 2s linear infinite;
+    background-color: #EE736E !important;
 }
 
 @keyframes blinker {
-  50% {
+  30% {
     opacity: 0.4;
   }
 }

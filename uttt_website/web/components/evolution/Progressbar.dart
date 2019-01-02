@@ -13,7 +13,7 @@ class _ProgressBar {
     _done = DivElement();
     _done.classes.addAll(["green", "lighten-1", "white-text"]);
     _progress = DivElement();
-    _progress.classes.addAll(["yellow", "lighten-1", "white-text"]);
+    _progress.classes.addAll(["lightRed", "lighten-1", "white-text"]);
     _todo = DivElement();
     _todo.classes.addAll(["grey", "lighten-4", "white-text"]);
     bar.children.addAll([_done, _progress, _todo]);

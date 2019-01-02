@@ -94,7 +94,7 @@ class GridElement {
     _clearClass("p1SmallTile");
     _clearClass("p2SmallTile");
     _clearClass("flip-in-hor-bottom");
-    _clearClass("yellow");
+    _clearClass("lightRed");
   }
 
   void _visualizeLastPlayedMove(GameState state) {
@@ -110,12 +110,12 @@ class GridElement {
   }
 
   void _visualizePossibleMoves(bool possibleMoves, GameState state) {
-    _clearClass("yellow");
+    _clearClass("lightRed");
     if (possibleMoves) {
       GC.getAllPossibleMoves(state).forEach((m) {
         querySelector(".bigTile${m.bigIndex} .tile${m.smallIndex}")
             .classes
-            .add("yellow");
+            .add("lightRed");
       });
     }
   }
