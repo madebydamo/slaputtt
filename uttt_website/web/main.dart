@@ -10,16 +10,11 @@ import 'controller/GameController.dart';
 
 void main() {
   GameController controller = GameController();
-  controller.config(
-      AlphaBetaPruning(
-          3,
-          HeuristicAlphaBeta(DNA(15.515486642969375, 81.51786860231158,
-              136.90917992046127, 2139.7204623955636, 13378.653412586225))),
-      true);
-
   EvolutionElement element = EvolutionElement();
-  HttpRequest.getString('era2.json').then((jsonString) {
+  HttpRequest.getString('35_3G50_newHeuristic.json').then((jsonString) {
     Era era = Era.fromJson(json.decode(jsonString));
     element.setEra(era);
+    controller.config(
+        AlphaBetaPruning(3,HeuristicAlphaBeta(era.lastGen.best)),true);
   });
 }
