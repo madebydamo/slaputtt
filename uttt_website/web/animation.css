@@ -81,10 +81,7 @@
   }
 }
 
-.lightRed {
-    animation: blinker 2s linear infinite;
-    background-color: #EE736E !important;
-}
+
 
 @keyframes blinker {
   30% {

@@ -1,0 +1,74 @@
+html, body{
+    background: white;
+    color: black;
+}
+
+.tile {
+    background-color: white;
+}
+
+.p1BigTile {
+    background-color: #E8E8E8;
+}
+
+.p2BigTile {
+    background-color: #444444;
+}
+
+.p1SmallTile {
+    background-color: #E8E8E8;
+}
+
+.p2SmallTile {
+    background-color: #444444;
+}
+
+.top.tile {
+    border-bottom: 1px  solid black;
+}
+
+.top.bigTile{
+    border-bottom: 3px solid black;
+}
+
+.bottom.tile{
+       border-top: 1px  solid black;
+}
+
+.bottom.bigTile{
+    border-top: 3px  solid black;
+}
+
+.left.tile{
+    border-right: 1px  solid black;
+ }
+
+.left.bigTile{
+     border-right: 3px  solid black;
+  }
+
+.right.tile{
+    border-left: 1px  solid black;
+}
+
+.right.bigTile{
+    border-left: 3px  solid black;
+}
+
+.lightRed {
+    animation: blinker 2s linear infinite;
+    background-color:  powderblue !important;
+}
+
+nav {
+  background-color: powderblue !important;
+  color: black;
+}
+
+nav ul li a{
+  color: black;
+}
+
+.title {
+    color: black !important;
+}

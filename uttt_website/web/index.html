@@ -8,6 +8,8 @@
     <meta name="scaffolded-by" content="https://github.com/google/stagehand">
     <title>uttt</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="redGreyWhite.css">
+    <link rel="stylesheet" href="colortheme2.css">
     <link rel="stylesheet" href="animation.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,25 +17,102 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
     <script defer src="main.dart.js"></script>
+    <script language="JavaScript" src="navbar.js"></script>
 </head>
 
 <body>
+<div class="navbar-fixed">
+    <nav>
+        <ul id="dropdownDesktop" class="dropdown-content">
+            <li><a href="#" onclick="loadColorTheme1();">color theme 1</a></li>
+            <li><a href="#" onclick="loadColorTheme2();">color theme 2</a></li>
+            <li><a href="#" onclick="loadColorTheme1();">color theme 3</a></li>
+        </ul>
 
-    <div id="output" class="container center-align">
-        <div class = viewPortHeight>
-            <h3 class="title" >Ultimate Tic-Tac-Toe</h3>
-            <div class="row">
-                <div class="col s12 m10 l8 xl6 offset-m1 offset-l2 offset-xl3">
-                    <div class="square" >
+        <ul id="dropdownMobile" class="dropdown-content">
+            <li><a href="#" class="sidenav-close" onclick="loadColorTheme1();">color theme 1</a></li>
+            <li><a href="#" class="sidenav-close" onclick="loadColorTheme2();">color theme 2</a></li>
+            <li><a href="#" class="sidenav-close" onclick="loadColorTheme1();">color theme 3</a></li>
+        </ul>
+
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo title">Ultimate Tic-Tac-Toe</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#play1">Play</a></li>
+                <li><a href="#rules1">Rules</a></li>
+                <li><a href="#train1">Train</a></li>
+                <li><a href="#about1">About</a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdownDesktop">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+</div>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="#play1" class="sidenav-close">Play</a></li>
+        <li><a href="#rules1" class="sidenav-close">Rules</a></li>
+        <li><a href="#train1" class="sidenav-close">Train</a></li>
+        <li><a href="#about1" class="sidenav-close">About</a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdownMobile">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+
+<div id="output" class="container center-align">
+
+    <section id="Play">
+            <div><a name="play1"></a></div>
+            <h3>Play</h3>
+
+                <div class="maxw">
+                    <div class="square">
                         <div id="tileWrapper" class="grid-container"></div>
                     </div>
                 </div>
-            </div>
+
             <h3 class="title" id="winner"></h3>
+    </section>
+
+
+
+
+
+
+    <section id="Rules">
+        <div><a name="rules1"></a></div>
+        <h3>Rules</h3>
+
+        <div class="rules valign-wrapper" >
+            <blockquote class="center-align">
+                <p class="left-align">The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe boards, hence there are 81 possible fields.
+                    Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be called the global board.
+                    A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board.
+                    The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board.
+                    <br><br>
+                    A victory of a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
+                    <br><br>
+                    If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board.
+                    It's possible that the game ends in a draw, because  no more legal moves are allowed.</p>
+            </blockquote>
+
         </div>
 
-        <div id="evolution"></div>
-    </div>
 
+    </section>
+    <section id="Train">
+        <div><a name="train1"></a></div>
+        <h3>Train</h3>
+        <div id="evolution">
+
+        </div>
+
+    </section>
+
+    <section id="About">
+        <div><a name="about1"></a></div>
+        <h3>About</h3>
+    </section>
+
+</div>
 </body>
 </html>

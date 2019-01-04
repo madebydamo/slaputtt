@@ -5,11 +5,12 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: lightgrey;
-  color: white !important;
-  font-family: 'Roboto', sans-serif;
+   font-family: 'Roboto', sans-serif;
+  scroll-behavior: smooth;
+
 
 }
+
 #output {
      text-align: center;
 }
@@ -17,6 +18,28 @@ html, body {
 .container {
     width: 95% !important;
 }
+
+nav{
+        position: absolute;
+        top: 0;
+        left: 0;
+        closeOnClick: true;
+}
+
+.sidenav {
+    padding-top: 5vh !important;
+}
+
+section {
+        min-height: 100vh;
+}
+
+
+h3 {
+   padding-top: 10vh !important;
+}
+
+
 
 #tileWrapper {
 /*  width: 360px;
@@ -45,6 +68,14 @@ html, body {
     scroll-behavior: smooth;
 }
 
+nav .sidenav {
+    position: fixed !important;
+    width: 100%;
+}
+
+a{
+
+}
 /*NOT WORKING ON IOS*/
 /*.square{
 	position: relative;
@@ -61,6 +92,16 @@ html, body {
     padding-bottom: 100%;
     position: relative;
 }
+.maxw {
+    max-width: 500px;
+    max-height: 500px;
+    margin: 0 auto;
+
+    margin-top: 5%;
+
+}
+
+
 
 .grid-container {
   display: grid;
@@ -69,6 +110,7 @@ html, body {
   grid-template-areas: ". . ." ". . ." ". . .";
 }
 
+/*Set */
 .bigTile {
     display: flex;
     flex-wrap: wrap;
@@ -81,59 +123,10 @@ html, body {
 }
 
 .tile {
-    background-color: lightgrey;
     flex: 0 0 33.3%;
 }
 
 .tile:nth-child(3n) {
-}
-
-.p1BigTile {
-    background-color: #E8E8E8;
-}
-
-.p2BigTile {
-    background-color: #444444;
-}
-
-.p1SmallTile {
-    background-color: #E8E8E8;
-}
-
-.p2SmallTile {
-    background-color: #444444;
-}
-
-.top.tile {
-    border-bottom: 1px  solid white;
-}
-
-.top.bigTile{
-    border-bottom: 3px solid white;
-}
-
-.bottom.tile{
-       border-top: 1px  solid white;
-}
-
-.bottom.bigTile{
-    border-top: 3px  solid white;
-}
-
-.left.tile{
-    border-right: 1px  solid white;
- }
-
-.left.bigTile{
-     border-right: 3px  solid white;
-  }
-
-.right.tile{
-    border-left: 1px  solid white;
-}
-
-.right.bigTile{
-    border-left: 3px  solid white;
 }
 
 .wrapper {
@@ -165,10 +158,17 @@ html, body {
     height: inherit;
 }
 
-.viewPortHeight {
-   height: 100vh;
+.title {
+ font-size: 2.5vh !important;
+ margin-left: 1%;
+ margin-right: 1%;
 }
 
-.title {
- font-size:5vh;
+.rules {
+    max-width: 600px !important;
+    font-size: 15px;
+    text-align: center;
+    margin: auto;
+    padding-right: 5vw;
+    padding-left: 5vw;
 }
