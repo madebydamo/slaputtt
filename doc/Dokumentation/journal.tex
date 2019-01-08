@@ -86,23 +86,25 @@ Here I have drawn in all occurring states.
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both colors. Now we take the difference of the states of the two colors. Then we have a certain number for each state. Now we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied.
+The states are determined separately for both players. Now we take the difference of the states of the two players. Then we have a certain number for each state. Now we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied.
 Let's do a sample calculation using the picture above. My DNA has the following Numbers.
 \begin{description}
 \item[Factor state one] 1
-\item[Factor state one] 3
-\item[Factor state one] 10
-\item[Factor state one] 30
-\item[Factor state one] 100
-\end{description}
-\begin{tabularx}{\textwidth}{|R|R|R|R|R|R|}
+\item[Factor state two] 3
+\item[Factor state three] 10
+\item[Factor state four] 30
+\item[Factor state five] 100
+\end{description}\\
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
+State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\\hline
 1	& 0	& 11	& -11	& 1 	& -11 \\\hline
 2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
 3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
 4	& 2	& 0 	& 2 	& 30	& 60 \\\hline
 5	& 1	& 0 	& 1 	& 100	& 100 \\\hline
-\end{tabularx}
+\multicolumn{5}{X|}{} & 183 \\\cline{6-6}
+\end{tabularx}\\
 The effective score in this case is 183, which is all the heuristic does. Based on this information, the Alpha Beta pruning decides which move to play.
 
 
