@@ -8,19 +8,19 @@ html, body{
 }
 
 .p1BigTile {
-    background-color: #E8E8E8;
+    background-color: #306066;
 }
 
 .p2BigTile {
-    background-color: #444444;
+    background-color: #89aeb3;
 }
 
 .p1SmallTile {
-    background-color: #E8E8E8;
+    background-color: #306066;
 }
 
 .p2SmallTile {
-    background-color: #444444;
+    background-color: #89aeb3;
 }
 
 .top.tile {
@@ -71,4 +71,27 @@ nav ul li a{
 
 .title {
     color: black !important;
+}
+
+blockquote {
+  margin: 20px 0;
+  padding-left: 1.5rem;
+  border-left: 5px solid powderblue !important; /* Just change the color value and that's it*/
+}
+
+.example .pagination>li>a,
+.example .pagination>li>span {
+  border: 1px solid powderblue !important;
+}
+.pagination>li.active>a {
+  background: powderblue;
+  color: powderblue;
+  border-radius: 2px !important;
+}
+
+
+
+nav .sidenav-trigger i {
+
+color: black !important;
 }
