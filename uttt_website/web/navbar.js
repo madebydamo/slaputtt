@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function loadColorTheme1() {
-    document.getElementsByTagName('link')[1].disabled = true;
-       document.getElementsByTagName('link')[2].disabled = false;
+    document.getElementsByTagName('link')[1].disabled = false;
+       document.getElementsByTagName('link')[2].disabled = true;
 }
 
 function loadColorTheme2() {
-    document.getElementsByTagName('link')[1].disabled = false;
-       document.getElementsByTagName('link')[2].disabled = true;
+    document.getElementsByTagName('link')[1].disabled = true;
+       document.getElementsByTagName('link')[2].disabled = false;
 }
