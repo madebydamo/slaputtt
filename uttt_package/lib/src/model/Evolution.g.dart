@@ -12,7 +12,8 @@ DNA _$DNAFromJson(Map<String, dynamic> json) {
       (json['smallTwo'] as num)?.toDouble(),
       (json['bigOne'] as num)?.toDouble(),
       (json['bigTwo'] as num)?.toDouble(),
-      (json['bigThree'] as num)?.toDouble());
+      (json['bigThree'] as num)?.toDouble(),
+      (json['mutation'] as num)?.toDouble());
 }
 
 Map<String, dynamic> _$DNAToJson(DNA instance) => <String, dynamic>{
@@ -20,7 +21,8 @@ Map<String, dynamic> _$DNAToJson(DNA instance) => <String, dynamic>{
       'smallTwo': instance.smallTwo,
       'bigOne': instance.bigOne,
       'bigTwo': instance.bigTwo,
-      'bigThree': instance.bigThree
+      'bigThree': instance.bigThree,
+      'mutation': instance.mutation
     };
 
 Generation _$GenerationFromJson(Map<String, dynamic> json) {
