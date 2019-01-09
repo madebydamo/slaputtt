@@ -13,7 +13,7 @@ DNA _$DNAFromJson(Map<String, dynamic> json) {
       (json['bigOne'] as num)?.toDouble(),
       (json['bigTwo'] as num)?.toDouble(),
       (json['bigThree'] as num)?.toDouble(),
-      (json['mutation'] as num)?.toDouble());
+      (json['mutation'] as num)?.toDouble() ?? 0.2);
 }
 
 Map<String, dynamic> _$DNAToJson(DNA instance) => <String, dynamic>{

@@ -12,7 +12,7 @@ class DNA {
   double bigOne;
   double bigTwo;
   double bigThree;
-  double mutation;
+  @JsonKey(defaultValue: 0.2) double mutation;
 
   DNA(this.smallOne, this.smallTwo, this.bigOne, this.bigTwo, this.bigThree, this.mutation);
 
