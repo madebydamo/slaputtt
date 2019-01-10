@@ -11,7 +11,7 @@ import 'controller/GameController.dart';
 void main() {
   GameController controller = GameController();
   EvolutionElement element = EvolutionElement();
-  HttpRequest.getString('35_3G50_newHeuristic.json').then((jsonString) {
+  HttpRequest.getString('35_2G40_6paramneu.json').then((jsonString) {
     Era era = Era.fromJson(json.decode(jsonString));
     element.setEra(era);
     controller.config(

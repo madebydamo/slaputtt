@@ -26,13 +26,13 @@ Generation _mutateGeneration(Generation generation) {
 }
 
 DNA _mutateDNA(DNA dna) {
-  double mutation = dna.mutation;
+  double mutation = _mutateNumber(dna.mutation, dna.mutation);
   return DNA(_mutateNumber(dna.smallOne, mutation),
       _mutateNumber(dna.smallTwo, mutation),
       _mutateNumber(dna.bigOne, mutation),
       _mutateNumber(dna.bigTwo, mutation),
       _mutateNumber(dna.bigThree, mutation),
-      _mutateNumber(dna.mutation, mutation));
+      mutation);
 }
 
 double _mutateNumber(double d, double mutation) {

@@ -22,7 +22,7 @@ class HeuristicAlphaBeta implements Heuristic {
     if(cache[state.value][primaryState].three > 0) {
       value += cache[state.value][primaryState].three * dna.bigThree;
     } else {
-      state.tiles.map((b) => cache[b.value][primaryState]).toList().forEach((info) {
+      state.tiles.map((b) => cache[b.value][primaryState]).forEach((info) {
         if(info.three == 0) {
           value += info.one * dna.smallOne;
           value += info.two * dna.smallTwo;
