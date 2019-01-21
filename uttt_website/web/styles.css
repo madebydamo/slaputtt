@@ -6,6 +6,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  font-weight: 100;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -153,10 +154,19 @@ nav .sidenav {
     height: inherit;
 }
 
+
 .title {
- font-size: 2vh !important;
+ font-size: 1.5em !important;
  margin-left: 1%;
  margin-right: 1%;
+}
+
+.blackText li a {
+    color: black !important;
+}
+
+.blackText li a:hover {
+    color: white !important;
 }
 
 .rules {
@@ -171,4 +181,8 @@ nav .sidenav {
 .card .card-action a {
     margin-right: 0 !important;
     color: black ! important;
+}
+
+h4{
+    text-align: center;
 }

@@ -9,24 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Dropdown.init(elems);
   });
 
-function loadPowderblue() {
-     document.getElementsByTagName('link')[1].disabled = true;
-     document.getElementsByTagName('link')[2].disabled = false;
-     document.getElementsByTagName('link')[3].disabled = false;
-}
+var colorThemes = ["powderblue", "coral", "mint"];
 
-function loadCoral() {
-    document.getElementsByTagName('link')[1].disabled = false;
-    document.getElementsByTagName('link')[2].disabled = true;
-    document.getElementsByTagName('link')[3].disabled = false;
+function loadColorTheme(id) {
+    console.log("asdf" + colorThemes.length);
+    for (var i = 0; i < colorThemes.length; i++) {
+            if (id == colorThemes[i]) {
+               $('#' + id).disabled = false;
+               console.log("anebked"  + id);
+            }
+            else {
+               $('#' + id).disabled = true;
+               console.log("disabled"  + id);
+            }
+       }
 }
-
-function loadColorMint() {
-     document.getElementsByTagName('link')[1].disabled = false;
-     document.getElementsByTagName('link')[2].disabled = false;
-     document.getElementsByTagName('link')[3].disabled = true;
-}
-
 
 //scrolspy
 
