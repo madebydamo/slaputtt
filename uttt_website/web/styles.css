@@ -14,8 +14,10 @@ html, body {
      text-align: center;
 }
 
-.container {
-    width: 95% !important;
+.row .centerSection{
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 nav{
@@ -29,13 +31,12 @@ nav{
     padding-top: 5vh !important;
 }
 
-section {
-        min-height: 100vh;
+.section {
+        min-height: 100vh !important;
 }
 
 
 h3 {
-   padding-top: 10vh !important;
 }
 
 
@@ -96,8 +97,6 @@ nav .sidenav {
     margin-top: 5%;
 
 }
-
-
 
 .grid-container {
   display: grid;

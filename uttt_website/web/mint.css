@@ -1,0 +1,95 @@
+html, body{
+    background: white;
+    color: black;
+}
+
+.tile {
+    background-color: white;
+}
+
+.p1BigTile {
+    background-color: #306066;
+}
+
+.p2BigTile {
+    background-color: #FFD140;
+}
+
+.p1SmallTile {
+    background-color: #306066;
+}
+
+.p2SmallTile {
+    background-color: #FFD140;
+}
+
+.top.tile {
+    border-bottom: 1px  solid black;
+}
+
+.top.bigTile{
+    border-bottom: 3px solid black;
+}
+
+.bottom.tile{
+       border-top: 1px  solid black;
+}
+
+.bottom.bigTile{
+    border-top: 3px  solid black;
+}
+
+.left.tile{
+    border-right: 1px  solid black;
+ }
+
+.left.bigTile{
+     border-right: 3px  solid black;
+  }
+
+.right.tile{
+    border-left: 1px  solid black;
+}
+
+.right.bigTile{
+    border-left: 3px  solid black;
+}
+
+.lightRed {
+    animation: blinker 2s linear infinite;
+    background-color:  powderblue !important;
+}
+
+nav {
+  background-color: #009989 !important;
+  color: black;
+}
+
+nav ul li a{
+  color: black;
+}
+
+.title {
+    color: black !important;
+}
+
+blockquote {
+  margin: 20px 0;
+  padding-left: 1.5rem;
+  border-left: 5px solid powderblue !important; /* Just change the color value and that's it*/
+}
+
+.example .pagination>li>a,
+.example .pagination>li>span {
+  border: 1px solid powderblue !important;
+}
+.pagination>li.active>a {
+  background: #009989;
+  color: #009989;
+  border-radius: 2px !important;
+}
+
+nav .sidenav-trigger i {
+
+color: black !important;
+}
