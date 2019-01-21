@@ -44,47 +44,64 @@
                 <li><a href="#rules">Rules</a></li>
                 <li><a href="#train">Train</a></li>
                 <li><a href="#about1">About</a></li>
-                <li><a class="dropdown-trigger" href="#!" data-target="dropdownDesktop">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdownDesktop">Color Themes<i
+                        class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
         </div>
     </nav>
 
 </div>
 
-    <ul class="sidenav" id="mobile-demo">
-        <li><a href="#play" class="sidenav-close">Play</a></li>
-        <li><a href="#rules" class="sidenav-close">Rules</a></li>
-        <li><a href="#train" class="sidenav-close">Train</a></li>
-        <li><a href="#about1" class="sidenav-close">About</a></li>
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdownMobile">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
-    </ul>
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="#play" class="sidenav-close">Play</a></li>
+    <li><a href="#rules" class="sidenav-close">Rules</a></li>
+    <li><a href="#train" class="sidenav-close">Train</a></li>
+    <li><a href="#about1" class="sidenav-close">About</a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdownMobile">Color Themes<i class="material-icons right">arrow_drop_down</i></a>
+    </li>
+</ul>
 
 
 <div id="output" class="center-align">
     <div class="row">
         <div class="col s12 m9 l10 centerSection">
             <div id="play" class="section scrollspy">
-                <div class="maxw">
-                    <h3>Play</h3>
-                    <div class="square">
-                        <div id="tileWrapper" class="grid-container"></div>
+                <h3>Play</h3>
+                <div class="row">
+                    <div class="col s12 m12 l6">
+                        <div>
+                            <div class="maxw">
+                                <div class="square">
+                                    <div id="tileWrapper" class="grid-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="title" id="winner"></h3>
                     </div>
-                    <h3 class="title" id="winner"></h3>
+                    <div class="col offset-s1 s10 offset-m1 m10 l6 center-align">
+                        <div id="opponent"></div>
+                    </div>
                 </div>
             </div>
 
             <div id="rules" class="section scrollspy">
                 <h3>Rules</h3>
                 <blockquote>
-                    <p class="left-align">The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe boards, hence there are 81 possible fields.
-                        Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be called the global board.
-                        A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board.
-                        The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board.
+                    <p class="left-align">The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe
+                        boards, hence there are 81 possible fields.
+                        Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be
+                        called the global board.
+                        A player can start anywhere he'd like to on a local board. According to the location he played
+                        on a local board, his opponent will be sent to that position in the global board.
+                        The opponent can now play on the local board, keeping in mind that he will send the other player
+                        to the relative position on the global board.
                         <br><br>
-                        A victory of a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
+                        A victory of a local board is the equivalent to a marked tile on the global board. To win the
+                        game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
                         <br><br>
-                        If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board.
-                        It's possible that the game ends in a draw, because  no more legal moves are allowed.</p>
+                        If a local board is won or draw, no more moves are allowed there. In case a player was sent to
+                        such a board, he is allowed to make his next turn on every other local board.
+                        It's possible that the game ends in a draw, because no more legal moves are allowed.</p>
                 </blockquote>
             </div>
 
