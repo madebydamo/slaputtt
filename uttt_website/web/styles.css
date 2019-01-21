@@ -154,7 +154,6 @@ nav .sidenav {
     height: inherit;
 }
 
-
 .title {
  font-size: 1.5em !important;
  margin-left: 1%;
@@ -183,6 +182,6 @@ nav .sidenav {
     color: black ! important;
 }
 
-h4{
-    text-align: center;
+#level {
+    margin-bottom: 10px;
 }

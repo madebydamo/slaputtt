@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="scaffolded-by" content="https://github.com/google/stagehand">
+    <title>uttt</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="coral.css">
+    <link rel="stylesheet" href="powderblue.css">
+    <link rel="stylesheet" href="mint.css">
+    <link rel="stylesheet" href="animation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script defer src="beginner.dart.js"></script>
+    <script language="JavaScript" src="navbar.js"></script>
+</head>
+
+<body>
+<div class="navbar-fixed">
+    <nav>
+        <ul id="dropdownDesktop" class="dropdown-content">
+            <li><a href="#" onclick="loadColorTheme1();">Coral</a></li>
+            <li><a href="#" onclick="loadColorTheme2();">Powderblue</a></li>
+            <li><a href="#" onclick="loadColorTheme1();">color theme 3</a></li>
+        </ul>
+
+        <ul id="dropdownMobile" class="dropdown-content">
+            <li><a href="#" class="sidenav-close" onclick="loadCoral;">Coral</a></li>
+            <li><a href="#" class="sidenav-close" onclick="loadPowderblue();">Powderblue</a></li>
+            <li><a href="#" class="sidenav-close" onclick="loadMint();">color theme 3</a></li>
+        </ul>
+
+        <div class="nav-wrapper">
+            <a href="#!" class="title">Ultimate Tic-Tac-Toe</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#play">Play</a></li>
+                <li><a href="#rules">Rules</a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdownDesktop">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+</div>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="#play" class="sidenav-close">Play</a></li>
+        <li><a href="#rules" class="sidenav-close">Rules</a></li>
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdownMobile">Color Themes<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+
+
+<div id="output" class="center-align">
+    <div class="row">
+        <div class="col s12 m9 l10 centerSection">
+            <div id="play" class="section scrollspy">
+                <h3>Play</h3>
+                <div id="level" class="center-align"></div>
+                <div class="maxw">
+                    <div class="square">
+                        <div id="tileWrapper" class="grid-container"></div>
+                    </div>
+                    <h3 class="title" id="winner"></h3>
+                </div>
+            </div>
+
+            <div id="rules" class="section scrollspy">
+                <h3>Rules</h3>
+                <blockquote>
+                    <p class="left-align">The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe boards, hence there are 81 possible fields.
+                        Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be called the global board.
+                        A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board.
+                        The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board.
+                        <br><br>
+                        A victory of a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
+                        <br><br>
+                        If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board.
+                        It's possible that the game ends in a draw, because  no more legal moves are allowed.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
