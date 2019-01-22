@@ -63,20 +63,24 @@ html, body{
     color: black !important;
 }
 
+.btn {
+    background-color: #EE736E !important;
+}
+
 input[type=range]::-webkit-slider-thumb {
-    background-color: #EE736E !important;
-  }
-  input[type=range]::-moz-range-thumb {
-    background-color: #EE736E !important;
-  }
-  input[type=range]::-ms-thumb {
-    background-color: #EE736E !important;
-  }
+background-color: #EE736E !important;
+}
+input[type=range]::-moz-range-thumb {
+background-color: #EE736E !important;
+}
+input[type=range]::-ms-thumb {
+background-color: #EE736E !important;
+}
 
 
-  input[type=range] + .thumb {
-    background-color: #EE736E !important;
-  }
-  input[type=range] + .thumb.active .value {
-    white;
-  }
+input[type=range] + .thumb {
+background-color: #EE736E !important;
+}
+input[type=range] + .thumb.active .value {
+white;
+}

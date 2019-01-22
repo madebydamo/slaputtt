@@ -26,7 +26,7 @@ class LevelElement {
     DivElement root = querySelector("#level");
     _easy = AnchorElement();
     _easy.innerHtml = "Easy";
-    _easy.classes.addAll(["waves-effect", "waves-teal", "btn-flat"]);
+    _easy.classes.addAll(["waves-effect", "waves-color", "btn-flat"]);
     _easy.onClick.listen((e) {
       _onClickEasy();
     });
@@ -35,7 +35,7 @@ class LevelElement {
 
     _medium = AnchorElement();
     _medium.innerHtml = "Medium";
-    _medium.classes.addAll(["waves-effect", "waves-teal", "btn-flat"]);
+    _medium.classes.addAll(["waves-effect", "waves-color", "btn-flat"]);
     _medium.onClick.listen((e) {
       _highlight(_medium);
       int index = _era.generations.length ~/ 2;
@@ -44,7 +44,7 @@ class LevelElement {
 
     _hard = AnchorElement();
     _hard.innerHtml = "Hard";
-    _hard.classes.addAll(["waves-effect", "waves-teal", "btn-flat"]);
+    _hard.classes.addAll(["waves-effect", "waves-color", "btn-flat"]);
     _hard.onClick.listen((e) {
       _highlight(_hard);
       GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.lastTrainedGen.best)), true);

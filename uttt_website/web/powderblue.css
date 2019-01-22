@@ -103,6 +103,12 @@ blockquote {
   border-radius: 2px !important;
 }
 
+.btn {
+    background-color: powderblue !important;
+}
+
+
+
 /*range */
 
 input[type=range]::-webkit-slider-thumb {
