@@ -35,7 +35,7 @@ class GameOverModal {
 
       Element newGameLink = Element.a();
       newGameLink.innerHtml = "New Game";
-      List<String> buttonClasses = ["modal-close", "waves-effect", "waves-green", "btn-flat"];
+      List<String> buttonClasses = ["modal-close", "waves-effect", "btn-flat"];
       newGameLink.classes.addAll(buttonClasses);
       footer.children.add(newGameLink);
 

@@ -36,11 +36,9 @@ nav{
         min-height: 100vh !important;
 }
 
-
-h3 {
+h4 {
+    text-align: center;
 }
-
-
 
 #tileWrapper {
 /*  width: 360px;
@@ -91,8 +89,8 @@ nav .sidenav {
     position: relative;
 }
 .maxw {
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 500px !important;
+    max-height: 500px !important;
     margin: 0 auto;
 
     margin-top: 5%;

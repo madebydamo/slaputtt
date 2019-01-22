@@ -15,7 +15,9 @@ class LevelElement {
     if (_levelElement == null) {
       _levelElement = LevelElement._internal();
     }
+
     _levelElement.initialise(era);
+
     return _levelElement;
   }
 
@@ -28,6 +30,7 @@ class LevelElement {
     _easy.onClick.listen((e) {
       _onClickEasy();
     });
+
 
 
     _medium = AnchorElement();

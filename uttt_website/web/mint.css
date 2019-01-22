@@ -62,15 +62,19 @@ html, body{
 
 nav {
   background-color: #009989 !important;
-  color: black;
+  color: white;
 }
 
 nav ul li a{
   color: white !important;
 }
 
+.page-footer {
+    background-color:  #009989 !important;
+}
+
 .title {
-    color: black !important;
+    color: white !important;
 }
 
 blockquote {
@@ -90,10 +94,8 @@ blockquote {
 }
 
 nav .sidenav-trigger i {
-
-color: black !important;
+    color: white;
 }
 
-.title {
-color: white !important;
+color: black !important;
 }

@@ -4,7 +4,7 @@ Algorithms are everywhere. They are a part of our everyday lives without even re
 In our apprenticeship, we both have a lot to do with algorithms. Damian works as a software engineer, where he writes most of the time software. Stefan is an electronics engineer and his specialisation in the fourth year of education is also software. According to that, we both have a pretty good idea of what algorithms are and what they do. We found out, that each of us is fascinated by the concepts and possibilities algorithmic structures provide. So we came up with the idea, to implement an algorithm by ourselves. \bigskip
 
 %goals
-We set the goal, to program an algorithm, that can play the game Ultimate TicTacToe (UTTT). UTTT is a more complex and strategic version of the ordinary TicTacToe. 
+We set the goal, to program an algorithm, that can play the game Ultimate Tic-Tac-Toe (UTTT). UTTT is a more complex and strategic version of the ordinary Tic-Tac-Toe. 
 Our approach to solve that problem is a so called Self Learning Alpha Beta Pruning Algorithm, also known as SLAP Algorithm. It's a combination of the already existing Alpha Beta Pruning algorithm combined with an own made up extension which is, as the name suggests, self learning. We want to analyse the learning process of the algorithm in more detail and evaluate whether there is really an improvement. This will be the mathematical part of our work
 To experience our algorithm in action, we also wanted to create a website where everybody can play the game against our SLAP Algorithm.
 Another intention of our project is to bring the seemingly complex subject in an easy understandable form to the interested reader. We aim to resume our approach of the solution in a comprehensible way. We want to give the reader an insight and a deeper understanding of algorithms, how they work and how they are implemented. With the website, we hope to create an interesting and interactive extension to this paper.
@@ -18,14 +18,14 @@ We decided to realise all of that with a modern programming language called Dart
 %to do
 
 \section{Rules}
-To understand to game Ultimate TicTacToe, it is required to  know the rules of the ordinary TicTacToe game. If you know the rules, you can continue reading the next paragraph. 
+To understand to game Ultimate Tic-Tac-Toe, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you know the rules, you can continue reading the next paragraph. 
 
-\subsection {Rules Tic Tac Toe}
-The game Tic Tac Toe consist of a 3-by-3 board. Two players are required while one player represents X and the the other player represents O. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.
+\subsection {Rules Tic-Tac-Toe}
+The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while one player represents X and the the other player represents O. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.
 
-\subsection {Rules Ultimate Tic Tac Toe}
-The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic Tac Toe boards, hence there are 81 possible fields.
-Each small Tic Tac Toe board will be called a local board and the big Tic Tac Toe board will be called the global board.
+\subsection {Rules Ultimate Tic-Tac-Toe}
+The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
+Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
 A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board. The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board. 
 
 A victory of a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
@@ -142,19 +142,18 @@ In order that our project is accessible all over the world with different end de
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part was already discussed in the previous subsection. 
 Because CSS can be extremly time consuming, we made use of a CSS Framework called Materialize from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we have used CSS animations. For this purpose, we used the website Animista, which provides ready-to-use CSS animations.
 
-To deploy our website online, we also needed to have a host which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Mesaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS, HTML.
+To deploy our website online, we also needed to have a host which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Messaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS and HTML.
 
-
-
-Our website consists of two main parts. The first part is mainly designed for an easy game experience, where you can choose between three levels to play against the algorithm which include "easy", "medium" and "hard". Behind the easy level plays the best organism of the first generation. 
+Our website consists of two main parts. The first part is mainly designed for an easy game experience, where you can choose between three levels to play against the algorithm. The levels include "easy", "medium" and "hard". Behind the easy level plays the best organism of the first generation. 
 The medium level is played by the best organism of the 35th %evtl korrektur
 generation and the hard level is the best organism of the whole era. The default search depth of the current game is three. Three is an experiential value, which is the best compromise between search duration and reliability of the algorithm.
-The first part contains the rules of the game as well. 
+The first part of the website contains an explanation of the rules of the game as well. 
 
-Via a navbar link, it's possible to change to a more detailed and advanced view which we designed for people who are interested in what's going on behind the scenes. Its possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
+Via a navbar link, it's possible to change to a more detailed and advanced view which we designed for people who are interested in what's going on behind the scenes. It's possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
 
 %evtl weglassen oder verbessern
 Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
+
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
 
 
@@ -167,6 +166,16 @@ In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with t
 
 
 \section{Motivation}
+
+Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
+Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. 
+
+We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
+
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
+
+\subsection{Why we chose Dart}
+
 
 
 \section{Review}
