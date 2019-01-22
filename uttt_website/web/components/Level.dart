@@ -39,7 +39,7 @@ class LevelElement {
     _medium.onClick.listen((e) {
       _highlight(_medium);
       int index = _era.generations.length ~/ 2;
-      GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.generations[index].best)));
+      GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.generations[index].best)), true);
     });
 
     _hard = AnchorElement();
@@ -47,7 +47,7 @@ class LevelElement {
     _hard.classes.addAll(["waves-effect", "waves-teal", "btn-flat"]);
     _hard.onClick.listen((e) {
       _highlight(_hard);
-      GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.lastTrainedGen.best)));
+      GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.lastTrainedGen.best)), true);
     });
 
     root.children.addAll([_easy, _medium, _hard]);

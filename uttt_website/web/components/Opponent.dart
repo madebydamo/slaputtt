@@ -25,20 +25,22 @@ class OpponentElement {
   OpponentElement._internal() {
     DivElement root = querySelector("#opponent");
     _ratingParent = DivElement();
-    ParagraphElement searchDepthPara = ParagraphElement();
-    searchDepthPara.innerHtml = "Depth of search of the current opponent";
-    ParagraphElement depthWrapper = ParagraphElement();
-    depthWrapper.classes.add("range-field");
-    InputElement depth = InputElement(type: "range");
-    depth.max = "7";
-    depth.min = "1";
-    depth.value = "3";
-    depth.step = "1";
-    depth.onChange.listen((e) => GameController().config(
-        AlphaBetaPruning(int.tryParse(depth.value), HeuristicAlphaBeta(_dna))));
-    depthWrapper.children.add(depth);
-    root.children.addAll([_ratingParent, searchDepthPara, depthWrapper]);
-    initRange(depth);
+    if(root != null) {
+      ParagraphElement searchDepthPara = ParagraphElement();
+      searchDepthPara.innerHtml = "Depth of search of the current opponent";
+      ParagraphElement depthWrapper = ParagraphElement();
+      depthWrapper.classes.add("range-field");
+      InputElement depth = InputElement(type: "range");
+      depth.max = "7";
+      depth.min = "1";
+      depth.value = "3";
+      depth.step = "1";
+      depth.onChange.listen((e) => GameController().config(
+          AlphaBetaPruning(int.tryParse(depth.value), HeuristicAlphaBeta(_dna))));
+      depthWrapper.children.add(depth);
+      root.children.addAll([_ratingParent, searchDepthPara, depthWrapper]);
+      initRange(depth);
+    }
   }
 
   void initialise(DNA dna) {
