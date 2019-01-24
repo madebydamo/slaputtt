@@ -5,19 +5,16 @@ import 'dart:html';
 import 'dart:core';
 import 'dart:convert';
 
-import 'package:chartjs/chartjs.dart';
-import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
-import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 
 import '../../controller/EvolutionWebController.dart' as EvolutionController;
-import '../../controller/GameController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
 import '../../materializecss/M.dart';
+import 'Rating.dart';
 
 part 'Controller.dart';
-part 'Rating.dart';
+
 part 'Progressbar.dart';
 
 class EvolutionElement {
@@ -35,7 +32,6 @@ class EvolutionElement {
     control.id = "control";
     querySelector("#evolution").children.add(control);
 
-
     evolutionController = _ControlElement(control, _visualize);
 
     querySelector("#evolution").children.add(control);
@@ -46,8 +42,7 @@ class EvolutionElement {
     querySelector("#evolution").children.add(generation);
 
     window.onResize.listen((e) {
-      if(evolutionController.era != null)
-        _visualizePagination();
+      if (evolutionController.era != null) _visualizePagination();
     });
   }
 
@@ -63,7 +58,7 @@ class EvolutionElement {
   }
 
   void _visualize() {
-    if(_selectedGen >= evolutionController.era.generations.length) {
+    if (_selectedGen >= evolutionController.era.generations.length) {
       _selectedGen = evolutionController.era.generations.length - 1;
     }
     _visualizePagination();
@@ -77,15 +72,14 @@ class EvolutionElement {
 
     Generation gen = evolutionController.era.generations[_selectedGen];
     List<DivElement> elements = gen.ratings.reversed
-        .map((r) => _RatingElement(r).element)
+        .map((r) => RatingElement(r).element)
         .map((element) => DivElement()
           ..classes.addAll(["s6", "m4", "l3", "xl2", "col"])
           ..children.add(element))
         .toList();
     root.children.addAll(elements);
-    Timer(
-        Duration(milliseconds: 500), () {
-          root.style.height = "";
+    Timer(Duration(milliseconds: 500), () {
+      root.style.height = "";
     });
   }
 
@@ -158,4 +152,3 @@ class EvolutionElement {
         .forEach((child) => child.classes.add("waves-effect"));
   }
 }
-

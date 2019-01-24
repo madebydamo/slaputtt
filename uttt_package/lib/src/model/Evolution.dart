@@ -12,8 +12,9 @@ class DNA {
   double bigOne;
   double bigTwo;
   double bigThree;
+  @JsonKey(defaultValue: 0.2) double mutation;
 
-  DNA(this.smallOne, this.smallTwo, this.bigOne, this.bigTwo, this.bigThree);
+  DNA(this.smallOne, this.smallTwo, this.bigOne, this.bigTwo, this.bigThree, this.mutation);
 
   factory DNA.fromJson(Map<String, dynamic> json) => _$DNAFromJson(json);
 
