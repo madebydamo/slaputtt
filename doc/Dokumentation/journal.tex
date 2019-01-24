@@ -230,44 +230,52 @@ The point is that the conditions are already sorted the way we expect them to be
 \subsection{Received results}
 The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following states are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite. With the exception of the last parameter, the following states are rated worse than the previous ones.
 \begin{fixedpic}
-	\centering
-	\includegraphics[width=0.3\textwidth]{g1first}
-	\includegraphics[width=0.3\textwidth]{g1middle}
-	\includegraphics[width=0.3\textwidth]{g1last}
-	\captionof{figure}{The best, an average and the last DNA of Generation 1}
-\end{fixedpic}
-\begin{fixedpic}
-\begin{tikzpicture}
-\begin{axis}[
-width=8.5cm,
-ylabel=Weight,
-xlabel=Condition,
-legend style={at={(0.5,1.05)},
-anchor=south,legend columns=-1},
-xtick={0,1,2,3,4,5,6},
-xticklabels={1, 2, 3, 4, 5},
-xticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
-yticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
-%x tick label style={rotate=90},
-%cycle list name=abacus235,
-]
-\addplot coordinates{(0, 108) (1, 379) (2, 856) (3, 1648) (4, 1745)};
-\addplot coordinates{(0, 1408) (1, 1575) (2, 1801) (3, 205) (4, 1508)};
-\addplot coordinates{(0, 1586) (1, 790) (2, 494) (3, 439) (4, 697)};
+\begin{dnadiagram}
+\addplot coordinates{(1, 108) (2, 379) (3, 856) (4, 1648) (5, 1745)};
+\addplot coordinates{(1, 1408) (2, 1575) (3, 1801) (4, 205) (5, 1508)};
+\addplot coordinates{(1, 1586) (2, 790) (3, 494) (4, 439) (5, 697)};
 \legend{First of Genration 1,Median of Generation 1,Last of Generation 1}
-\end{axis}
-\end{tikzpicture}
+\end{dnadiagram}
+\captionof{figure}{The best, an average and the last DNA of Generation 1}
 \end{fixedpic}
 While in the first generation only the first organism more or less reproduced the expected curve, in the 5th generation there are already 11 of 16 organisms with such DNA. The remaining 5 organisms show the curve up to the fourth parameter, but the fifth parameter was mutated badly and the curve goes down again. So we have in only five generations already a first trend which plays itself in and already strongly differs from the generation 1.
 \begin{fixedpic}
-	\centering
-	\includegraphics[width=0.3\textwidth]{g5first}
-	\includegraphics[width=0.3\textwidth]{g5middle}
-	\includegraphics[width=0.3\textwidth]{g5last}
-	\captionof{figure}{The best, an average and the last DNA of Generation 5}
+\begin{dnadiagram}
+\addplot coordinates{(1, 112) (2, 398) (3, 735) (4, 1410) (5, 1890)};
+\addplot coordinates{(1, 122) (2, 362) (3, 750) (4, 1280) (5, 1646)};
+\addplot coordinates{(1, 118)(2, 423)(3, 1078)(4, 1507)(5, 1123)};
+\legend{First of Genration 5,Median of Generation 5,Last of Generation 5}
+\end{dnadiagram}
+\captionof{figure}{The best, an average and the last DNA of Generation 5}
+\end{fixedpic}
+In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but places 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like the expected result. The striking difference to the others is also that the relative difference of conditions 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role.
+
+\begin{fixedpic}
+\begin{dnadiagram}
+\addplot coordinates{(1, 99) (2, 555) (3, 730) (4, 1294) (5, 2055)};
+\addplot coordinates{(1, 60) (2, 324) (3, 642) (4, 1664) (5, 1763)};
+\addplot coordinates{(1, 92) (2, 281) (3, 796) (4, 2018) (5, 2055)};
+\legend{First of Genration 10,Third of Generation 10,Fourth of Generation 10}
+\end{dnadiagram}
+\captionof{figure}{Some conspicuous DNA of Generation 10}
 \end{fixedpic}
 
+From the tenth generation onwards, these conditions are further developed. So the best of the tenth generation reminds rather of a line, whereas the best of the generation 20 reminds rather of a (half-)parabola. This development continues until generation 70, where we have completed the development.
 
+\begin{fixedpic}
+\begin{dnadiagram}
+\addplot coordinates{(1, 99) (2, 555) (3, 730) (4, 1294) (5, 2055)};
+\addplot coordinates{(1, 103) (2, 369) (3, 1110) (4, 2209) (5, 3033)};
+\addplot coordinates{(1 ,74) (2 ,275) (3 ,732) (4 ,1387) (5 ,3976)};
+\addplot coordinates{(1, 66) (2, 282) (3, 583) (4, 1451) (5, 5091)};
+\addplot coordinates{(1, 61) (2, 327) (3, 717) (4, 1542) (5, 5683)};
+\addplot coordinates{(1, 71) (2, 368) (3, 476) (4, 1800) (5, 8907)};
+\legend{First of Generation 10,F.o.G. 15,F.o.G. 20, F.o.G. 30, F.o.G. 50, F.o.G. 70}
+\end{dnadiagram}
+\captionof{figure}{First}
+\end{fixedpic}
+
+\todo{Nach State und Condition suchen und alles aufräumen}
 
 \section{Motivation}
 Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
