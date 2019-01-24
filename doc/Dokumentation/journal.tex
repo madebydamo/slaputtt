@@ -23,10 +23,15 @@ To understand to game Ultimate Tic-Tac-Toe, it is required to  know the rules of
 \subsection {Rules Tic-Tac-Toe}
 The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while one player represents X and the the other player represents O. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.
 
-\todo{Bild Tic-Tac-Toe}
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.2\textwidth]{tictactoe}
+	\captionof{figure}{a random scenario of an ordinary Tic-Tac-Toe field}
+\end{fixedpic}
+
 
 \subsection {Rules Ultimate Tic-Tac-Toe}
-The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
+The board of Ultimate Tic Tac Toe is made up from 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
 Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
 A player can start anywhere he'd like to on a local board. According to the location he played on a local board, his opponent will be sent to that position in the global board. The opponent can now play on the local board, keeping in mind that he will send the other player to the relative position on the global board. 
 
@@ -34,7 +39,13 @@ A victory of a local board is the equivalent to a marked tile on the global boar
 
 If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board. It's possible that the game ends in a draw, because  no more legal moves are allowed.
 
-\todo{Bild UTTT}
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{uttt}
+	\captionof{figure}{a random scenario of an Ultimate Tic-Tac-Toe field}
+\end{fixedpic}
+
+The yellow marked local fields are already won by the yellow party.
 
 \section{SLAP Algorithm}
 
@@ -44,7 +55,10 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
 	\captionof{figure}{a representation of a Alpha Beta Pruning search tree}
 \end{fixedpic}
-%erster satz nicht ganz klar
+
+
+
+\todo{erster satz nicht ganz klar}
 Our algorithm takes a score. Each score has a certain number of moves that can be played. All the possible moves are now tried out one after the other. After each move we get a new score, which also has possible moves again. Even after these moves, we have new scores again. This is how one score after the other is calculated. This can be represented as a tree structure. Each knot (whether round or square) symbolizes a score. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four moves were evaluated from the main node. Now the scores of the lowest row (hands) are evaluated. The score evaluation in the graph is represented by the number in knots (do not get confused by the numbers in the other knots, more on this later). The bigger the number, the better the score for us. Now the tree is evaluated so that in the worst case the score is as high as possible for us. That means as much as assuming that the opponent always makes the move that would be worst for us. This is how the evaluation starts below. The fourth move (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Of course, the opponent takes the worst score for us. Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
 \begin{fixedpic}
 	\centering
@@ -52,33 +66,48 @@ Our algorithm takes a score. Each score has a certain number of moves that can b
 	\captionof{figure}{the smaller value gets written to the upper knot}
 \end{fixedpic}
 The opponent has two moves from this score. Either he takes the first move, which leads to a score of 5, or he takes the second move, which leads to a score of 6. The first move is clearly an advantage for the opponent. Therefore, the parent node is given the value five. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. Thus, the procedure repeats itself up to the top node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the algorithm. So we do not have to evaluate these areas at all and can save computing time.
-\todo{Bild aus Word kopieren oder selber erstellen}
+
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.9\textwidth]{alphabetalevel}
+	\captionof{figure}{all possible game moves in the 3rd level of the search depth, evaluated by the minimzing player}
+\end{fixedpic}
+
+The average amount of options per move in the game Ultimate Tic-Tac-Toe is five. \cite{web:tsurel2013}
+In our case, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, the calculated amounts of states of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
+
+\begin{center}
+$\alpha$: amount of nodes,	
+$n$: search depth,
+$i$: index,
+$\delta$: average move per node
+\end{center}
+
 
 \subsection{Heuristic}
 The Alpha Beta Pruning only decides which move is played. But without the heuristic, the Alpha Beta Pruning algorithm would be pointless. The task of the heuristic is to fill the nodes in the Alpha Beta Pruning search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a number for each possible game state. The better the game state, the higher the score.
 
-Now to how the evaluation works. We award points for certain states. There are exactly five of these states.
-The check always takes place in a row, a column or a diagonal. The first two states are checked in the small fields.
+Now to how the evaluation works. We award points for certain conditions. There are exactly five of these conditions. The check always takes place in a row, a column or a diagonal. The first two conditions are checked in the small fields.
 \begin{itemize}
 \item One field occupied, two fields empty. The condition occurs three times here. Once in the right column, once in the bottom row and once in the diagonal from top left to bottom right.
 \begin{fixedpic}
-	\includegraphics[width=0.33\textwidth]{con1}
+	\includegraphics[width=0.2\textwidth]{con1}
 	\captionof{figure}{Condition one}
 \end{fixedpic}
-\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first state occurs twice again, in the left and middle column.
+\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column vertically, diagonally left bottom to the right bottom and again vertically middle column.
 \begin{fixedpic}
-	\includegraphics[width=0.33\textwidth]{con2}
+	\includegraphics[width=0.2\textwidth]{con2}
 	\captionof{figure}{Condition two}
 \end{fixedpic}
 \end{itemize}
-The following three states are checked in the large field.
+The following three conditions are checked in the large field.
 \begin{itemize}
-\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. Here the first two states are no longer considered, a field is won a field is won.
+\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions are no longer considered.
 \begin{fixedpic}
-	\includegraphics[width=0.33\textwidth]{con3}
+	\includegraphics[width=0.2\textwidth]{con3}
 	\captionof{figure}{Condition three}
 \end{fixedpic}
-\item Two small fields won, one small field not yet determined. Here is a visualization of this state.
+\item Two small fields won, one small field not yet determined. Here is a visualization of this condition.
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{con4}
@@ -91,7 +120,7 @@ The following three states are checked in the large field.
 	\captionof{figure}{Condition five}
 \end{fixedpic}
 \end{itemize}
-Here I have drawn in all occurring states.
+In the following figure, all five occurring states are marked with different colors:
 \begin{description}
 \item[State one] Yellow
 \item[State two] Green
@@ -104,9 +133,9 @@ Here I have drawn in all occurring states.
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. Now we take the difference of the states of the two players. 
+The states are determined separately for both players. We take the difference of the states of the two players. 
 %evtl erklären, wieso wir die differen der beiden spieler nehmen
-Then we have a certain number for each state. Now we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers. 
+Then we have a certain number for each state. We have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.\\ 
 \begin{description}
 \item[Factor state one] 1
 \item[Factor state two] 3
@@ -114,7 +143,7 @@ Then we have a certain number for each state. Now we have to convert them into a
 \item[Factor state four] 30
 \item[Factor state five] 100
 \end{description}
- \\
+
 In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.\\
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
@@ -146,7 +175,7 @@ That means the proportion of the different parameters vary vividly. We already k
 The DNA of the better half of the ranking will mutate two times and form a new generation. The best Organism of the generation will survive and continue to live in the next generation.
 %eventuell genäuere/bessere beschreibung
 As described at the beginning, the mutation only affects the DNA. The DNA contains the factor for each parameter and each factor will be mutated by a value between 0.8 and 1.2. This results in an almost totally new set of Organisms, which are descenders of the previous generation. The selection starts again for this generation.
-This cycle will continue as long as the creator of the era desires to. 
+This cycle will continue as long as the creator of the era desires to. \\
 
 \begin{fixedpic}
 	\centering
@@ -170,7 +199,7 @@ In order that our project is accessible all over the world with different end de
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part was already discussed in the previous subsection. 
 Because CSS can be extremly time consuming, we made use of a CSS Framework called Materialize from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website Animista, which provides ready-to-use CSS animations.
 
-To deploy our website online, we also needed to have a hosting service which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Messaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS and HTML.
+To deploy our website online, we also needed to have a hosting service which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Messaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS and HTML.\\
 
 Our website consists of two main parts. The first part, we called it "Reduced View", is mainly designed for an easy game experience, where you can choose between three levels to play against the algorithm. The levels include "easy", "medium" and "hard". Behind the easy level plays the best organism of the first generation. 
 The medium level is played by the best organism of the 35th %evtl korrektur
@@ -195,7 +224,7 @@ In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with t
 
 \section{Motivation}
 Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
-Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. 
+Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. \\
 
 We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
 
@@ -206,6 +235,8 @@ To cover two subjects in our IDPA, we decided to apply our English knowledge, wh
 
 \section{Challenges}
 
+
 \section{Review}
-In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that  it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
+In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
+
 

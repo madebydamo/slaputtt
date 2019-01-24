@@ -51,7 +51,7 @@ class GameOverModal {
 
       querySelector("body").append(_modal);
 
-      initModal(_modal, ModalOptions());
+      initModal(_modal, ModalOptions(dismissible: false));
     }
 
     void open(bool won) {

@@ -30,6 +30,8 @@ class ModalOptions {
 
   external num get activationPercent;
 
+  external bool get dismissible;
+
   external factory ModalOptions({
     String html,
     num displayLength,
@@ -37,6 +39,7 @@ class ModalOptions {
     String classes,
     num outDuration,
     num activationPercent,
+    bool dismissible,
   });
 }
 
