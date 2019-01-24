@@ -18,10 +18,12 @@ We decided to realise all of that with a modern programming language called Dart
 %to do
 
 \section{Rules}
-To understand to game Ultimate Tic-Tac-Toe, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you know the rules, you can continue reading the next paragraph. 
+To understand to game Ultimate Tic-Tac-Toe, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinaty Tic-Tac-Toe, you can continue reading paragraph 2.2. 
 
 \subsection {Rules Tic-Tac-Toe}
 The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while one player represents X and the the other player represents O. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.
+
+\todo{Bild Tic-Tac-Toe}
 
 \subsection {Rules Ultimate Tic-Tac-Toe}
 The board of Ultimate Tic Tac Toe is made up from a 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
@@ -32,16 +34,28 @@ A victory of a local board is the equivalent to a marked tile on the global boar
 
 If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other local board. It's possible that the game ends in a draw, because  no more legal moves are allowed.
 
+\todo{Bild UTTT}
+
 \section{SLAP Algorithm}
 
 \subsection{Alpha Beta}
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.9\textwidth]{alphabetatree}
+	\captionof{figure}{a representation of a Alpha Beta Pruning search tree}
+\end{fixedpic}
+%erster satz nicht ganz klar
 Our algorithm takes a score. Each score has a certain number of moves that can be played. All the possible moves are now tried out one after the other. After each move we get a new score, which also has possible moves again. Even after these moves, we have new scores again. This is how one score after the other is calculated. This can be represented as a tree structure. Each knot (whether round or square) symbolizes a score. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four moves were evaluated from the main node. Now the scores of the lowest row (hands) are evaluated. The score evaluation in the graph is represented by the number in knots (do not get confused by the numbers in the other knots, more on this later). The bigger the number, the better the score for us. Now the tree is evaluated so that in the worst case the score is as high as possible for us. That means as much as assuming that the opponent always makes the move that would be worst for us. This is how the evaluation starts below. The fourth move (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Of course, the opponent takes the worst score for us. Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
-\todo{Bild aus Word kopieren oder selber erstellen}
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.15\textwidth]{alphabetabranch}
+	\captionof{figure}{the smaller value gets written to the upper knot}
+\end{fixedpic}
 The opponent has two moves from this score. Either he takes the first move, which leads to a score of 5, or he takes the second move, which leads to a score of 6. The first move is clearly an advantage for the opponent. Therefore, the parent node is given the value five. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. Thus, the procedure repeats itself up to the top node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the algorithm. So we do not have to evaluate these areas at all and can save computing time.
 \todo{Bild aus Word kopieren oder selber erstellen}
 
 \subsection{Heuristic}
-The Alpha Beta pruning decides which move is played. But it needs some information to make a decision. To be more precise, you need an evaluation for each game state, how good it is. The better the game state, the higher the score. This is where the heuristic comes into play. This has only the purpose to evaluate the score of the board.
+The Alpha Beta Pruning only decides which move is played. But without the heuristic, the Alpha Beta Pruning algorithm would be pointless. The task of the heuristic is to fill the nodes in the Alpha Beta Pruning search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a number for each possible game state. The better the game state, the higher the score.
 
 Now to how the evaluation works. We award points for certain states. There are exactly five of these states.
 The check always takes place in a row, a column or a diagonal. The first two states are checked in the small fields.
@@ -99,8 +113,10 @@ Then we have a certain number for each state. Now we have to convert them into a
 \item[Factor state three] 10
 \item[Factor state four] 30
 \item[Factor state five] 100
-\end{description}\\
-In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
+\end{description}
+ \\
+In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.\\
+
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
 State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\\hline
@@ -111,6 +127,7 @@ State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\
 5	& 1	& 0 	& 1 	& 100	& 100 \\\hline
 \multicolumn{5}{X|}{} & 183 \\\cline{6-6}
 \end{tabularx}\\
+\\
 The effective score in this case is 183, which is all the heuristic does. 
 Based on this information, the Alpha Beta Pruning decides which move to play.
 
@@ -131,9 +148,15 @@ The DNA of the better half of the ranking will mutate two times and form a new g
 As described at the beginning, the mutation only affects the DNA. The DNA contains the factor for each parameter and each factor will be mutated by a value between 0.8 and 1.2. This results in an almost totally new set of Organisms, which are descenders of the previous generation. The selection starts again for this generation.
 This cycle will continue as long as the creator of the era desires to. 
 
-%
-The era which is shown on our website contains 70 generations and each generation consists 16 Organisms.
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{evoalgo}
+	\captionof{figure}{visualisation of an evolutionary algorithm}
+\end{fixedpic}
 
+
+The era which is shown on our website contains 70 generations and each generation consists of 16 Organisms.
+%wie lange zum trainieren?
 
 
 
@@ -181,7 +204,7 @@ To cover two subjects in our IDPA, we decided to apply our English knowledge, wh
 \subsection{Why we chose Dart}
 
 
-\section{challenges}
+\section{Challenges}
 
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that  it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
