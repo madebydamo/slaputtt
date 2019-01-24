@@ -22,7 +22,7 @@ class AlphaBetaPruning implements Algorithm {
     for (Move move in getAllPossibleMoves(state, ourState)) {
       RevertMove revert = playMove(state, move);
       double alphabeta = _alphabeta(
-          state, depth, double.negativeInfinity, double.infinity, false);
+          state, depth, value, double.infinity, false);
       if (alphabeta > value) {
         value = alphabeta;
         returnMove = move;

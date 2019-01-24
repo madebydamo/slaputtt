@@ -19,13 +19,18 @@ class HeuristicAlphaBeta implements Heuristic {
 
   double evaluateForState(GameState state, State primaryState) {
     double value = 0.0;
-    state.tiles.map((b) => cache[b.value][primaryState]).toList().forEach((info) {
-      value += info.one * dna.smallOne;
-      value += info.two * dna.smallTwo;
-    });
-    value += cache[state.value][primaryState].one * dna.bigOne;
-    value += cache[state.value][primaryState].two * dna.bigTwo;
-    value += cache[state.value][primaryState].three * dna.bigThree;
+    if(cache[state.value][primaryState].three > 0) {
+      value += cache[state.value][primaryState].three * dna.bigThree;
+    } else {
+      state.tiles.map((b) => cache[b.value][primaryState]).forEach((info) {
+        if(info.three == 0) {
+          value += info.one * dna.smallOne;
+          value += info.two * dna.smallTwo;
+        }
+      });
+      value += cache[state.value][primaryState].one * dna.bigOne;
+      value += cache[state.value][primaryState].two * dna.bigTwo;
+    }
     return value;
   }
 

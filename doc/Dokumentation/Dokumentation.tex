@@ -174,7 +174,7 @@ keepaspectratio]{background2.jpg}%
 
 \author{
 		Stefan Jampen \\ 
-        Damian Moser \\
+        	Damian Moser \\
 		Guided By - Alejandro González and Barbara Becher \\
 		Gewerbliche Berufsschule St.Gallen}
 
@@ -193,9 +193,10 @@ keepaspectratio]{background2.jpg}%
 \graphicspath{{./img/}}
 \newcommand\todo[1]{\textcolor{red}{\\\\//TODO #1\\}}
 
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0}}{#1}}
+%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0}}m{#1}}
+%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{.2in}}m{#1}}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}p{.2in}}
 
 
 \abovecaptionskip=3pt % above caption
@@ -213,6 +214,7 @@ keepaspectratio]{background2.jpg}%
 
 \input{wortdefinitionen} % Configure wortdefinitionen
 \input{pgfplotlistdefinition}
+\input{dnadiagram}
 
 \begin{document}
 \AddToShipoutPicture*{\BackgroundPic}

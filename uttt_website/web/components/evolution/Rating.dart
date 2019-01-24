@@ -1,19 +1,28 @@
-part of 'Evolution.dart';
+import 'dart:html';
+import 'dart:core';
 
-class _RatingElement {
+import 'package:chartjs/chartjs.dart';
+import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
+import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
+import 'package:uttt_package/src/model/Evolution.dart';
+
+import '../../controller/GameController.dart';
+
+class RatingElement {
   DivElement root;
 
-  _RatingElement._(Rating r) {
+  RatingElement._(Rating r) {
     root = DivElement();
     root.classes.addAll(["card", "grey", "lighten-3", "hoverable"]);
     DivElement content = DivElement()
       ..classes.addAll(["card-content"])
       ..style.padding = "0";
     initChart(content, r.dna);
-    if(r.stats.wins + r.stats.draws + r.stats.loses > 0) {
+    if (r.stats.wins + r.stats.draws + r.stats.loses > 0) {
       DivElement bar = DivElement();
       bar.classes.add("bar");
-      bar.style.gridTemplateColumns = "${r.stats.wins}fr ${r.stats.draws}fr ${r.stats.loses}fr";
+      bar.style.gridTemplateColumns =
+          "${r.stats.wins}fr ${r.stats.draws}fr ${r.stats.loses}fr";
       DivElement win = DivElement();
       win.innerHtml = r.stats.wins > 0 ? "${r.stats.wins}" : "";
       win.classes.addAll(["green", "lighten-1", "wihte-text"]);
@@ -42,6 +51,16 @@ class _RatingElement {
   }
 
   void initChart(Element parent, DNA dna) {
+    DNAChart(parent, dna);
+  }
+
+  factory RatingElement(Rating r) => RatingElement._(r);
+
+  get element => root;
+}
+
+class DNAChart {
+  DNAChart(Element parent, dna) {
     CanvasElement area = CanvasElement();
     parent.children.add(area);
 
@@ -74,8 +93,4 @@ class _RatingElement {
 
     new Chart(area, config);
   }
-
-  factory _RatingElement(Rating r) => _RatingElement._(r);
-
-  get element => root;
 }

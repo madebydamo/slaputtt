@@ -1,3 +1,5 @@
+library evolution;
+
 import 'dart:async';
 import 'dart:html';
 import 'dart:math';
@@ -10,6 +12,8 @@ import 'package:uttt_package/src/model/GameState.dart';
 
 import '../worker/game/GameSimulator.dart';
 
+part 'package:uttt_package/src/controller/evolution/EvolutionBase.dart';
+
 List<GameSimulator> _simulators;
 Iterator<List<Algorithm>> _currentIterator;
 Generation _currentGeneration;
@@ -19,28 +23,9 @@ int _evaluated = 0;
 Completer _trainComplete;
 void Function(int fullSize, int done, int inProgress) _progress;
 
-Era initialiseEra(int size, depth) {
-  Era era = Era(depth);
-  Generation gen1 =
-      Generation(List.generate(size, (i) => Rating(_randomDNA())));
-  era.generations.add(gen1);
-  return era;
-}
-
-DNA _randomDNA() {
-  Random r = Random();
-  double smallOne = r.nextDouble() * 2000;
-  double smallTwo = r.nextDouble() * 2000;
-  double bigOne = r.nextDouble() * 2000;
-  double bigTwo = r.nextDouble() * 2000;
-  double bigThree = r.nextDouble() * 2000;
-
-  return DNA(smallOne, smallTwo, bigOne, bigTwo, bigThree);
-}
-
 Future<void> train(Era era,
     [void Function(int fullSize, int done, int inProgress)
-        showProgress]) async {
+    showProgress]) async {
   if (_trainComplete == null || _trainComplete.isCompleted) {
     _trainComplete = Completer();
     _inEvaluation = 0;
@@ -62,9 +47,9 @@ Iterable<List<Algorithm>> _getAllGames(int depth) sync* {
         Rating rating1 = _currentGeneration.ratings[i];
         Rating rating2 = _currentGeneration.ratings[j];
         Algorithm algo1 =
-            AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna));
+        AlphaBetaPruning(depth, HeuristicAlphaBeta(rating1.dna));
         Algorithm algo2 =
-            AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna));
+        AlphaBetaPruning(depth, HeuristicAlphaBeta(rating2.dna));
         yield [algo1, algo2];
       }
     }
@@ -82,11 +67,11 @@ List<Algorithm> _next() {
 
 void _saveRating(State s, List<Algorithm> algorithms) {
   Rating rating1 = _currentGeneration.ratings.firstWhere((r) =>
-      r.dna ==
+  r.dna ==
       ((algorithms[0] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
   Rating rating2 = _currentGeneration.ratings.firstWhere((r) =>
-      r.dna ==
+  r.dna ==
       ((algorithms[1] as AlphaBetaPruning).heuristic as HeuristicAlphaBeta)
           .dna);
 
@@ -126,53 +111,4 @@ void _trainGeneration(int depth) {
 void trainAndMutate(Era era) {
   train(era);
   mutate(era);
-}
-
-mutate(Era era) {
-  assert(
-      era.currentState == trained, "You have to train your generation first!");
-  Generation generation = era.lastTrainedGen;
-  era.generations.add(_mutateGeneration(generation));
-  era.currentState = mutated;
-}
-
-Generation _mutateGeneration(Generation generation) {
-  List<Rating> list = [];
-  generation.ratings.sort();
-  if (generation.ratings.length.isEven) {
-    for (int i = generation.ratings.length ~/ 2 + 1;
-        i < generation.ratings.length;
-        i++) {
-      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
-      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
-    }
-    list.add(Rating(
-        _mutateDNA(generation.ratings[generation.ratings.length ~/ 2].dna)));
-    list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
-  } else {
-    for (int i = (generation.ratings.length + 1) ~/ 2;
-        i < generation.ratings.length;
-        i++) {
-      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
-      list.add(Rating(_mutateDNA(generation.ratings[i].dna)));
-    }
-    list.add(Rating(generation.ratings[generation.ratings.length - 1].dna));
-  }
-  assert(list.length == generation.ratings.length,
-      "Old generation and mutated generation doesn't have the same size");
-  return Generation(list);
-}
-
-DNA _mutateDNA(DNA dna) {
-  return DNA(
-      _mutateNumber(dna.smallOne),
-      _mutateNumber(dna.smallTwo),
-      _mutateNumber(dna.bigOne),
-      _mutateNumber(dna.bigTwo),
-      _mutateNumber(dna.bigThree));
-}
-
-double _mutateNumber(double d) {
-  Random r = Random();
-  return d * (r.nextDouble() * 0.4 + 0.8);
 }
