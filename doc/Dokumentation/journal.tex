@@ -77,7 +77,7 @@ The average amount of options per move in the game Ultimate Tic-Tac-Toe is five.
 In our case, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, the calculated amounts of states of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
 
 \begin{center}
-$\alpha$: amount of nodes,	
+$\alpha$: amount of nodes,
 $n$: search depth,
 $i$: index,
 $\delta$: average move per node
@@ -133,9 +133,9 @@ In the following figure, all five occurring states are marked with different col
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. We take the difference of the states of the two players. 
+The states are determined separately for both players. We take the difference of the states of the two players.
 %evtl erklären, wieso wir die differen der beiden spieler nehmen
-Then we have a certain number for each state. We have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.\\ 
+Then we have a certain number for each state. We have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.\\
 \begin{description}
 \item[Factor state one] 1
 \item[Factor state two] 3
@@ -144,7 +144,7 @@ Then we have a certain number for each state. We have to convert them into a mea
 \item[Factor state five] 100
 \end{description}
 
-In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.\\
+In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
@@ -186,6 +186,7 @@ This cycle will continue as long as the creator of the era desires to. \\
 
 The era which is shown on our website contains 70 generations and each generation consists of 16 Organisms.
 %wie lange zum trainieren?
+\todo{Wie lange zum trainiere? 8h an Computer mit 3.2Ghz und 16 Threads}
 
 
 
@@ -220,6 +221,52 @@ In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with t
 
 
 \section{Progress Evaluation}
+As already mentioned, first-generation organisms are produced from randomly generated DNA. Thus, on average, all parameters are still evaluated in approximately the same way. However, this changes over the generations.
+
+\subsection{Expected Result}
+According to instinct we can say that condition 5, a victory of the game, should be rated better than condition 1. We can also say that condition 2 should be rated better than condition 1, because with condition 2 we are closer to winning a local game. Also a won local game, condition 3, is better than a nearly won local game, condition 2.
+The point is that the conditions are already sorted the way we expect them to be weighted. Condition 1 should have the least weight, condition 5 the most.
+
+\subsection{Received results}
+The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following states are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite. With the exception of the last parameter, the following states are rated worse than the previous ones.
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.3\textwidth]{g1first}
+	\includegraphics[width=0.3\textwidth]{g1middle}
+	\includegraphics[width=0.3\textwidth]{g1last}
+	\captionof{figure}{The best, an average and the last DNA of Generation 1}
+\end{fixedpic}
+\begin{fixedpic}
+\begin{tikzpicture}
+\begin{axis}[
+width=8.5cm,
+ylabel=Weight,
+xlabel=Condition,
+legend style={at={(0.5,1.05)},
+anchor=south,legend columns=-1},
+xtick={0,1,2,3,4,5,6},
+xticklabels={1, 2, 3, 4, 5},
+xticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
+yticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
+%x tick label style={rotate=90},
+%cycle list name=abacus235,
+]
+\addplot coordinates{(0, 108) (1, 379) (2, 856) (3, 1648) (4, 1745)};
+\addplot coordinates{(0, 1408) (1, 1575) (2, 1801) (3, 205) (4, 1508)};
+\addplot coordinates{(0, 1586) (1, 790) (2, 494) (3, 439) (4, 697)};
+\legend{First of Genration 1,Median of Generation 1,Last of Generation 1}
+\end{axis}
+\end{tikzpicture}
+\end{fixedpic}
+While in the first generation only the first organism more or less reproduced the expected curve, in the 5th generation there are already 11 of 16 organisms with such DNA. The remaining 5 organisms show the curve up to the fourth parameter, but the fifth parameter was mutated badly and the curve goes down again. So we have in only five generations already a first trend which plays itself in and already strongly differs from the generation 1.
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.3\textwidth]{g5first}
+	\includegraphics[width=0.3\textwidth]{g5middle}
+	\includegraphics[width=0.3\textwidth]{g5last}
+	\captionof{figure}{The best, an average and the last DNA of Generation 5}
+\end{fixedpic}
+
 
 
 \section{Motivation}
