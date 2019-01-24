@@ -1,0 +1,19 @@
+\newenvironment{dnadiagram}{
+\begin{tikzpicture}
+\begin{axis}[
+width=8.5cm,
+ylabel=Value DNA,
+xlabel=Condition,
+legend style={at={(0.5,1.05)},
+anchor=south,legend columns=-1},
+%xtick={0,1,2,3,4,5,6},
+xticklabels={1, 2, 3, 4, 5},
+xticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
+yticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
+%x tick label style={rotate=90},
+%cycle list name=abacus235,
+]
+}{
+\end{axis}
+\end{tikzpicture}
+}
