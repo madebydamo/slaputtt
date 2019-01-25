@@ -47,25 +47,37 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 
 The yellow marked local fields are already won by the yellow party.
 
+\section{Motivation}
+Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
+Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. \\
+
+We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
+
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
+
 \section{SLAP Algorithm}
 
 \subsection{Alpha Beta}
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
-	\captionof{figure}{a representation of a Alpha Beta Pruning search tree}
+	\captionof{figure}{a representation of an Alpha Beta Pruning search tree}
 \end{fixedpic}
 
 
 
-\todo{erster satz nicht ganz klar}
-Our algorithm takes a score. Each score has a certain number of moves that can be played. All the possible moves are now tried out one after the other. After each move we get a new score, which also has possible moves again. Even after these moves, we have new scores again. This is how one score after the other is calculated. This can be represented as a tree structure. Each knot (whether round or square) symbolizes a score. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four moves were evaluated from the main node. Now the scores of the lowest row (hands) are evaluated. The score evaluation in the graph is represented by the number in knots (do not get confused by the numbers in the other knots, more on this later). The bigger the number, the better the score for us. Now the tree is evaluated so that in the worst case the score is as high as possible for us. That means as much as assuming that the opponent always makes the move that would be worst for us. This is how the evaluation starts below. The fourth move (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Of course, the opponent takes the worst score for us. Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
+Our algorithm always starts from one initial game state. This initial game state is represented by the top node. Each game state also corresponded to a number. Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played at a search depth of one.
+All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. This is how one score after the other is calculated. This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state, represented by a number. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four turns were evaluated from the initial node. Now the scores of the lowest row (hands) are evaluated. The bigger the number, the better the game state for us. And the better the game state, the sooner we will win.\\
+
+Now the tree is evaluated so that in the worst case the score is as high as possible for us.
+That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. This is how the evaluation starts at the bottom of the tree. The fourth turn (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.15\textwidth]{alphabetabranch}
 	\captionof{figure}{the smaller value gets written to the upper knot}
 \end{fixedpic}
-The opponent has two moves from this score. Either he takes the first move, which leads to a score of 5, or he takes the second move, which leads to a score of 6. The first move is clearly an advantage for the opponent. Therefore, the parent node is given the value five. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. Thus, the procedure repeats itself up to the top node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the algorithm. So we do not have to evaluate these areas at all and can save computing time.
+The parent node is given the value five, because the minimizing player always chooses the smaller value. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. The procedure repeats itself up to the initial node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the Alpha Beta Pruning algorithm. So we do not have to evaluate these areas at all and can save computing time.
+The search tree gets evaluated after every new turn. In other words, our Algorithm is able to calculate $n$ turns, which represents the search depth, in advance. Of course, the bigger the search depth $n$ is, the more accurate our moves can be made.
 
 \begin{fixedpic}
 	\centering
@@ -74,7 +86,7 @@ The opponent has two moves from this score. Either he takes the first move, whic
 \end{fixedpic}
 
 The average amount of options per move in the game Ultimate Tic-Tac-Toe is five. \cite{web:tsurel2013}
-In our case, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, the calculated amounts of states of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
+In our case, for simplification purposes, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, and without the optimizations of the Alpha Beta Pruning algorithm, the calculated amounts  of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
 
 \begin{center}
 $\alpha$: amount of nodes,
@@ -133,22 +145,26 @@ In the following figure, all five occurring states are marked with different col
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. We take the difference of the states of the two players.
-%evtl erklären, wieso wir die differen der beiden spieler nehmen
-Then we have a certain number for each state. We have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.\\
+The states are determined separately for both players. We take the difference of the states of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has more occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
+If the difference is $<0$, the second player has an advantage with the corresponding condition.
+
+After the subtraction we have five certain numbers, which describes each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represents  conditions, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.
+\begin{center}
 \begin{description}
-\item[Factor state one] 1
-\item[Factor state two] 3
-\item[Factor state three] 10
-\item[Factor state four] 30
+\item[Factor condition one] 1
+\item[Factor condition two] 3
+\item[Factor condition three] 10
+\item[Factor condition four] 30
 \item[Factor state five] 100
 \end{description}
+\end{center}
 
-In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
+
+In other words, the 5th DNA Value contributes 100 times more value to the final game state evaluation than the 1st DNA factor. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
-State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\\hline
+Condition & Occurrence red & Occurrence blue & Difference & DNA factor & DNA value \\\hline
 1	& 0	& 11	& -11	& 1 	& -11 \\\hline
 2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
 3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
@@ -157,7 +173,7 @@ State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\
 \multicolumn{5}{X|}{} & 183 \\\cline{6-6}
 \end{tabularx}\\
 \\
-The effective score in this case is 183, which is all the heuristic does. 
+The effective game state score in this case is 183, which is all the heuristic does.
 Based on this information, the Alpha Beta Pruning decides which move to play.
 
 
@@ -167,8 +183,10 @@ To say it in easy terms, the self learning part learns how to estimate the game 
 
 Let's take a look at how an algorithm is generated and how it gets better over time.
 To start a new era, we need to set a few things up. An era can be compared to several generations of humans. 
-The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
-%Formel 2*(n-1)
+The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. It's crucial, that every Organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the second player, which is a statistically significant advantage. \cite{web:tsurel2013}
+The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
+The amount of games that are played in that way with $n$ participants is $n^2-n$.
+
 We also need to decide the search depth of the alpha beta pruning algorithm the organisms use, while playing against each other. The bigger the search depth, the longer it will take, because the computer has to calculate more scenarios. But the deeper we search, the more accurate results we will get. 
 Now after we set up the amount of organisms and the search depth, we can start our new era. The first generation gets created (initialised) with random DNA. %in welchem bereich sind die Zufallszahlen?
 That means the proportion of the different parameters vary vividly. We already know, the Organisms with the best random parameter configuration will perform the best. But we don't know yet exactly, which parameters are the most important ones. To find it out, which parameters are the best ones, we now let the organisms play against each other. In other words, we will start the selection. After all matches are finished, we can rank the organisms according to the point distribution system, which we used. The worse half of our first generation will die. And as it is in real evolution, mutation will take place.
@@ -179,20 +197,23 @@ This cycle will continue as long as the creator of the era desires to. \\
 
 \begin{fixedpic}
 	\centering
-	\includegraphics[width=0.6\textwidth]{evoalgo}
+	\includegraphics[width=0.4\textwidth]{evoalgo}
 	\captionof{figure}{visualisation of an evolutionary algorithm}
 \end{fixedpic}
 
 
 The era which is shown on our website contains 70 generations and each generation consists of 16 Organisms.
-%wie lange zum trainieren?
-\todo{Wie lange zum trainiere? 8h an Computer mit 3.2Ghz und 16 Threads}
+
+It took a Computer with 3.2GHz and 16 threads 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
+
+$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{15 \cdot 16 \cdot 70} = 1.714s$$\\
+The average duration of a game between two Organisms with above-mentioned computer is 1.714 seconds.
 
 \subsection{Implementation in Dart}
 The implementation in Dart had to be carefully planned. So we started to create the classes that store the data, like the score, for us. This step had to be carefully considered, we then built all the other classes on these classes. Afterwards, of course, we couldn't immediately deal with the algorithms and the actual meaning of the project, but had some milestones, which we could only work through one after the other, because they depended on each other.
 
 \subsubsection{Gamecontroller}
-We already have the classes that store data for us, called modal for short. But to be able to play we need a lot more information. For example, which moves can be played when a certain game state is active. Therefore we created the \texttt{GameController}, which gives us exactly such information. 
+We already have the classes that store data for us, called modal for short. But to be able to play we need a lot more information. For example, which moves can be played when a certain game state is active. Therefore we created the \texttt{GameController}, which gives us exactly such information.
 \begin{lstlisting}[language=Dart,caption={Structure of the \texttt{GameController}}]
 // Returns whether the game is finished or not based on the [state]
 bool isGameFinished(GameState state) {
@@ -248,10 +269,10 @@ Now that we have a working game, we want to play it ourselves. That's why we sta
 Before we can start with the Alpha Beta Pruning algorithm, we have to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first create the DNA, the base of the evaluation. Based on this DNA, the states are then added together. In order to accelerate this evaluation, we have already loaded the evaluation for all possible Tic Tac Toe fields in the background, as with the game controller. With this information we can efficiently evaluate even a large field without much computational effort. Finally, this function is called several times with each move of the algorithm.
 
 \begin{lstlisting}[language=Dart,caption={Implementation of the evaluation}]
-// Returns the evaluated score of the [state] from the 
+// Returns the evaluated score of the [state] from the
 // point of view of the [primaryState]
 double evaluateState(GameState state, State primaryState) {
-	// Evaluates the score for the [primaryState] and 
+	// Evaluates the score for the [primaryState] and
 	// subtract score of the opponent
     return evaluateForState(state, primaryState)
      - evaluateForState(state, State.flip(primaryState));
@@ -268,7 +289,7 @@ double evaluateForState(GameState state, State primaryState) {
       // The game is not finished, therefore we analyse all local games
       state.tiles.map((b) => cache[b.value][primaryState]).forEach((info) {
         // If the local board is finished, we don't evaluate the score, because
-        // the score will get added in the last step, where we evaluate 
+        // the score will get added in the last step, where we evaluate
         // condition 3 and 4
         if(info.three == 0) {
        	  // Adds the score of condition 1 and 2 for each local board
@@ -315,13 +336,14 @@ Via a button in the navigation bar, it's possible to change to a more detailed  
 Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
+We also had ho make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience.
 
 
-\subsection{Runtime} 
+\subsection{Runtime}
 Our two algorithms both depend on different parameters. These influence the runtime in different ways. If they are too small, we do not get an optimal result; if they are too large, the runtime can be too long.
 \subsubsection{Alpha Beta Pruning algorithm}
 $$O(\delta^{n})$$
-The Alpha Beta Pruning algorithm has 
+The Alpha Beta Pruning algorithm has
 
 \begin{center}
 $\alpha$: amount of nodes,
@@ -392,14 +414,6 @@ From the tenth generation onwards, these conditions are further developed. So th
 
 \todo{Nach State und Condition suchen und alles aufräumen}
 
-\section{Motivation}
-Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
-Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. \\
-
-We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
-
-To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
-
 \subsection{Why we chose Dart}
 At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in Javascript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be Javascript. However, Dart was designed to compete with Javascript.  The main goal was to eliminate the errors and inconveniences of Javascript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in Javascript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
 
@@ -407,7 +421,7 @@ At the beginning of every project there is always the question which programming
 // Returns obj2 if obj1 is null, otherwise returns obj1
 function method1(obj1, obj2) {
 	if(obj1 == null) {
-		return obj2;	
+		return obj2;
 	} else {
 		return obj1;
 	}
@@ -435,7 +449,8 @@ void method2(Foo foo) {
 
 
 \section{Challenges}
-
+\subsection{Worker}
+\subsection{CSS responsive and crossbrowser design}
 
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
