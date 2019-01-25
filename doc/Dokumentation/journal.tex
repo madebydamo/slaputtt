@@ -209,6 +209,23 @@ It took a Computer with 3.2GHz and 16 threads 8 hours to calculate everything. 1
 $$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{16^2 - 16 \cdot 70} = 1.714s$$\\
 The average duration of a game between two Organisms with above-mentioned computer is 1.714 seconds.
 
+\subsection{Runtime}
+Our two algorithms both depend on different parameters. These influence the runtime in different ways. If they are too small, we do not get an optimal result; if they are too large, the runtime can be too long.
+
+\subsubsection{Alpha Beta Pruning algorithm}
+The Alpha Beta Pruning algorithm has several factors that influence it. One factor is the average search depth, here $\delta$. This factor is always similar for our game, but the more advanced the score, the smaller it gets. The second factor is the search depth, here $n$. The deeper you search, the more scores you have to evaluate. This factor influences the score exponentially. Therefore, the search depth of the era must also be carefully selected when creating. So we have a runtime of $\delta^n$ which in the O-notation, which is used in computer science, corresponds to a runtime of $O(N^{m})$. This means that the parameter $n$ influences the runtime exponentially.
+
+\subsubsection{Self Learning algorithm}
+The self-learning algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all play against each other, with outward and return play, formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. Now we run the Alpha Beta Pruning Algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the Alpha Beta Pruning algorithm. So in the end we have a runtime of $(g^2 - g) * \omega * delta^n$. The first part $(g^2 - g) * \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the Alpha Beta Pruning algorithm, is $O(N^k)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially. So the search depth should be played around more cautiously, as with the size of the generations. 
+
+\subsubsection{Device Restrictions}
+We have made our program as device friendly as possible. So you don't need a powerful computer to play games, a smartphone is enough. To train the generations, on the other hand, as much computing power as possible is needed. So you will get better results with a multicore PC than with a smartphone. Since the software runs on as many threads as possible, this is the main criterion of the training. So it was also surprising that a game on my smartphone, the Galaxy S8, was played faster than on my business PC. 
+As we already found out in \autoref{selflearning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$. If we multiply that by the 14 ($maximale\ number\ threads - 2$) working threads, we get $[t] = 24 s$.
+If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that the smartphone actually works faster than the computer, but would still be slower because the computer has 8 threads more to work with. So you can't generally say that a device is unsuitable for training organisms. However, the more threads and speed a device has, the faster the organisms can be trained.
+
+\section{Implementation}
+
+
 \subsection{Implementation in Dart}
 The implementation in Dart had to be carefully planned. So we started to create the classes that store the data, like the score, for us. This step had to be carefully considered, we then built all the other classes on these classes. Afterwards, of course, we couldn't immediately deal with the algorithms and the actual meaning of the project, but had some milestones, which we could only work through one after the other, because they depended on each other.
 
@@ -338,20 +355,6 @@ Our Algorithm is separated from the part of the Web, that it is modular and reus
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
 We also had ho make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience.
 
-
-\subsection{Runtime}
-Our two algorithms both depend on different parameters. These influence the runtime in different ways. If they are too small, we do not get an optimal result; if they are too large, the runtime can be too long.
-
-\subsubsection{Alpha Beta Pruning algorithm}
-The Alpha Beta Pruning algorithm has several factors that influence it. One factor is the average search depth, here $\delta$. This factor is always similar for our game, but the more advanced the score, the smaller it gets. The second factor is the search depth, here $n$. The deeper you search, the more scores you have to evaluate. This factor influences the score exponentially. Therefore, the search depth of the era must also be carefully selected when creating. So we have a runtime of $\delta^n$ which in the O-notation, which is used in computer science, corresponds to a runtime of $O(N^{m})$. This means that the parameter $n$ influences the runtime exponentially.
-
-\subsubsection{Self Learning algorithm}
-The self-learning algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all play against each other, with outward and return play, formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. Now we run the Alpha Beta Pruning Algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the Alpha Beta Pruning algorithm. So in the end we have a runtime of $(g^2 - g) * \omega * delta^n$. The first part $(g^2 - g) * \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the Alpha Beta Pruning algorithm, is $O(N^k)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially. So the search depth should be played around more cautiously, as with the size of the generations. 
-
-\subsubsection{Device Restrictions}
-We have made our program as device friendly as possible. So you don't need a powerful computer to play games, a smartphone is enough. To train the generations, on the other hand, as much computing power as possible is needed. So you will get better results with a multicore PC than with a smartphone. Since the software runs on as many threads as possible, this is the main criterion of the training. So it was also surprising that a game on my smartphone, the Galaxy S8, was played faster than on my business PC. 
-As we already found out in \autoref{selflearning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$. If we multiply that by the 14 ($maximale\ number\ threads - 2$) working threads, we get $[t] = 24 s$.
-If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that the smartphone actually works faster than the computer, but would still be slower because the computer has 8 threads more to work with. So you can't generally say that a device is unsuitable for training organisms. However, the more threads and speed a device has, the faster the organisms can be trained.
 
 \section{Progress Evaluation}
 As already mentioned, first-generation organisms are produced from randomly generated DNA. Thus, on average, all parameters are still evaluated in approximately the same way. However, this changes over the generations.
