@@ -47,6 +47,14 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 
 The yellow marked local fields are already won by the yellow party.
 
+\section{Motivation}
+Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
+Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. \\
+
+We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
+
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
+
 \section{SLAP Algorithm}
 
 \subsection{Alpha Beta}
@@ -177,7 +185,7 @@ Let's take a look at how an algorithm is generated and how it gets better over t
 To start a new era, we need to set a few things up. An era can be compared to several generations of humans. 
 The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. It's crucial, that every Organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the second player, which is a statistically significant advantage. \cite{web:tsurel2013}
 The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
-%Formel 2*(n-1)
+The amount of games that are played in that way with $n$ participants is $n^2-n$.
 
 We also need to decide the search depth of the alpha beta pruning algorithm the organisms use, while playing against each other. The bigger the search depth, the longer it will take, because the computer has to calculate more scenarios. But the deeper we search, the more accurate results we will get. 
 Now after we set up the amount of organisms and the search depth, we can start our new era. The first generation gets created (initialised) with random DNA. %in welchem bereich sind die Zufallszahlen?
@@ -189,17 +197,16 @@ This cycle will continue as long as the creator of the era desires to. \\
 
 \begin{fixedpic}
 	\centering
-	\includegraphics[width=0.6\textwidth]{evoalgo}
+	\includegraphics[width=0.4\textwidth]{evoalgo}
 	\captionof{figure}{visualisation of an evolutionary algorithm}
 \end{fixedpic}
 
 
 The era which is shown on our website contains 70 generations and each generation consists of 16 Organisms.
-%wie lange zum trainieren?
+
 It took a Computer with 3.2GHz and 16 threads 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
 
-$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{15 \cdot 16 \cdot 70} = 1.714s$$
-
+$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{15 \cdot 16 \cdot 70} = 1.714s$$\\
 The average duration of a game between two Organisms with above-mentioned computer is 1.714 seconds.
 
 \subsection{Implementation in Dart}
@@ -225,6 +232,7 @@ Via a button in the navbar, it's possible to change to a more detailed  part of 
 Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
+We also had ho make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience. 
 
 
 \subsection{ Runtime } 
@@ -289,20 +297,11 @@ From the tenth generation onwards, these conditions are further developed. So th
 
 \todo{Nach State und Condition suchen und alles aufräumen}
 
-\section{Motivation}
-Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
-Damian came up with the idea, to create a Self Learning Algorithm which is able to play Ultimate Tic-Tac-Toe. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with such a project and that the context of the IDPA provides the perfect opportunity for that. \\
-
-We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
-
-To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
-
 \subsection{Why we chose Dart}
 
-
-
 \section{Challenges}
-
+\subsection{Worker}
+\subsection{CSS responsive and crossbrowser design}
 
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
