@@ -448,6 +448,8 @@ void method2(Foo foo) {
 
 \section{Challenges}
 \subsection{Worker}
+Worker is a feature of web development. You can outsource computational tasks to them so that the main thread, who is responsible for updating the UI, is not under load for too long. Otherwise, the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript. But Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. We still wanted to use it.\\
+In general, when we want to create a worker, we have to link a JavaScript file, which will get executed in an other thread. So our plan was to call a JavaScript file, which afterwards executes a Dart file, compiled in JavaScript. The problem was that there is not a official way, how we should call a Dart file out of a JavaScript file. We had to look deep in the documentation of the Dart compilers to find relevant informations to solve this problems. The most important thing is that it works now. Even tough it puzzled us some hours.
 
 \subsection{Responsive design with CSS}
 When designing a website, it's important to consider, that different end devices are used to visit the website. The screen size and ratio of a normal desktop computer is extremely different from a smartphone. In order to render the website well on all end devices, \ac{responsive} design is required. 
