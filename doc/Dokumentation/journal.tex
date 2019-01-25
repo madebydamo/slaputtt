@@ -53,19 +53,23 @@ The yellow marked local fields are already won by the yellow party.
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
-	\captionof{figure}{a representation of a Alpha Beta Pruning search tree}
+	\captionof{figure}{a representation of an Alpha Beta Pruning search tree}
 \end{fixedpic}
 
 
 
-\todo{erster satz nicht ganz klar}
-Our algorithm takes a score. Each score has a certain number of moves that can be played. All the possible moves are now tried out one after the other. After each move we get a new score, which also has possible moves again. Even after these moves, we have new scores again. This is how one score after the other is calculated. This can be represented as a tree structure. Each knot (whether round or square) symbolizes a score. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four moves were evaluated from the main node. Now the scores of the lowest row (hands) are evaluated. The score evaluation in the graph is represented by the number in knots (do not get confused by the numbers in the other knots, more on this later). The bigger the number, the better the score for us. Now the tree is evaluated so that in the worst case the score is as high as possible for us. That means as much as assuming that the opponent always makes the move that would be worst for us. This is how the evaluation starts below. The fourth move (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Of course, the opponent takes the worst score for us. Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
+Our algorithm always starts from one initial game state. This initial game state is represented by the top node. Each game state also corresponded to a number. Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played at a search depth of one.
+All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. This is how one score after the other is calculated. This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state, represented by a number. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four turns were evaluated from the initial node. Now the scores of the lowest row (hands) are evaluated. The bigger the number, the better the game state for us. And the better the game state, the sooner we will win.\\
+
+Now the tree is evaluated so that in the worst case the score is as high as possible for us.
+That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. This is how the evaluation starts at the bottom of the tree. The fourth turn (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Therefore, the smallest number of leaves is always written in the upper node. See the example at the bottom left:
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.15\textwidth]{alphabetabranch}
 	\captionof{figure}{the smaller value gets written to the upper knot}
 \end{fixedpic}
-The opponent has two moves from this score. Either he takes the first move, which leads to a score of 5, or he takes the second move, which leads to a score of 6. The first move is clearly an advantage for the opponent. Therefore, the parent node is given the value five. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. Thus, the procedure repeats itself up to the top node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the algorithm. So we do not have to evaluate these areas at all and can save computing time.
+The parent node is given the value five, because the minimizing player always chooses the smaller value. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. The procedure repeats itself up to the initial node. In this way we get the information which move is best for us. The grey marked nodes and crossed out branches are optimizations of the Alpha Beta Pruning algorithm. So we do not have to evaluate these areas at all and can save computing time. 
+The search tree gets evaluated after every new turn. In other words, our Algorithm is able to calculate $n$ turns, which represents the search depth, in advance. Of course, the bigger the search depth $n$ is, the more accurate our moves can be made.
 
 \begin{fixedpic}
 	\centering
@@ -74,7 +78,7 @@ The opponent has two moves from this score. Either he takes the first move, whic
 \end{fixedpic}
 
 The average amount of options per move in the game Ultimate Tic-Tac-Toe is five. \cite{web:tsurel2013}
-In our case, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, the calculated amounts of states of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
+In our case, for simplification purposes, the Alpha Beta Pruning search tree can be pictured with five branches emerging from every new node. With a search depth of n, and without the optimizations of the Alpha Beta Pruning algorithm, the calculated amounts  of all nodes  can be calculated with the following  equation:  $$\alpha = \sum_{i=1}^{n} 	\delta^{i}$$
 
 \begin{center}
 $\alpha$: amount of nodes,
@@ -192,7 +196,11 @@ This cycle will continue as long as the creator of the era desires to. \\
 
 The era which is shown on our website contains 70 generations and each generation consists of 16 Organisms.
 %wie lange zum trainieren?
-\todo{Wie lange zum trainiere? 8h an Computer mit 3.2Ghz und 16 Threads}
+It took a Computer with 3.2GHz and 16 threads 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
+
+$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{15 \cdot 16 \cdot 70} = 1.714s$$
+
+The average duration of a game between two Organisms with above-mentioned computer is 1.714 seconds.
 
 \subsection{Implementation in Dart}
 
