@@ -309,28 +309,28 @@ The medium level is played by the best organism of the 35th %evtl korrektur
 generation and the hard level is the best organism of the whole era. The default search depth of the current game is three. Three is an experiential value, which is the best compromise between search duration and reliability of the algorithm.
 The first part of the website contains an explanation of the rules of the game as well.
 
-Via a button in the navbar, it's possible to change to a more detailed  part of the website, we called it "Advanced View", which we designed for people who are interested in what's going on behind the scenes. It's possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
+Via a button in the navigation bar, it's possible to change to a more detailed  part of the website, we called it "Advanced View", which we designed for people who are interested in what's going on behind the scenes. It's possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
 
 %evtl weglassen oder verbessern
-Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.\\
+Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
 
 
 \subsection{Runtime} 
 Our two algorithms both depend on different parameters. These influence the runtime in different ways. If they are too small, we do not get an optimal result; if they are too large, the runtime can be too long.
-\subsubsection{Alpha Beta Pruning Algorithm}
-$$O(\sum_{i=1}^{n} 	\delta^{i})$$
+\subsubsection{Alpha Beta Pruning algorithm}
+$$O(\delta^{n})$$
+The Alpha Beta Pruning algorithm has 
 
 \begin{center}
 $\alpha$: amount of nodes,
 $n$: search depth,
-$i$: index,
 $\delta$: average move per node
 \end{center}
 
 
-\subsubsection{Self Learning Algorithm}
+\subsubsection{Self Learning algorithm}
 
 \subsubsection{Device Restrictions}
 
