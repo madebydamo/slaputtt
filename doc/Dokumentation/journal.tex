@@ -133,22 +133,26 @@ In the following figure, all five occurring states are marked with different col
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. We take the difference of the states of the two players. 
-\todo{evtl erklären, wieso wir die differen der beiden spieler nehmen}
-Then we have a certain number for each state. We have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number of states is multiplied. Not all parameters should contribute the same value to the game state evaluation. With the DNA, we are able to control the relative proportions of the five parameters. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.\\ 
+The states are determined separately for both players. We take the difference of the states of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has more occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
+If the difference is $<0$, the second player has an advantage with the corresponding condition.
+
+After the subtraction we have five certain numbers, which describes each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represents  conditions, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.
+\begin{center}
 \begin{description}
-\item[Factor state one] 1
-\item[Factor state two] 3
-\item[Factor state three] 10
-\item[Factor state four] 30
+\item[Factor condition one] 1
+\item[Factor condition two] 3
+\item[Factor condition three] 10
+\item[Factor condition four] 30
 \item[Factor state five] 100
 \end{description}
+\end{center}
 
-In other words, the 5th parameter contributes 100 times more value to the end evaluation than the 1st parameter. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
+
+In other words, the 5th DNA Value contributes 100 times more value to the final game state evaluation than the 1st DNA factor. The 4th parameter is 10 times more valuable than the 2nd parameter. In the following table, the whole calculation of the value of the game state is shown.
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
-State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\\hline
+Condition & Occurrence red & Occurrence blue & Difference & DNA factor & DNA value \\\hline
 1	& 0	& 11	& -11	& 1 	& -11 \\\hline
 2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
 3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
@@ -157,7 +161,7 @@ State & Occurrence red & Occurrence blue & Difference & Factor of DNA & Value \\
 \multicolumn{5}{X|}{} & 183 \\\cline{6-6}
 \end{tabularx}\\
 \\
-The effective score in this case is 183, which is all the heuristic does. 
+The effective game state score in this case is 183, which is all the heuristic does. 
 Based on this information, the Alpha Beta Pruning decides which move to play.
 
 
@@ -167,8 +171,10 @@ To say it in easy terms, the self learning part learns how to estimate the game 
 
 Let's take a look at how an algorithm is generated and how it gets better over time.
 To start a new era, we need to set a few things up. An era can be compared to several generations of humans. 
-The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
+The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. It's crucial, that every Organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the second player, which is a statistically significant advantage. \cite{web:tsurel2013}
+The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
 %Formel 2*(n-1)
+
 We also need to decide the search depth of the alpha beta pruning algorithm the organisms use, while playing against each other. The bigger the search depth, the longer it will take, because the computer has to calculate more scenarios. But the deeper we search, the more accurate results we will get. 
 Now after we set up the amount of organisms and the search depth, we can start our new era. The first generation gets created (initialised) with random DNA. %in welchem bereich sind die Zufallszahlen?
 That means the proportion of the different parameters vary vividly. We already know, the Organisms with the best random parameter configuration will perform the best. But we don't know yet exactly, which parameters are the most important ones. To find it out, which parameters are the best ones, we now let the organisms play against each other. In other words, we will start the selection. After all matches are finished, we can rank the organisms according to the point distribution system, which we used. The worse half of our first generation will die. And as it is in real evolution, mutation will take place.
