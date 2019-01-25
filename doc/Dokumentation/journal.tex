@@ -224,7 +224,7 @@ As we already found out in \autoref{selflearning}, on a computer with 16 threads
 If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that the smartphone actually works faster than the computer, but would still be slower because the computer has 8 threads more to work with. So you can't generally say that a device is unsuitable for training organisms. However, the more threads and speed a device has, the faster the organisms can be trained.
 
 \section{Implementation}
-
+The implementation had two main parts. One part was the implementation of the algorithms and the corresponding one in Dart. The second part was the subsequent integration into the website and the clean design of this.
 
 \subsection{Implementation in Dart}
 The implementation in Dart had to be carefully planned. So we started to create the classes that store the data, like the score, for us. This step had to be carefully considered, we then built all the other classes on these classes. Afterwards, of course, we couldn't immediately deal with the algorithms and the actual meaning of the project, but had some milestones, which we could only work through one after the other, because they depended on each other.
