@@ -53,7 +53,7 @@ Damian came up with the idea, to create a Self Learning Algorithm which is able 
 
 We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
 
-To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
 
 \section{SLAP Algorithm}
 
@@ -61,12 +61,12 @@ To cover two subjects in our IDPA, we decided to apply our English knowledge, wh
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
-	\captionof{figure}{a representation of an Alpha Beta Pruning search tree}
+	\captionof{figure}{A representation of an Alpha Beta Pruning tree. \protect \cite{web:aptree} }
 \end{fixedpic}
 
 
 
-Our algorithm always starts from one initial game state. This initial game state is represented by the top node. Each game state also corresponded to a number. Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played at a search depth of one.
+The \ac{ap}  always starts from one initial game state. This initial game state is represented by the top node. Each game state also corresponded to a number. Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played at a search depth of one.
 All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. This is how one score after the other is calculated. This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state, represented by a number. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four turns were evaluated from the initial node. Now the scores of the lowest row (hands) are evaluated. The bigger the number, the better the game state for us. And the better the game state, the sooner we will win.\\
 
 Now the tree is evaluated so that in the worst case the score is as high as possible for us.
@@ -164,13 +164,13 @@ In other words, the 5th DNA Value contributes 100 times more value to the final 
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
-Condition & Occurrence red & Occurrence blue & Difference & DNA factor & DNA value \\\hline
+Condition & Occurrence Condition red & Occurrence Condition blue & Difference & DNA factor & Condition Score \\\hline
 1	& 0	& 11	& -11	& 1 	& -11 \\\hline
 2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
 3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
 4	& 2	& 0 	& 2 	& 30	& 60 \\\hline
 5	& 1	& 0 	& 1 	& 100	& 100 \\\hline
-\multicolumn{5}{X|}{} & 183 \\\cline{6-6}
+\multicolumn{5}{|c|}{Game state score}&183 \\\hline
 \end{tabularx}\\
 \\
 The effective game state score in this case is 183, which is all the heuristic does.
@@ -206,7 +206,7 @@ The era which is shown on our website contains 70 generations and each generatio
 
 It took a Computer with 3.2GHz and 16 threads 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
 
-$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{15 \cdot 16 \cdot 70} = 1.714s$$\\
+$$ [t] =  \frac{8h \cdot 60\frac{min}{h} \cdot 60\frac{s}{min}}{16^2 - 16 \cdot 70} = 1.714s$$\\
 The average duration of a game between two Organisms with above-mentioned computer is 1.714 seconds.
 
 \subsection{Implementation in Dart}
@@ -447,10 +447,14 @@ void method2(Foo foo) {
 }
 \end{lstlisting}
 
-
 \section{Challenges}
 \subsection{Worker}
-\subsection{CSS responsive and crossbrowser design}
+
+\subsection{Responsive design with CSS}
+When designing a website, it's important to consider, that different end devices are used to visit the website. The screen size and ratio of a normal desktop computer is extremely different from a smartphone. In order to render the website well on all end devices, \ac{responsive} design is required. 
+
+To meet that requirement, fortunately we had the Materialize CSS frame work. Despite that, it wasn't always easy to achieve a seamless design on different end devices. While we developed the website, some components were often displaced, when we accessed the unfinished website with different end devices. 
+In the end, even tough it was challenging, we had a well structured responsive design.
 
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
