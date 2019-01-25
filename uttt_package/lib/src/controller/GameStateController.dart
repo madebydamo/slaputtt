@@ -63,7 +63,7 @@ List<Move> getAllPossibleMoves(GameState state, [State s]) {
   return moves;
 }
 
-RevertMove getRevertMove(GameState state, Move move) {
+RevertMove _getRevertMove(GameState state, Move move) {
   return RevertMove(state.lastMove, state.tiles[move.bigIndex].state);
 }
 
@@ -76,7 +76,7 @@ GameState revertMove(GameState state, RevertMove revertMove) {
 }
 
 RevertMove playMove(GameState state, Move move) {
-  RevertMove revertMove = getRevertMove(state, move);
+  RevertMove revertMove = _getRevertMove(state, move);
   state.tiles[move.bigIndex].tiles[move.smallIndex].state = move.state;
   state.lastMove = move;
   var _gridInfo = cache[state.tiles[move.bigIndex].value];

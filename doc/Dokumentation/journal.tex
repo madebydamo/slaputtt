@@ -162,7 +162,7 @@ Based on this information, the Alpha Beta Pruning decides which move to play.
 
 
 
-\subsection{Self Learning}
+\subsection{Self Learning} \label{selflearning}
 To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the DNA  is responsible for that. The DNA dictates, which heuristic parameters are more important and it does that simply with a factor. The DNA is also the only thing which changes, while learning. 
 
 Let's take a look at how an algorithm is generated and how it gets better over time.
@@ -189,10 +189,114 @@ The era which is shown on our website contains 70 generations and each generatio
 \todo{Wie lange zum trainiere? 8h an Computer mit 3.2Ghz und 16 Threads}
 
 \subsection{Implementation in Dart}
+The implementation in Dart had to be carefully planned. So we started to create the classes that store the data, like the score, for us. This step had to be carefully considered, we then built all the other classes on these classes. Afterwards, of course, we couldn't immediately deal with the algorithms and the actual meaning of the project, but had some milestones, which we could only work through one after the other, because they depended on each other.
+
+\subsubsection{Gamecontroller}
+We already have the classes that store data for us, called modal for short. But to be able to play we need a lot more information. For example, which moves can be played when a certain game state is active. Therefore we created the \texttt{GameController}, which gives us exactly such information. 
+\begin{lstlisting}[language=Dart,caption={Structure of the \texttt{GameController}}]
+// Returns whether the game is finished or not based on the [state]
+bool isGameFinished(GameState state) {
+  // Implementation of IsGameFinished
+  ...
+}
+
+// Return a list of all possible playable moves based on the [state]
+List<Move> getAllPossibleMoves(GameState state, [State s]) {
+  // Implementation of getAllPossibleMoves
+  ...
+}
+
+// Reverts a played move on the [state] based on the [revertMove]
+GameState revertMove(GameState state, RevertMove revertMove) {
+	//Implementation of revertMove
+	...
+}
+
+// Modifies the [state] based on the [move].
+RevertMove playMove(GameState state, Move move) {
+	//Implementation of playMove
+	...
+}
+\end{lstlisting}
+Since these functions are needed for each individual move, we have made these functions as efficient as possible. So we have already evaluated every possible Tic Tac Toe field and stored it in a cache. If we now evaluate the Ultimate Tic Tac Toe field, we can access this information and minimize the computing time per call.
+
+\subsubsection{Game}
+Now that we have all the necessary information for a gamestate, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program doesn't yet run in the browser but in the console, we didn't implement any input options yet. Instead we created the simplest algorithm there is. It chooses a random playable move and plays it. Then we could let the computer play the first games. The games didn't really make sense, because only one random move was played at a time, but we reached this milestone.
+
+\begin{lstlisting}[language=Dart,caption={Implementation of the \texttt{RandomMove}}]
+class RandomMove extends Algorithm {
+  Random r;
+
+  /// Initialises a new Random Algorithm
+  RandomMove() {
+    r = Random();
+  }
+
+  @override
+  Move getNextMove(GameState state) {
+    List<Move> moves = getAllPossibleMoves(state, State.flip(state.lastMove.state));
+    int randomIndex = r.nextInt(moves.length);
+    return moves[randomIndex];
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Website}
+Now that we have a working game, we want to play it ourselves. That's why we started developing the website. First we had to make sure that the score was displayed correctly. Then we had to create the possibility that when we click into the grid, the correct move is played. After this implementation we were able to play against the computer, but only against the random algorithm. The further implementation of the website is described in more detail in the \autoref{websiteui}. For this milestone we only needed a playable version so that we could start implementing the Alpha Beta pruning algorithm.
+
+\subsubsection{Heuristic}
+Before we can start with the Alpha Beta Pruning algorithm, we have to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first create the DNA, the base of the evaluation. Based on this DNA, the states are then added together. In order to accelerate this evaluation, we have already loaded the evaluation for all possible Tic Tac Toe fields in the background, as with the game controller. With this information we can efficiently evaluate even a large field without much computational effort. Finally, this function is called several times with each move of the algorithm.
+
+\begin{lstlisting}[language=Dart,caption={Implementation of the evaluation}]
+// Returns the evaluated score of the [state] from the 
+// point of view of the [primaryState]
+double evaluateState(GameState state, State primaryState) {
+	// Evaluates the score for the [primaryState] and 
+	// subtract score of the opponent
+    return evaluateForState(state, primaryState)
+     - evaluateForState(state, State.flip(primaryState));
+}
+
+// Returns the evaluated score of the [state] only for the [primaryState]
+double evaluateForState(GameState state, State primaryState) {
+    double value = 0.0;
+    // Checks if the game is finished
+    if(cache[state.value][primaryState].three > 0) {
+      // Because the game is finished, only the last parameter of the DNA is relevant
+      value += cache[state.value][primaryState].three * dna.bigThree;
+    } else {
+      // The game is not finished, therefore we analyse all local games
+      state.tiles.map((b) => cache[b.value][primaryState]).forEach((info) {
+        // If the local board is finished, we don't evaluate the score, because
+        // the score will get added in the last step, where we evaluate 
+        // condition 3 and 4
+        if(info.three == 0) {
+       	  // Adds the score of condition 1 and 2 for each local board
+          value += info.one * dna.smallOne;
+          value += info.two * dna.smallTwo;
+        }
+      });
+      // Finally we evaluate condition 3 and 4
+      value += cache[state.value][primaryState].one * dna.bigOne;
+      value += cache[state.value][primaryState].two * dna.bigTwo;
+    }
+    return value;
+}
+\end{lstlisting}
+
+\subsubsection{Alpha Beta Pruning Algorithm}
+Now we can implement the Alpha Beta Pruning algorithm. Since we already prepared everything, from the heuristics to the game controller, this work was done relatively fast. Since we also built our program cleanly with interfaces, we could simply replace the random algorithm with the Alpha Beta Pruning algorithm and play against it. However, the prerequisite for this was that the heuristic was filled with a meaningful DNA object. We created this by hand, with values that we thought made sense. Afterwards we were able to play against our algorithm. What is striking is that it was really hard to win against the algorithm, although the parameters were not defined by the computer but by us. That was of course a good sign that our approach could be successful.
+
+\subsubsection{Selflearning Algorithm}
+Since our algorithm now works, we start with the self-learning part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the functions described in the \autoref{selflearning} and call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
+
+\subsubsection{Final Step}
+Our main goal was achieved. The algorithm evolves itself and we can play against it. But we didn't want to be satisfied with that yet. That's why we added the self-learning algorithm to the website and added some nice features like color themes or compatibility on all devices. We also kept an eye on the performance and if possible, wrote the code as efficiently as possible.
+
 
 %For dynamic parts of a website, webbrowsers such as Google Chrome or Windows Explorer only understand a language called JavaScript. Because of that, our project, %which is mainly written in Dart, gets compiled (translated) to JavaScript. In that way, we can avoid the disadvantages JavaScript has.
 
-\subsection{Website and User Interface}
+\subsection{Website and User Interface} \label{websiteui}
 In order that our project is accessible all over the world with different end devices ranging from Smartphones to Personal Computers running with different Operating Systems, we thought that it would be the most convenient solution to make a website. 
 
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part was already discussed in the previous subsection. 
@@ -208,14 +312,27 @@ The first part of the website contains an explanation of the rules of the game a
 Via a button in the navbar, it's possible to change to a more detailed  part of the website, we called it "Advanced View", which we designed for people who are interested in what's going on behind the scenes. It's possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
 
 %evtl weglassen oder verbessern
-Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
+Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.\\
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
 
 
-\subsection{ Runtime } 
+\subsection{Runtime} 
+Our two algorithms both depend on different parameters. These influence the runtime in different ways. If they are too small, we do not get an optimal result; if they are too large, the runtime can be too long.
+\subsubsection{Alpha Beta Pruning Algorithm}
+$$O(\sum_{i=1}^{n} 	\delta^{i})$$
 
-\subsubsection{ Device Restrictions}
+\begin{center}
+$\alpha$: amount of nodes,
+$n$: search depth,
+$i$: index,
+$\delta$: average move per node
+\end{center}
+
+
+\subsubsection{Self Learning Algorithm}
+
+\subsubsection{Device Restrictions}
 
 
 \section{Progress Evaluation}
@@ -284,7 +401,37 @@ We also knew, that we could integrate knowledge in our project, which we gained 
 To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
 
 \subsection{Why we chose Dart}
+At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in Javascript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be Javascript. However, Dart was designed to compete with Javascript.  The main goal was to eliminate the errors and inconveniences of Javascript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in Javascript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
 
+\begin{lstlisting}[language=JavaScript,caption={Example in JavaScript}]
+// Returns obj2 if obj1 is null, otherwise returns obj1
+function method1(obj1, obj2) {
+	if(obj1 == null) {
+		return obj2;	
+	} else {
+		return obj1;
+	}
+}
+
+// Executes the method bar, but only if foo is not null
+function method2(foo) {
+	if(foo != null) {
+		foo.bar();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Dart,caption={Example in Dart}]
+// Same as above but in Dart
+dynamic method1(dynamic obj1, dynamic obj2) {
+	return obj1 ?? obj2;
+}
+
+// Same as above but in Dart
+void method2(Foo foo) {
+	foo?.bar();
+}
+\end{lstlisting}
 
 
 \section{Challenges}
