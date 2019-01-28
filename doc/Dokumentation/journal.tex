@@ -12,7 +12,7 @@ In order to meet the requirements to cover two subjects, we decided to write our
 
 %overview methodological approach
 The first part of our IDPA will be to implement the game itself and the corresponding SLAP algorithm. 
-That includes to find a way to value the states of the game in the most efficient way. This will be the task of the \acl{SL} algorithm (\ac{SL}). Only if that part of the \ac{SLAP} algorithm works fine, the \ac{ABP} is able to work in our favour.
+That includes to find a way to value the \acp{game state} in the most efficient way. This will be the task of the \acl{SL} algorithm (\ac{SL}). Only if that part of the \ac{SLAP} algorithm works fine, the \ac{ABP} is able to work in our favour.
 We decided to realise all of that with a modern programming language called Dart from Google. Dart is a well-structured, object-oriented programming language that gives us the flexibility to write client and server-side code. All with one code base and one language. Once everything is set up, we will track the development of the \ac{SL} algorithm. We are also planning to integrate a function into the website where the user can evolve his own \ac{SLAP} algorithm and observe the progress themselves.
 %overview structure of the paper
 %to do
@@ -26,7 +26,7 @@ We also knew, that we could integrate knowledge in our project, which we gained 
 To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
 
 \section{Rules}
-To understand how to play \ac{UTTT}, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinaty Tic-Tac-Toe, you can continue reading paragraph 2.2. 
+To understand how to play \ac{UTTT}, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinaty Tic-Tac-Toe, you can continue reading \autoref{rulesuttt}. 
 
 \subsection {Rules Tic-Tac-Toe}
 
@@ -40,7 +40,7 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while o
 
 
 
-\subsection {Rules \ac{UTTT}}
+\subsection {Rules \ac{UTTT}} \label{rulesuttt}
 The board of \ac{UTTT} is made up from 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
 Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
 A player can start anywhere he would like to on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. \\
@@ -95,9 +95,7 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 	\captionof{figure}{All possible game moves in the 3rd level of the search depth, evaluated by the minimzing player}
 \end{fixedpic}
 
-\todo{minimale oder maximaler durchschnitt. der genaue durchschnitt ist unbekannt}
-
-The average amount of options per move in the game \ac{UTTT} is five. \cite{web:tsurel2013}
+The minimal average amount of options per move in the game \ac{UTTT} is five \cite[p.~1-2]{web:amar2013}.
 In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$, and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts  of all nodes  can be calculated with the following  equation:  $$a = \sum_{i=1}^{n} 	\delta^{i}$$
 
 \begin{center}
@@ -120,7 +118,7 @@ Now to how the evaluation of the game state works. We award points for certain  
 	\includegraphics[width=0.2\textwidth]{con1}
 	\captionof{figure}{Condition one}
 \end{fixedpic}
-\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column vertically, diagonally left bottom to the right top and again vertically middle column.\\
+\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column, diagonally left bottom to the right top and again  middle column.
 \begin{fixedpic}
 	\includegraphics[width=0.2\textwidth]{con2}
 	\captionof{figure}{Condition two}
@@ -159,7 +157,7 @@ In the following figure, all five occurring states are marked with different col
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The conditions are determined separately for both players. We take the difference of the conditions of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
+The states are determined separately for both players. We take the difference of the states of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
 If the difference is $<0$, the second player has an advantage with the corresponding condition.
 
 
