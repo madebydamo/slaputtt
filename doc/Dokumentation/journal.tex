@@ -65,7 +65,7 @@ The yellow marked local fields are already won by the yellow party.
 
 \section{\ac{SLAP} algorithm}
 
-\subsection{\acl{ABP} algorithm}
+\subsection{\acl{ABP} algorithm} \label{abpalgo}
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
@@ -144,7 +144,7 @@ The following three conditions are checked in the large field.
 	\captionof{figure}{Condition five}
 \end{fixedpic}
 \end{itemize}
-In the following figure, all five occurring states are marked with different colors:
+In the following figure, all five occurring conditions are marked with different colors:
 \begin{description}
 \item[Condition one] Yellow
 \item[Condition two] Green
@@ -157,7 +157,7 @@ In the following figure, all five occurring states are marked with different col
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. We take the difference of the states of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
+The conditions are determined separately for both players. We take the difference of the conditions of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
 If the difference is $<0$, the second player has an advantage with the corresponding condition.
 
 
@@ -276,7 +276,7 @@ RevertMove playMove(GameState state, Move move) {
 Since these functions are needed for each individual move, we have made these functions as efficient as possible. So we have already evaluated every possible Tic Tac Toe field and stored it in a cache. If we now evaluate the Ultimate Tic Tac Toe field, we can access this information and minimize the computing time per call.
 
 \subsubsection{Game}
-Now that we have all the necessary information for a gamestate, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program doesn't yet run in the browser but in the console, we didn't implement any input options yet. Instead we created the simplest algorithm there is. It chooses a random playable move and plays it. Then we could let the computer play the first games. \todo{satz bearbeiten} The games didn't really make sense, because only one random move was played at a time, but we reached this milestone.
+Now that we have all the necessary information for a game state, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program doesn't yet run in the browser but in the console, we didn't implement any input options yet. Instead we created the simplest algorithm there is. It chooses a random playable move and plays it. So we could let the computers play against each other for the first time. Since the moves were all completely random, the games weren't really exciting. However, it was enough to check that all the rules were followed and that the computer could not play any wrong moves. And we could start with the next milestone.
 
 \begin{lstlisting}[language=Dart,caption={Implementation of the \texttt{RandomMove}}]
 class RandomMove extends Algorithm {
@@ -351,9 +351,8 @@ Our main goal was achieved. The algorithm evolves itself and we can play against
 \subsection{Website and User Interface} \label{websiteui}
 In order that our project is accessible all over the world with different end devices ranging from smartphones to Personal Computers running with different Operating Systems, we thought that it would be the most convenient solution to make a website. 
 
-\todo{Animista und Materialize verlinken}
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part, which provides the functionality of the algorithm, was already discussed in the previous subsection. 
-Because CSS can be extremly time consuming, we made use of a CSS Framework called Materialize from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website Animista, which provides ready-to-use CSS animations.
+Because CSS can be extremly time consuming, we made use of a CSS Framework called \href{https://materializecss.com/}{Materialize} from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website \href{http://animista.net/}{Animista}, which provides ready-to-use CSS animations.
 
 To deploy our website online, we also needed to have a hosting service which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Messaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS and HTML.\\
 
@@ -380,7 +379,7 @@ According to instinct we can say that condition 5, a victory of the game, should
 The point is that the conditions are already sorted the way we expect them to be weighted. Condition 1 should have the least weight, condition 5 the most.
 
 \subsection{Received results}
-The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following states are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite. With the exception of the last parameter, the following states are rated worse than the previous ones.
+The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following conditions are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite of the expected result. With the exception of the last parameter, the following conditions are rated worse than the previous ones.
 \begin{fixedpic}
 \begin{dnadiagram}
 \addplot coordinates{(1, 108) (2, 379) (3, 856) (4, 1648) (5, 1745)};
@@ -424,11 +423,8 @@ From the tenth generation onwards, these conditions are further developed. So th
 \addplot coordinates{(1, 71) (2, 368) (3, 476) (4, 1800) (5, 8907)};
 \legend{First of Generation 10,F.o.G. 15,F.o.G. 20, F.o.G. 30, F.o.G. 50, F.o.G. 70}
 \end{dnadiagram}
-\captionof{figure}{First Caption}
+\captionof{figure}{First DNA of different Generations}
 \end{fixedpic}
-\todo{evtl Figure 16 kommentar bearbeiten}
-
-\todo{Nach State und Condition suchen und alles aufräumen}
 
 \subsection{Why we chose Dart}
 At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in Javascript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be Javascript. However, Dart was designed to compete with Javascript.  The main goal was to eliminate the errors and inconveniences of Javascript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in Javascript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
@@ -478,6 +474,9 @@ In the end, even tough it was challenging, we had a well structured responsive d
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
 
+\subsection{Potential for improvement}
+Our algorithm is far from perfect. One point that could be improved is the structure of DNA. Actually, the weighting of a condition is not so important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
 
+Another optimization point would be a variable search depth. Towards the end of the game the possible moves are always minimized. The average number of moves also reduces the number of games to be evaluated, see \autoref{abpalgo}. In order to evaluate the same number of games anyway, the search depth could be increased during the course of the game.
 \todo{Zeitformen beachten --> alles in past schreiben}
 \todo{wo nötig alles verlinken}
