@@ -17,6 +17,14 @@ We decided to realise all of that with a modern programming language called Dart
 %overview structure of the paper
 %to do
 
+\section{Motivation}
+Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
+Damian came up with the idea, to create a kind of self learning algorithm which is able to play \ac{UTTT}. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with a project like this and that the context of the IDPA provides the perfect opportunity. \\
+
+We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
+
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
+
 \section{Rules}
 To understand how to play \ac{UTTT}, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinaty Tic-Tac-Toe, you can continue reading paragraph 2.2. 
 
@@ -27,7 +35,7 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while o
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.2\textwidth]{tictactoe}
-	\captionof{figure}{a random scenario of an ordinary Tic-Tac-Toe field}
+	\captionof{figure}{A random scenario of an ordinary Tic-Tac-Toe field}
 \end{fixedpic}\\
 
 
@@ -35,7 +43,13 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while o
 \subsection {Rules \ac{UTTT}}
 The board of \ac{UTTT} is made up from 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
 Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
-A player can start anywhere he would like to on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. 
+A player can start anywhere he would like to on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. \\
+
+\begin{fixedpic}
+	\centering
+	\includegraphics[width=0.6\textwidth]{rule1}
+	\captionof{figure}{The yellow player forced the blue player to make his turn somewhere in the light blue marked big tile. The relative position (top-left) of the yellow square on the small board is the same relative position (top-left) as the light blue marked tile on the global board.}
+\end{fixedpic}\\
 
 A victory on a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
 
@@ -44,18 +58,10 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{uttt}
-	\captionof{figure}{a random scenario of an Ultimate Tic-Tac-Toe field}
+	\captionof{figure}{A random scenario of an Ultimate Tic-Tac-Toe field}
 \end{fixedpic}
 
 The yellow marked local fields are already won by the yellow party.
-
-\section{Motivation}
-Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
-Damian came up with the idea, to create a kind of self learning algorithm which is able to play \ac{UTTT}. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with a project like this and that the context of the IDPA provides the perfect opportunity. \\
-
-We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
-
-To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
 
 \section{\ac{SLAP} algorithm}
 
@@ -89,6 +95,8 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 	\captionof{figure}{All possible game moves in the 3rd level of the search depth, evaluated by the minimzing player}
 \end{fixedpic}
 
+\todo{minimale oder maximaler durchschnitt. der genaue durchschnitt ist unbekannt}
+
 The average amount of options per move in the game \ac{UTTT} is five. \cite{web:tsurel2013}
 In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$, and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts  of all nodes  can be calculated with the following  equation:  $$a = \sum_{i=1}^{n} 	\delta^{i}$$
 
@@ -105,14 +113,14 @@ The \ac{ABP} algorithm only decides which move is played. But without the heuris
 
 Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal. The first two conditions are checked in the small fields.\\
 
-\todo{akronyme momentaner standpunkt}
+
 \begin{itemize}
-\item One field occupied, two fields empty. The condition occurs three times here. Once in the right column, once in the bottom row and once in the diagonal from top left to bottom right.
+\item One field occupied, two fields empty. The condition occurs three times here. Once in the right column, once in the bottom row and once in the diagonal from top left to bottom right.\\
 \begin{fixedpic}
 	\includegraphics[width=0.2\textwidth]{con1}
 	\captionof{figure}{Condition one}
 \end{fixedpic}
-\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column vertically, diagonally left bottom to the right bottom and again vertically middle column.
+\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column vertically, diagonally left bottom to the right top and again vertically middle column.\\
 \begin{fixedpic}
 	\includegraphics[width=0.2\textwidth]{con2}
 	\captionof{figure}{Condition two}
@@ -120,18 +128,18 @@ Now to how the evaluation of the game state works. We award points for certain  
 \end{itemize}
 The following three conditions are checked in the large field.
 \begin{itemize}
-\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions are no longer considered.
+\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions are no longer considered.\\
 \begin{fixedpic}
-	\includegraphics[width=0.2\textwidth]{con3}
+	\includegraphics[width=0.6\textwidth]{con3}
 	\captionof{figure}{Condition three}
 \end{fixedpic}
-\item Two small fields won, one small field not yet determined. Here is a visualization of this condition.
+\item Two small fields won, one small field not yet determined. Here is a visualization of this condition.\\
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{con4}
 	\captionof{figure}{Condition four}
 \end{fixedpic}
-\item Three small squares won. This also corresponds to a victory. Here the condition occurs in the right column.
+\item Three small squares won. This also corresponds to a victory. Here the condition occurs in the right column.\\
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{con5}
@@ -140,28 +148,29 @@ The following three conditions are checked in the large field.
 \end{itemize}
 In the following figure, all five occurring states are marked with different colors:
 \begin{description}
-\item[State one] Yellow
-\item[State two] Green
-\item[State three] Blue
-\item[State four] Purple
-\item[State five] Light blue
+\item[Condition one] Yellow
+\item[Condition two] Green
+\item[Condition three] Blue
+\item[Condition four] Purple
+\item[Condition five] Light blue
 \end{description}
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The states are determined separately for both players. We take the difference of the states of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has more occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
+The conditions are determined separately for both players. We take the difference of the conditions of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
 If the difference is $<0$, the second player has an advantage with the corresponding condition.
 
-After the subtraction we have five certain numbers, which describes each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represents  conditions, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.
+
+After the subtraction we have five certain numbers, which describe each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represent a  condition, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.
 \begin{center}
 \begin{description}
 \item[Factor condition one] 1
 \item[Factor condition two] 3
 \item[Factor condition three] 10
 \item[Factor condition four] 30
-\item[Factor state five] 100
+\item[Factor condition five] 100
 \end{description}
 \end{center}
 
@@ -182,23 +191,27 @@ Condition & Occurrence Condition red & Occurrence Condition blue & Difference & 
 The effective game state score in this case is 183, which is all the heuristic does.
 Based on this information, the Alpha Beta Pruning decides which move to play.
 
-
+\todo{akronyme momentaner standpunkt}
 
 \subsection{Self Learning} \label{selflearning}
-To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the DNA  is responsible for that. The DNA dictates, which heuristic parameters are more important and it does that simply with a factor. The DNA is also the only thing which changes, while learning. 
+To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the DNA  is responsible for that. The DNA dictates, which heuristic parameters are more important and it does that simply with a factor. The \ac{DNA} is also the only thing which changes, while learning.
 
-Let's take a look at how an algorithm is generated and how it gets better over time.
-To start a new era, we need to set a few things up. An era can be compared to several generations of humans. 
-The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. It's crucial, that every Organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the second player, which is a statistically significant advantage. \cite{web:tsurel2013}
+\todo{titel richtig verlinken}
+\subsubsection{Era, generation, organism}
+%\subsection{\acp{Era}, \acp{generation} and \acp{organism}}
+Let's take a look at how our \ac{SL} algorithm is generated and how it gets better over time.
+To get started, we have to create a new \ac{era} and must set up a few things. An era can be compared to several generations of humans. 
+The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation Organisms. We have to decide, how many Organisms per generation we want to create. But we have to keep in mind, the more Organisms we create, the longer the evolution will take. That's because every Organisms will play against every other Organisms twice. They play two times, to make sure every Organisms has once the possibility to start. It's crucial, that every Organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the second player, which is a statistically significant advantage \cite{web:tsurel2013}.
 The process of playing against each other is called selection. The Organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best Organisms of a generation is actually very similar to a football cup.
-The amount of games that are played in that way with $n$ participants is $n^2-n$.
+The amount of games that are played in that way with $n$ participants is $n^2-n$.\\
 
+\subsubsection{Search depth}
 We also need to decide the search depth of the alpha beta pruning algorithm the organisms use, while playing against each other. The bigger the search depth, the longer it will take, because the computer has to calculate more scenarios. But the deeper we search, the more accurate results we will get. 
-Now after we set up the amount of organisms and the search depth, we can start our new era. The first generation gets created (initialised) with random DNA. %in welchem bereich sind die Zufallszahlen?
+Now after we set up the amount of organisms and the search depth, we can start our new era. The first generation gets created (initialised) with random DNA. The random values are generated between 0 and 2000.
 That means the proportion of the different parameters vary vividly. We already know, the Organisms with the best random parameter configuration will perform the best. But we don't know yet exactly, which parameters are the most important ones. To find it out, which parameters are the best ones, we now let the organisms play against each other. In other words, we will start the selection. After all matches are finished, we can rank the organisms according to the point distribution system, which we used. The worse half of our first generation will die. And as it is in real evolution, mutation will take place.
 The DNA of the better half of the ranking will mutate two times and form a new generation. The best Organism of the generation will survive and continue to live in the next generation.
 %eventuell genäuere/bessere beschreibung
-As described at the beginning, the mutation only affects the DNA. The DNA contains the factor for each parameter and each factor will be mutated by a value between 0.8 and 1.2. This results in an almost totally new set of Organisms, which are descenders of the previous generation. The selection starts again for this generation.
+As described at the beginning, the mutation only affects the DNA. The DNA contains the factor for each parameter and each factor will be mutated with +/- 20\%. This results in an almost totally new set of Organisms, which are descenders of the previous generation. The selection starts again for this generation.
 This cycle will continue as long as the creator of the era desires to. \\
 
 \begin{fixedpic}
@@ -222,11 +235,11 @@ Our two algorithms both depend on different parameters. These influence the runt
 The Alpha Beta Pruning algorithm has several factors that influence it. One factor is the average search depth, here $\delta$. This factor is always similar for our game, but the more advanced the score, the smaller it gets. The second factor is the search depth, here $n$. The deeper you search, the more scores you have to evaluate. This factor influences the score exponentially. Therefore, the search depth of the era must also be carefully selected when creating. So we have a runtime of $\delta^n$ which in the O-notation, which is used in computer science, corresponds to a runtime of $O(N^{m})$. This means that the parameter $n$ influences the runtime exponentially.
 
 \subsubsection{Self Learning algorithm}
-The self-learning algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all play against each other, with outward and return play, formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. Now we run the Alpha Beta Pruning Algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the Alpha Beta Pruning algorithm. So in the end we have a runtime of $(g^2 - g) * \omega * delta^n$. The first part $(g^2 - g) * \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the Alpha Beta Pruning algorithm, is $O(N^k)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially. So the search depth should be played around more cautiously, as with the size of the generations. 
+The self-learning algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all organisms play against each other, with outward and return play, formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. Now we run the Alpha Beta Pruning Algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the Alpha Beta Pruning algorithm. So in the end we have a runtime of $(g^2 - g) * \omega * \delta^n$. The first part $(g^2 - g) * \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the Alpha Beta Pruning algorithm, is $O(N^k)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially. So the search depth should be played around more cautiously, as with the size of the generations. 
 
 \subsubsection{Device Restrictions}
-We have made our program as device friendly as possible. So you don't need a powerful computer to play games, a smartphone is enough. To train the generations, on the other hand, as much computing power as possible is needed. So you will get better results with a multicore PC than with a smartphone. Since the software runs on as many threads as possible, this is the main criterion of the training. So it was also surprising that a game on my smartphone, the Galaxy S8, was played faster than on my business PC. 
-As we already found out in \autoref{selflearning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$. If we multiply that by the 14 ($maximale\ number\ threads - 2$) working threads, we get $[t] = 24 s$.
+We have made our program as device friendly as possible. So you don't need a powerful computer to play games, a smartphone is enough. To train the generations, on the other hand, as much computing power as possible is needed. So you will get better results with a multicore PC than with a smartphone. Since the software runs on as many threads as possible, this is the main criterion of the training. So it was also surprising that a game on a smartphone, the Samsung Galaxy S8, was played faster than on a business PC. 
+As we already found out in \autoref{Self Learning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$. If we multiply that by the 14 ($maximale\ number\ threads - 2$) working threads, we get $[t] = 24 s$ per game per thread.
 If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that the smartphone actually works faster than the computer, but would still be slower because the computer has 8 threads more to work with. So you can't generally say that a device is unsuitable for training organisms. However, the more threads and speed a device has, the faster the organisms can be trained.
 
 \section{Implementation}
@@ -265,7 +278,7 @@ RevertMove playMove(GameState state, Move move) {
 Since these functions are needed for each individual move, we have made these functions as efficient as possible. So we have already evaluated every possible Tic Tac Toe field and stored it in a cache. If we now evaluate the Ultimate Tic Tac Toe field, we can access this information and minimize the computing time per call.
 
 \subsubsection{Game}
-Now that we have all the necessary information for a gamestate, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program doesn't yet run in the browser but in the console, we didn't implement any input options yet. Instead we created the simplest algorithm there is. It chooses a random playable move and plays it. Then we could let the computer play the first games. The games didn't really make sense, because only one random move was played at a time, but we reached this milestone.
+Now that we have all the necessary information for a gamestate, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program doesn't yet run in the browser but in the console, we didn't implement any input options yet. Instead we created the simplest algorithm there is. It chooses a random playable move and plays it. Then we could let the computer play the first games. \todo{satz bearbeiten} The games didn't really make sense, because only one random move was played at a time, but we reached this milestone.
 
 \begin{lstlisting}[language=Dart,caption={Implementation of the \texttt{RandomMove}}]
 class RandomMove extends Algorithm {
@@ -289,7 +302,7 @@ class RandomMove extends Algorithm {
 Now that we have a working game, we want to play it ourselves. That's why we started developing the website. First we had to make sure that the score was displayed correctly. Then we had to create the possibility that when we click into the grid, the correct move is played. After this implementation we were able to play against the computer, but only against the random algorithm. The further implementation of the website is described in more detail in the \autoref{websiteui}. For this milestone we only needed a playable version so that we could start implementing the Alpha Beta pruning algorithm.
 
 \subsubsection{Heuristic}
-Before we can start with the Alpha Beta Pruning algorithm, we have to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first create the DNA, the base of the evaluation. Based on this DNA, the states are then added together. In order to accelerate this evaluation, we have already loaded the evaluation for all possible Tic Tac Toe fields in the background, as with the game controller. With this information we can efficiently evaluate even a large field without much computational effort. Finally, this function is called several times with each move of the algorithm.
+Before we can start with the Alpha Beta Pruning algorithm, we have to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first create the DNA, the basic component of the evaluation. Based on this DNA, the conditions are then added together. In order to accelerate this evaluation, we have already loaded the evaluation for all possible Tic-Tac-Toe fields in the background, as with the game controller. With this information we can efficiently evaluate even a large field without much computational effort. Finally, this function is called several times with each move of the algorithm.
 
 \begin{lstlisting}[language=Dart,caption={Implementation of the evaluation}]
 // Returns the evaluated score of the [state] from the
@@ -331,19 +344,17 @@ double evaluateForState(GameState state, State primaryState) {
 \subsubsection{Alpha Beta Pruning Algorithm}
 Now we can implement the Alpha Beta Pruning algorithm. Since we already prepared everything, from the heuristics to the game controller, this work was done relatively fast. Since we also built our program cleanly with interfaces, we could simply replace the random algorithm with the Alpha Beta Pruning algorithm and play against it. However, the prerequisite for this was that the heuristic was filled with a meaningful DNA object. We created this by hand, with values that we thought made sense. Afterwards we were able to play against our algorithm. What is striking is that it was really hard to win against the algorithm, although the parameters were not defined by the computer but by us. That was of course a good sign that our approach could be successful.
 
-\subsubsection{Selflearning Algorithm}
-Since our algorithm now works, we start with the self-learning part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the functions described in the \autoref{selflearning} and call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
+\subsubsection{Self Learning Algorithm}
+Since our algorithm now works, we start with the self learning part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the parts described in the \autoref{Self Learning} and call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
 
 \subsubsection{Final Step}
-Our main goal was achieved. The algorithm evolves itself and we can play against it. But we didn't want to be satisfied with that yet. That's why we added the self-learning algorithm to the website and added some nice features like color themes or compatibility on all devices. We also kept an eye on the performance and if possible, wrote the code as efficiently as possible.
-
-
-%For dynamic parts of a website, webbrowsers such as Google Chrome or Windows Explorer only understand a language called JavaScript. Because of that, our project, %which is mainly written in Dart, gets compiled (translated) to JavaScript. In that way, we can avoid the disadvantages JavaScript has.
+Our main goal was achieved. The algorithm evolves itself and we can play against it. But we didn't want to be satisfied with that yet. That's why we added the self-learning algorithm to the website and added some nice features like color themes or compatibility on all devices. We also kept an eye on the performance and wrote the code as efficiently as possible.
 
 \subsection{Website and User Interface} \label{websiteui}
-In order that our project is accessible all over the world with different end devices ranging from Smartphones to Personal Computers running with different Operating Systems, we thought that it would be the most convenient solution to make a website. 
+In order that our project is accessible all over the world with different end devices ranging from smartphones to Personal Computers running with different Operating Systems, we thought that it would be the most convenient solution to make a website. 
 
-In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part was already discussed in the previous subsection. 
+\todo{Animista und Materialize verlinken}
+In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part, which provides the functionality of the algorithm, was already discussed in the previous subsection. 
 Because CSS can be extremly time consuming, we made use of a CSS Framework called Materialize from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website Animista, which provides ready-to-use CSS animations.
 
 To deploy our website online, we also needed to have a hosting service which offers a server and a domain. Because we already worked with tools of Google like the language Dart and the Materialize Framework, it wasn't far-fetched, that we decided to make use of a hosting provider which also belongs to Google. It's called Firebase. Firebase provides many options for developers such as Real Time Databases or Cloud Messaging, but we only needed to use the hosting opportunity, which supports hosting static files like CSS and HTML.\\
@@ -359,7 +370,8 @@ Via a button in the navigation bar, it's possible to change to a more detailed  
 Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implementet a function that shows the player, where he has to play his next turn. 
-We also had ho make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience.
+We also had to make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience.
+\todo{genauer erklären}
 
 
 \section{Progress Evaluation}
@@ -414,8 +426,9 @@ From the tenth generation onwards, these conditions are further developed. So th
 \addplot coordinates{(1, 71) (2, 368) (3, 476) (4, 1800) (5, 8907)};
 \legend{First of Generation 10,F.o.G. 15,F.o.G. 20, F.o.G. 30, F.o.G. 50, F.o.G. 70}
 \end{dnadiagram}
-\captionof{figure}{First}
+\captionof{figure}{First Caption}
 \end{fixedpic}
+\todo{evtl Figure 16 kommentar bearbeiten}
 
 \todo{Nach State und Condition suchen und alles aufräumen}
 
@@ -463,5 +476,10 @@ When designing a website, it's important to consider, that different end devices
 To meet that requirement, fortunately we had the Materialize CSS frame work. Despite that, it wasn't always easy to achieve a seamless design on different end devices. While we developed the website, some components were often displaced, when we accessed the unfinished website with different end devices. 
 In the end, even tough it was challenging, we had a well structured responsive design.
 
+\todo{review allenfalls ausführlicher}
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
+
+
+\todo{Zeitformen beachten --> alles in past schreiben}
+\todo{wo nötig alles verlinken}
