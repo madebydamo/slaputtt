@@ -36,7 +36,7 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while o
 	\centering
 	\includegraphics[width=0.2\textwidth]{tictactoe}
 	\captionof{figure}{A random scenario of an ordinary Tic-Tac-Toe field.}
-\end{fixedpic}\\
+\end{fixedpic}
 
 
 
@@ -49,7 +49,7 @@ A player can start anywhere he would like to on a local board. According to the 
 	\centering
 	\includegraphics[width=0.6\textwidth]{rule1}
 	\captionof{figure}{The yellow player forced the blue player to make his turn somewhere in the light blue marked big tile. The relative position (top-left) of the yellow square on the small board is the same relative position (top-left) as the light blue marked tile on the global board.}
-\end{fixedpic}\\
+\end{fixedpic}
 
 A victory on a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
 
@@ -85,7 +85,7 @@ This is how the evaluation starts at the bottom of the tree. The fourth turn (br
 	\centering
 	\includegraphics[width=0.15\textwidth]{alphabetabranch}
 	\captionof{figure}{Nodes at the bottom left; the smaller value gets written to the upper node}
-\end{fixedpic}\\
+\end{fixedpic}
 The parent node is given the value five, because the minimizing player always chooses the smaller value. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. The procedure repeats itself up to the initial node. In this way we get the information, which move is best for us. The grey marked nodes and crossed out branches are optimizations of the \ac{ABP} algorithm. So we do not have to evaluate these areas at all and can save computing time.
 The search tree gets evaluated after every new turn. In other words, the \ac{ABP} algorithm is able to calculate $n$ turns, which represents the search depth, in advance. Of course, the bigger the search depth $n$ is, the more accurate our moves will turn out. But the deeper the search depth $n$ is, the longer it takes to calculate all moves.
 
@@ -115,11 +115,13 @@ Now to how the evaluation of the game state works. We award points for certain  
 \begin{itemize}
 \item One field occupied, two fields empty. The condition occurs three times here. Once in the right column, once in the bottom row and once in the diagonal from top left to bottom right.\\
 \begin{fixedpic}
+	\centering
 	\includegraphics[width=0.2\textwidth]{con1}
 	\captionof{figure}{Condition one}
 \end{fixedpic}
 \item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column, diagonally left bottom to the right top and again  middle column.
 \begin{fixedpic}
+	\centering
 	\includegraphics[width=0.2\textwidth]{con2}
 	\captionof{figure}{Condition two}
 \end{fixedpic}
@@ -128,6 +130,7 @@ The following three conditions are checked in the large field.
 \begin{itemize}
 \item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions are no longer considered.\\
 \begin{fixedpic}
+	\centering
 	\includegraphics[width=0.6\textwidth]{con3}
 	\captionof{figure}{Condition three}
 \end{fixedpic}
@@ -388,6 +391,7 @@ The point is that the conditions are already sorted the way we expect them to be
 The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following conditions are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite of the expected result. With the exception of the last parameter, the following conditions are rated worse than the previous ones.\\
 
 \begin{fixedpic}
+\centering
 \begin{dnadiagram}
 \addplot coordinates{(1, 108) (2, 379) (3, 856) (4, 1648) (5, 1745)};
 \addplot coordinates{(1, 1408) (2, 1575) (3, 1801) (4, 205) (5, 1508)};
@@ -398,6 +402,7 @@ The first generation consists only of randomly created organisms. Nevertheless, 
 \end{fixedpic}
 While in the first generation only the first organism more or less reproduced the expected curve, in the 5th generation there are already 11 of 16 organisms with such DNA. The remaining 5 organisms show the curve up to the fourth parameter, but the fifth parameter was mutated badly and the curve goes down again. So we have in only five generations already a first trend which plays itself in and already strongly differs from the first generation.
 \begin{fixedpic}
+\centering
 \begin{dnadiagram}
 \addplot coordinates{(1, 112) (2, 398) (3, 735) (4, 1410) (5, 1890)};
 \addplot coordinates{(1, 122) (2, 362) (3, 750) (4, 1280) (5, 1646)};
@@ -409,6 +414,7 @@ While in the first generation only the first organism more or less reproduced th
 In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but condition 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like the expected result. The striking difference to the others is also that the relative difference of condition 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role.
 
 \begin{fixedpic}
+\centering
 \begin{dnadiagram}
 \addplot coordinates{(1, 99) (2, 555) (3, 730) (4, 1294) (5, 2055)};
 \addplot coordinates{(1, 60) (2, 324) (3, 642) (4, 1664) (5, 1763)};
@@ -421,6 +427,7 @@ In the tenth generation there is again a conspicuity. Slowly all organisms start
 From the tenth generation onwards, these conditions are further developed. So the best of the tenth generation reminds rather of a line, whereas the best of the generation 20 reminds rather of a (half-)parabola. This development continues until generation 70, where we have completed the evolution.
 
 \begin{fixedpic}
+\centering
 \begin{dnadiagram}
 \addplot coordinates{(1, 99) (2, 555) (3, 730) (4, 1294) (5, 2055)};
 \addplot coordinates{(1, 103) (2, 369) (3, 1110) (4, 2209) (5, 3033)};

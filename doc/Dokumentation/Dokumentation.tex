@@ -64,18 +64,19 @@
 \usepackage{pgfplotstable}
 \usepackage{eso-pic} % Background image
 \usepackage{apacite}
+\usepackage[left=3cm, right=2cm, top=2.5cm, bottom=2.5cm, paper=a4paper]{geometry}
 \pgfplotsset{compat=1.16}
 \renewcommand{\familydefault}{\sfdefault}
 
 % Margins
-\topmargin=-0.45in
-\evensidemargin=0in
-\oddsidemargin=0in
-\textwidth=6.5in %6.5in
-\textheight=9.0in
-\headsep=0.25in
+%\topmargin=-0.45in
+%\evensidemargin=0in
+%\oddsidemargin=0in
+%\textwidth=6.5in %6.5in
+%\textheight=9.0in
+%\headsep=0.25in
 
-\linespread{1.1} % Line spacing
+\linespread{1.25} % Line spacing
 \setlist[1]{nolistsep}
 
 %\renewcommand{\familydefault}{\sfdefault}
@@ -172,15 +173,20 @@ keepaspectratio]{background2.jpg}%
 
 \abovecaptionskip=3pt % above caption
 \belowcaptionskip=\baselineskip % below caption
-\newenvironment{fixedpic}{
-\break
-\begin{minipage}{\linewidth}
-\abovecaptionskip=3pt % above caption
-\belowcaptionskip=\baselineskip % below caption
-\centering
-}{
-\end{minipage}
-}
+
+\newfloat{fixedpic}{H}{fixedpic}
+\newcommand{\captionof}[2]{\caption{#2}}
+
+%\newenvironment{fixedpic}{
+%\break
+%\begin{minipage}{\linewidth}
+%\abovecaptionskip=3pt % above caption
+%\belowcaptionskip=\baselineskip % below caption
+%\centering
+%}{
+%\end{minipage}
+%}
+
 
 
 \input{wortdefinitionen} % Configure wortdefinitionen
