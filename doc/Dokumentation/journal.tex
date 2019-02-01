@@ -194,7 +194,7 @@ Based on this information, the Alpha Beta Pruning decides which move to play.
 \subsection{Self Learning} \label{selflearning}
 To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the \ac{DNA}  is responsible for that. The \ac{DNA} dictates, which heuristic parameters are more important and it does that simply with a factor. The \ac{DNA} is also the only thing which changes, while learning.
 
-\todo{titel richtig verlinken}
+
 \subsubsection{Era, generation, organism}
 %\subsection{\acp{Era}, \acp{generation} and \acp{organism}}
 Let's take a look at how our \ac{SL} algorithm is generated and how it gets better over time.
@@ -235,14 +235,11 @@ The \ac{ABP} algorithm has several factors that influence the runtime. One facto
 \subsubsection{Self Learning algorithm}
 The \ac{SL} algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all organisms play against each other two times, the formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. We run the \ac{ABP} algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the \ac{ABP} algorithm. So in the end we have a runtime of $(g^2 - g) * \omega * \delta^n$. The first part $(g^2 - g) * \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the \ac{ABP} algorithm, is $O(N^k)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially.
 
-\todo{evtl überarbeiten, nicht ganz klar was schneller/besser ist smartphone oder computer - bezug auf threads besser beschreiben}
 
 \subsubsection{Device Restrictions}
-We made our program as device friendly as possible. It isn't required to own a powerful computer to play our \ac{UTTT}, a smartphone is enough. To train the generations, on the other hand, as much computing power as possible is needed. We discovered, that we get better results with a multicore PC than with a smartphone. That's because the software runs on as many threads as possible, which is the main criterion of fast evolution of an era. So it was also surprising that a game on a smartphone, the Samsung Galaxy S8, was actually played faster than on a business computer. 
-As we already found out in the chapter about \autoref{Self Learning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$ for one game. If we multiply that by the 14 ($maximal\ number\ threads - 2$) working threads, we get $[t] = 24 s$ per game per thread.
-If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that the smartphone actually works faster than the computer, but would still be slower because the computer has 8 threads more to work with. So you can't generally say that a device is unsuitable for training organisms. However, the more threads and speed a device has, the faster the organisms can be trained.
-
-
+We made our program as device friendly as possible. It isn't required to own a powerful computer to play our \ac{UTTT}, a smartphone is enough. To generate a new era, we got better results with a multicore PC than with a smartphone. That's because the software runs on as many threads as possible, which is the main criteria of fast evolution of an era. 
+As we already found out in \autoref{selflearning}, on a computer with 16 threads we needed an average of $[t] = 1,714s$ for one game. If we multiply that by the 14 ($maximal\ number\ threads - 2$) working threads, we get $[t] = 24 s$ per game per thread.
+If we now calculate the time for the smartphone we get the following result. $ [t] = \frac{1.5min \cdot 60\frac{s}{min}}{(6^2 - 6)} = 3s$. If we multiply this with the 6 working threads we get $[t] = 3s \cdot 6 = 18s$. This means that one thread of the smartphone actually works faster than one thread of the computer. But in the end, the computer would still be faster because the it has 8 threads more to work with than the smartphone.  Generally spoken, the more threads and speed a device has, the faster the organisms evolve.
 
 
 %implementation in past
@@ -351,7 +348,7 @@ double evaluateForState(GameState state, State primaryState) {
 Now we can describe how we implemented the Alpha Beta Pruning algorithm. Since we already prepared everything, from the heuristics to the game controller, this work was done relatively fast. Since we also built our program cleanly with interfaces, we could simply replace the random algorithm with the Alpha Beta Pruning algorithm and play against it. However, the prerequisite for this was that the heuristic was filled with a meaningful DNA object. We created this by hand, with values that we thought made sense. Afterwards we were able to play against our algorithm. What is striking is that it was already really hard to win against the algorithm, although the parameters were not defined by the computer but by us. That was of course a good sign that our approach could be successful.
 
 \subsubsection{Self Learning Algorithm}
-Since our program worked so far, we started with the \ac{SL} part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the parts described in the \todo{auroref korrekt machen} \autoref{Self Learning} and needed to call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
+Since our program worked so far, we started with the \ac{SL} part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the parts described in the \autoref{selflearning} and needed to call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
 
 
 
@@ -377,8 +374,7 @@ Via a button in the navigation bar, it's possible to change to a more detailed  
 Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
 In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implemented a function that shows the player, where he has to play his next turn. 
-We also had to make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the UI couldn't be updated at the moment when the user clicked, which would be a bad user experience.
-\todo{genauer erklären}
+We also had to make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the calculations of our algorithm would block the update of the UI. That would be a bad user experience. In order to prevent that scenario, we made two threads, which allowed the computer to work on both calculations at the same time. 
 
 
 \section{Progress Evaluation}
@@ -389,7 +385,8 @@ According to instinct we can say that condition 5, a victory of the game, should
 The point is that the conditions are already sorted the way we expect them to be weighted. Condition 1 should have the least weight, condition 5 the most.
 
 \subsection{Received results}
-The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following conditions are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite of the expected result. With the exception of the last parameter, the following conditions are rated worse than the previous ones.
+The first generation consists only of randomly created organisms. Nevertheless, a first development can already be observed. The best organism already shows more or less the expected curve. The following conditions are better evaluated than the previous ones. This probably also helped him to victory. Also the last organism is the opposite of the expected result. With the exception of the last parameter, the following conditions are rated worse than the previous ones.\\
+
 \begin{fixedpic}
 \begin{dnadiagram}
 \addplot coordinates{(1, 108) (2, 379) (3, 856) (4, 1648) (5, 1745)};
@@ -399,7 +396,7 @@ The first generation consists only of randomly created organisms. Nevertheless, 
 \end{dnadiagram}
 \captionof{figure}{The best, an average and the last DNA of Generation 1}
 \end{fixedpic}
-While in the first generation only the first organism more or less reproduced the expected curve, in the 5th generation there are already 11 of 16 organisms with such DNA. The remaining 5 organisms show the curve up to the fourth parameter, but the fifth parameter was mutated badly and the curve goes down again. So we have in only five generations already a first trend which plays itself in and already strongly differs from the generation 1.
+While in the first generation only the first organism more or less reproduced the expected curve, in the 5th generation there are already 11 of 16 organisms with such DNA. The remaining 5 organisms show the curve up to the fourth parameter, but the fifth parameter was mutated badly and the curve goes down again. So we have in only five generations already a first trend which plays itself in and already strongly differs from the first generation.
 \begin{fixedpic}
 \begin{dnadiagram}
 \addplot coordinates{(1, 112) (2, 398) (3, 735) (4, 1410) (5, 1890)};
@@ -409,7 +406,7 @@ While in the first generation only the first organism more or less reproduced th
 \end{dnadiagram}
 \captionof{figure}{The best, an average and the last DNA of Generation 5}
 \end{fixedpic}
-In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but places 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like the expected result. The striking difference to the others is also that the relative difference of conditions 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role.
+In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but condition 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like the expected result. The striking difference to the others is also that the relative difference of condition 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role.
 
 \begin{fixedpic}
 \begin{dnadiagram}
@@ -421,7 +418,7 @@ In the tenth generation there is again a conspicuity. Slowly all organisms start
 \captionof{figure}{Some conspicuous DNA of Generation 10}
 \end{fixedpic}
 
-From the tenth generation onwards, these conditions are further developed. So the best of the tenth generation reminds rather of a line, whereas the best of the generation 20 reminds rather of a (half-)parabola. This development continues until generation 70, where we have completed the development.
+From the tenth generation onwards, these conditions are further developed. So the best of the tenth generation reminds rather of a line, whereas the best of the generation 20 reminds rather of a (half-)parabola. This development continues until generation 70, where we have completed the evolution.
 
 \begin{fixedpic}
 \begin{dnadiagram}
@@ -440,7 +437,7 @@ From the tenth generation onwards, these conditions are further developed. So th
 
 \todo{Besser und punkt Motivation}
 
-At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in Javascript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be Javascript. However, Dart was designed to compete with Javascript.  The main goal was to eliminate the errors and inconveniences of Javascript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in Javascript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
+At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
 
 \begin{lstlisting}[language=JavaScript,caption={Example in JavaScript}]
 // Returns obj2 if obj1 is null, otherwise returns obj1
@@ -476,8 +473,9 @@ void method2(Foo foo) {
 
 \section{Challenges}
 \subsection{Worker}
-Worker is a feature of web development. You can outsource computational tasks to them so that the main thread, who is responsible for updating the UI, is not under load for too long. Otherwise, the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript. But Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. We still wanted to use it.\\
-In general, when we want to create a worker, we have to link a JavaScript file, which will get executed in an other thread. So our plan was to call a JavaScript file, which afterwards executes a Dart file, compiled in JavaScript. The problem was that there is not a official way, how we should call a Dart file out of a JavaScript file. We had to look deep in the documentation of the Dart compilers to find relevant informations to solve this problems. The most important thing is that it works now. Even tough it puzzled us some hours.
+A worker is a feature of web development. You can outsource computational tasks to them so that the main thread, who is responsible for updating the UI, is not under load for too long. Otherwise, the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript. But Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. But we still wanted to use it in order to provide a better user experience.\\
+To create a worker, we had to link a JavaScript file, which would get executed in another thread. Our plan was to call a JavaScript file, which afterwards would execute a Dart file, compiled in JavaScript. The problem was that there is not an official way, how we could call a Dart file out of a JavaScript file. We had to look deep in the documentation of the Dart compilers in order to find relevant informations to solve this problems. In the end, the worker worked, even tough it puzzled us many hours.
+
 
 \subsection{Responsive design with CSS}
 When designing a website, it's important to consider, that different end devices are used to visit the website. The screen size and ratio of a normal desktop computer is extremely different from a smartphone. In order to render the website well on all end devices, \ac{responsive} design is required. 
@@ -494,4 +492,3 @@ Our algorithm is far from perfect. One point that could be improved is the struc
 
 Another optimization point would be a variable search depth. Towards the end of the game the possible moves are always minimized. The average number of moves also reduces the number of games to be evaluated, see \autoref{abpalgo}. In order to evaluate the same number of games anyway, the search depth could be increased during the course of the game.
 \todo{Zeitformen beachten --> alles in past schreiben}
-\todo{wo nötig alles verlinken}
