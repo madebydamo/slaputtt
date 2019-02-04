@@ -22,5 +22,6 @@ pubspec.lock
 *.toc
 *.bak
 *.tks
+*.lol
 # Directory created by dartdoc
 doc/api/

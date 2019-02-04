@@ -23,7 +23,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass{article}
+\documentclass[11pt]{article}
 
 \usepackage{fancyhdr} % Required for custom headers
 \usepackage{lastpage} % Required to determine the last page for the footer
@@ -217,11 +217,12 @@ keepaspectratio]{background2.jpg}%
 
 \input{journal}
 \clearpage
-\printacronyms[heading=section]
+\printacronyms[heading=section,include-classes=acro]
+\printacronyms[heading=section,exclude-classes=acro,name=Word definitions]
 \clearpage
 \listoffigures
 \pagebreak
-\listoftables
+\lstlistoflistings
 \pagebreak
 \bibliographystyle{apacite}
 \bibliography{literatur}
