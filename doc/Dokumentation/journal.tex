@@ -97,6 +97,8 @@ The yellow marked local fields are already won by the yellow party.
 
 \section{\ac{SLAP} algorithm}
 
+
+
 \subsection{\acl{ABP} algorithm} \label{abpalgo}
 \begin{fixedpic}
 	\centering
@@ -106,13 +108,18 @@ The yellow marked local fields are already won by the yellow party.
 
 
 
-The \ac{ABP} algorithm always starts from one initial game state. This initial game state is represented by the top node. Each game state also corresponded to a value. Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played at a search depth of one.
-All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. This is how one score after the other is calculated. This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state, represented by a number. The branches show the possible moves. Since evaluating all scores would be too computationally intensive, a search depth is defined. In the figure the search depth would be 4, because four turns were evaluated from the initial node. Now the scores of the lowest row (hands) are evaluated. The bigger the number, the better the game state for us. And the better the game state, the sooner we will win.\\
+The \ac{ABP} algorithm always starts from one initial game state. This initial game state is represented by the top node. 
+%Each game state also corresponded to a value. 
+Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played.
+All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. 
+%This is how one score after the other is calculated. 
+This is how we get all different game states that we evaluate afterwards.
+This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is in the \autoref{heuristic} described. For now we should know that each game state can be representet by a score. The bigger the number, the better the game state for us. And the better the game state, the sooner we'll win.\\
 
-Now the tree is evaluated so that in the worst case, the score is as high as possible for us.
+Now the tree gets evaluated so that in the worst case, the score is as high as possible for us.
 That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. 
 
-This is how the evaluation starts at the bottom of the tree. The fourth turn (branches between the last two levels) is played by the opponent (MIN stands for minimizing player). Therefore, the smallest number of leaves is always written in the upper node.\\
+This is how the evaluation starts at the bottom of the tree. The fourth turn (branches between the last two levels) is played by the opponent (MIN stands for minimizing player, which is equal to our opponent). Therefore, the smallest score is always written in the upper node.\\
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.15\textwidth]{alphabetabranch}
@@ -128,7 +135,7 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 \end{fixedpic}
 
 The minimal average amount of options per move in the game \ac{UTTT} is five \cite[p.~1-2]{web:amar2013}.
-In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$, and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts  of all nodes  can be calculated with the following  equation:  $$a = \sum_{i=1}^{n} 	\delta^{i}$$
+In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$, and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts of all nodes can be calculated with the following equation:  $$a = \sum_{i=1}^{n} 	\delta^{i}$$
 
 \begin{center}
 $a$: amount of nodes,
@@ -138,8 +145,8 @@ $\delta$: average move per node
 \end{center}
 
 
-\subsection{Heuristic}
-The \ac{ABP} algorithm only decides which move is played. But without the heuristic, the \ac{ABP} algorithm would be pointless. The task of the heuristic is to fill the nodes in the \ac{ABP} search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our \ac{SLAP} algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a number for each possible  \ac{game state}. The better the game state, the higher the score.\\
+\subsection{Heuristic} \label{heuristic}
+The \ac{ABP} algorithm only decides which move is played. But without the heuristic, the \ac{ABP} algorithm would be pointless. The task of the heuristic is to fill the nodes in the \ac{ABP} search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our \ac{SLAP} algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a score for each possible \ac{game state}. The better the game state, the higher the score.\\
 
 Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal. The first two conditions are checked in the small fields.\\
 
@@ -355,7 +362,8 @@ double evaluateForState(GameState state, State primaryState) {
     double value = 0.0;
     // Checks if the game is finished
     if(cache[state.value][primaryState].three > 0) {
-      // Because the game is finished, only the last parameter of the DNA is relevant
+      // Because the game is finished, 
+      // only the last parameter of the DNA is relevant
       value += cache[state.value][primaryState].three * dna.bigThree;
     } else {
       // The game is not finished, therefore we analyse all local games
@@ -475,7 +483,7 @@ The simple answer is no. Even our best organism didn't have a 100\% win rate. So
 
 An other approach which would surely lead to victory, however, certainly exists. But it is not very efficient. This approach would be to set the search depth of our algorithm to 81. 81 for the reason that the game has 81 fields and so even in the worst case the game would be finished after 81 moves. So the algorithm would evaluate every single possible game state. The disadvantage would be the runtime.
 
-The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate some of them, but there would still be far too many game states to evaluate. 
+The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game consists of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate most of them, but there would still be far too many game states to evaluate.
 
 \section{Challenges}
 Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we also had problems with bugs and unwanted behavior. But only two cases really caused us problems.
@@ -490,9 +498,9 @@ When designing a website, it's important to consider, that different end devices
 To meet that requirement, fortunately we had the Materialize CSS frame work. Despite that, it wasn't always easy to achieve a seamless design on different end devices. While we developed the website, some components were often displaced, when we accessed the unfinished website with different end devices. 
 In the end, even tough it was challenging, we had a well structured responsive design.
 
-\todo{review allenfalls ausführlicher}
+\todo{review allenfalls ausführlicher, Edit Damian: Habe noch einzwei sätze hinzugefügt.}
 \section{Review}
-In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations.
+In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations. Through this project we could also learn a lot. Not only was the programming language new, but also hosting a website, implementing a self-learning algorithm or game. Both of us haven't done that yet.
 
 \subsection{Potential for improvement}
 Our algorithm is far from perfect. One point that could be improved is the structure of DNA. Actually, the weighting of a condition is not so important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
