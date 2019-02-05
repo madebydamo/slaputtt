@@ -1,12 +1,12 @@
 \section{Introduction}
 %introduction of the topic
 Algorithms are everywhere. They are a part of our everyday lives without even realizing it. They can be found in general mathematics, or in practical applications such as  computers or smartphones. But what exactly is an algorithm? According to the Oxford Dictionary an algorithm is generally speaken "a process or set of rules to be followed in calculations or other problem-solving operations, especially by a computer" \cite{web:oxforddictionaries2018}.
-In our apprenticeship, we both have a lot to do with algorithms. Damian works as a software engineer, where he writes most of the time software. Stefan is an electronics engineer and his specialisation in the fourth year of education is also software. According to that, we both have a pretty good idea of what algorithms are and what they do. We found out, that each of us is fascinated by the concepts and possibilities algorithmic structures provide. So we came up with the idea, to implement an algorithm by ourselves. \\
+In our apprenticeship, we both have a lot to do with algorithms. Damian works as a software engineer, where he writes most of the time software. Stefan is an electronics engineer and his specialisation in the fourth year of education is also software. According to that, we both have a pretty good idea of what algorithms are and what they do. We found out, that each of us is fascinated by the concepts and possibilities algorithmic structures provide, especially in practical applications. So we came up with the idea, to implement an algorithm by ourselves. \\
 
 %goals
 We set the goal, to program an algorithm, that can play the game \acl{UTTT} (\ac{UTTT}). \ac{UTTT} is a more complex and strategic version of the ordinary Tic-Tac-Toe. 
 Our approach to solve that problem is a so called \acl {SLAP}  algorithm, also known as \ac{SLAP} Algorithm. It's a combination of the already existing \acl{ABP} algorithm (\ac{ABP}) combined with an own made up extension which is, as the name suggests, self learning. We want to analyse the learning process of the algorithm in more detail and evaluate whether there is really an improvement. This will be the mathematical part of our work.
-To experience our algorithm in action, we also wanted to create a website where everybody can play the game against our \ac{SLAP} Algorithm.
+To experience our project in action, we also want to create a website where everybody can play \ac{UTTT}  against our \ac{SLAP} algorithm.
 Another intention of our project is to bring the seemingly complex subject in an easy understandable form to the interested reader. We aim to resume our approach of the solution in a comprehensible way. We want to give the reader an insight and a deeper understanding of algorithms, how they work and how they are implemented. With the website, we hope to create an interesting and interactive extension to this paper. To access the website, type \href{https://slaputtt.firebaseapp.com/}{slaputtt.firebaseapp.com} into your web browser. In order to meet the requirements to cover two subjects, we decided to write our paper and the website in English. \\
 
 %overview methodological approach
@@ -25,7 +25,8 @@ We also knew, that we could integrate knowledge in our project, which we gained 
 To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
 
 \subsection{Why we chose Dart}
-At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
+At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided to use a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with Dart yet, what we would like to have changed.  And in this project we both saw our chance to 
+do that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
 
 \begin{lstlisting}[language=JavaScript,caption={Example in JavaScript}]
 // Returns obj2 if obj1 is null, otherwise returns obj1
@@ -114,7 +115,7 @@ Each game state has a certain number of moves that can be played. For example, w
 All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. 
 %This is how one score after the other is calculated. 
 This is how we get all different game states that we evaluate afterwards.
-This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is in the \autoref{heuristic} described. For now we should know that each game state can be representet by a score. The bigger the number, the better the game state for us. And the better the game state, the sooner we'll win.\\
+This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is described in \autoref{heuristic}. For now we should know that each game state can be representet by a score. The bigger the number, the better the game state for us. And the better the game state, the better the chances we'll win.\\
 
 Now the tree gets evaluated so that in the worst case, the score is as high as possible for us.
 That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. 
@@ -123,7 +124,7 @@ This is how the evaluation starts at the bottom of the tree. The fourth turn (br
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.15\textwidth]{alphabetabranch}
-	\captionof{figure}{Nodes at the bottom left; the smaller value gets written to the upper node}
+	\captionof{figure}{Nodes at the bottom left; the smaller value gets written to the upper node.}
 \end{fixedpic}
 The parent node is given the value five, because the minimizing player always chooses the smaller value. This happens with all nodes of this level. The third move is now played by us. We'll take the highest possible score, of course. In this way, the higher-level nodes of the previously filled level are filled with the highest of the possible values. Now it's the turn of the opponent who chooses the worst score for us. The procedure repeats itself up to the initial node. In this way we get the information, which move is best for us. The grey marked nodes and crossed out branches are optimizations of the \ac{ABP} algorithm. So we do not have to evaluate these areas at all and can save computing time.
 The search tree gets evaluated after every new turn. In other words, the \ac{ABP} algorithm is able to calculate $n$ turns, which represents the search depth, in advance. Of course, the bigger the search depth $n$ is, the more accurate our moves will turn out. But the deeper the search depth $n$ is, the longer it takes to calculate all moves.
@@ -131,11 +132,11 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetalevel}
-	\captionof{figure}{All possible game moves in the 3rd level of the search depth, evaluated by the minimizing player}
+	\captionof{figure}{All possible game moves in the 3rd level of the search depth, evaluated by the minimizing player.}
 \end{fixedpic}
 
 The minimal average amount of options per move in the game \ac{UTTT} is five \cite[p.~1-2]{web:amar2013}.
-In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$ and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts of all nodes can be calculated with the following equation:  $$a = \sum_{i=1}^{n} \delta^{i}$$
+In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$ and without the optimizations the \ac{ABP} algorithm provides, the calculated amount of all nodes can be represented with the following equation:  $$a = \sum_{i=1}^{n} \delta^{i}$$
 
 \begin{center}
 $a$: amount of nodes,
@@ -148,7 +149,7 @@ $\delta$: average move per node
 \subsection{Heuristic} \label{heuristic}
 The \ac{ABP} algorithm only decides which move is played. But without the heuristic, the \ac{ABP} algorithm would be pointless. The task of the heuristic is to fill the nodes in the \ac{ABP} search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our \ac{SLAP} algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a score for each possible \ac{game state}. The better the game state, the higher the score.\\
 
-Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal. The first two conditions are checked in the small fields.\\
+Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal line. The first two conditions are checked in the small fields.\\
 
 
 \begin{itemize}
@@ -158,22 +159,22 @@ Now to how the evaluation of the game state works. We award points for certain  
 	\includegraphics[width=0.2\textwidth]{con1}
 	\captionof{figure}{Condition one}
 \end{fixedpic}
-\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column, diagonally left bottom to the right top and again  middle column.
+\item Two fields occupied, one field empty. Here the condition occurs in the lowest row. Note how the first condition occurs three times again, in the left column, diagonally left bottom to the right top and again middle column.
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.2\textwidth]{con2}
 	\captionof{figure}{Condition two}
 \end{fixedpic}
 \end{itemize}
-The following three conditions are checked in the large field.
+The following three conditions are checked in the large field.\\
 \begin{itemize}
-\item One small field won, two small fields not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions are no longer considered.\\
+\item One local boards won, two local boards not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions in the won local board are no longer considered.\\
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{con3}
 	\captionof{figure}{Condition three}
 \end{fixedpic}
-\item Two small fields won, one small field not yet determined. Here is a visualization of this condition.\\
+\item Two local boards won, one local board not yet determined. Here is a visualization of this condition.\\
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{con4}
@@ -199,11 +200,11 @@ In the following figure, all five occurring conditions are marked with different
 	\includegraphics[width=0.6\textwidth]{allcons}
 	\captionof{figure}{All Conditions}
 \end{fixedpic}
-The conditions are determined separately for both players. We take the difference of the conditions of the two players. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition.
-If the difference is $<0$, the second player has an advantage with the corresponding condition.
+The conditions are determined separately for both players. We count all conditions of the two players separately and take the difference of those conditions. That is to get a more objective result of the five game conditions. If the difference is $>0$, the first player has better occurring conditions than the second player. If the difference is equal to $0$, both player have the exact same evaluation of the corresponding condition. m 
+If the difference is $<0$, the second player has an advantage with the corresponding condition
+(The following table will clarify this step).\\
 
-
-After the subtraction we have five certain numbers, which describe each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represent a  condition, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our DNA has the following Numbers.
+After the subtraction we have five certain numbers, which describe each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represent a  condition, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our example DNA has the following Numbers. 
 \begin{center}
 \begin{description}
 \item[Factor condition one] 1
@@ -218,7 +219,7 @@ In other words, the 5th DNA factor contributes 100 times more value to the final
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
 \hline
-Condition & Occurrence Condition red & Occurrence Condition blue & Difference & DNA factor & Condition Score \\\hline
+Condition & Occurrence Condition \includegraphics[height=11pt]{yellow}  & Occurrence Condition \includegraphics[height=11pt]{green}  & Difference & DNA factor & Condition Score \\\hline
 1	& 0	& 11	& -11	& 1 	& -11 \\\hline
 2	& 1	& 3 	& -2	& 3 	& -6 \\\hline
 3	& 4	& 0 	& 4 	& 10	& 40 \\\hline
@@ -478,14 +479,14 @@ From the tenth generation onwards, these conditions are further developed. So th
 \end{fixedpic}
 
 \subsection{Is our algorithm unbeatable?}
-The simple answer is no. Even our best organism didn't have a 100\% win rate. So even in his own generation there are organisms which were better or at least could defeat him. And whether we arrive at a point where we reach a 100\% win rate is questionable. During the whole training it never happened that one organism could defeat all the others of the generation. To achieve this, a different approach would have to be tried. One where, for example, more information, such as the current round, influences the heuristics. This would make sense under the assumption that the tactics are different at the beginning of the optimal game than at the end of the game.\\
+The simple answer is no. Even our best organism didn't have a 100\% win rate. So even in his own generation there are organisms which were better or at least could defeat him. And whether we arrive at a point where we reach a 100\% win rate is questionable. During the whole training it never happened that one organism could defeat all the others of the generation. To achieve this, a different approach would have to be tried. For example, more information, such as the current round, could influence the heuristics. This would make sense under the assumption that the tactics are different at the beginning of the optimal game than at the end of the game.\\
 
 An other approach which would surely lead to victory, however, certainly exists. But it is not very efficient. This approach would be to set the search depth of our algorithm to 81. 81 for the reason that the game has 81 fields and so even in the worst case the game would be finished after 81 moves. So the algorithm would evaluate every single possible game state. The disadvantage would be the runtime.
 
 The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game consists of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate most of them, but there would still be far too many game states to evaluate.
 
 \section{Challenges}
-Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we also had problems with bugs and unwanted behavior. But only two cases really caused us problems.
+Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we also had problems with bugs and unwanted behaviour. But only two cases really caused us problems.
 
 \subsection{Worker}
 A worker is a feature of web development. You can outsource computational tasks to them so that the main thread, who is responsible for updating the UI, is not under load for too long. Otherwise, the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript. But Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. But we still wanted to use it in order to provide a better user experience.\\
@@ -500,6 +501,8 @@ In the end, even tough it was challenging, we had a well structured responsive d
 %\todo{review allenfalls ausführlicher, Edit Damian: Habe noch einzwei sätze hinzugefügt.}
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations. Through this project we could also learn a lot. Not only was the programming language new, but also hosting a website, implementing a self-learning algorithm or game. Both of us haven't done that yet.
+
+All in all we are satisfied with our result. The SLAP algorithm works fine, the website is online and all the goals we set at the beginning are achieved. It was a fun project!
 
 \subsection{Potential for improvement}
 Our algorithm is far from perfect. One point that could be improved is the structure of DNA. Actually, the weighting of a condition is not so important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
