@@ -25,7 +25,7 @@ We also knew, that we could integrate knowledge in our project, which we gained 
 To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
 
 \subsection{Why we chose Dart}
-At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript, and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
+At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided on a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with dart yet, what we would like to have changed.  And in this project we both saw our chance to change that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
 
 \begin{lstlisting}[language=JavaScript,caption={Example in JavaScript}]
 // Returns obj2 if obj1 is null, otherwise returns obj1
@@ -60,7 +60,7 @@ void method2(Foo foo) {
 \section{Rules}
 To understand how to play \ac{UTTT}, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinary Tic-Tac-Toe, you can continue reading \autoref{rulesuttt}. 
 
-\subsection {Rules Tic-Tac-Toe}
+\subsection{Rules Tic-Tac-Toe}
 
 The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while in this example one player represents \includegraphics[height=11pt]{green} and the the other player represents \includegraphics[height=11pt]{yellow}. One player can start and put his mark anywhere he'd like to. After that, the other player can take his turn and put his mark to a remaining spot. This procedure continues until someone has 3 of his own marks vertically, horizontally or diagonal aligned. It's possible that no party wins and the match ends undecided.\\
 
@@ -72,7 +72,7 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while i
 
 
 
-\subsection {Rules \ac{UTTT}} \label{rulesuttt}
+\subsection{Rules \acl*{UTTT}} \label{rulesuttt}
 The board of \ac{UTTT} is made up from 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
 Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
 A player can start anywhere he would like to on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. \\
@@ -95,11 +95,11 @@ If a local board is won or draw, no more moves are allowed there. In case a play
 
 The yellow marked local fields are already won by the yellow party.
 
-\section{\ac{SLAP} algorithm}
+\section{\acs*{SLAP} algorithm}
 
 
 
-\subsection{\acl{ABP} algorithm} \label{abpalgo}
+\subsection{\acl*{ABP} algorithm} \label{abpalgo}
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.9\textwidth]{alphabetatree}
@@ -135,7 +135,7 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 \end{fixedpic}
 
 The minimal average amount of options per move in the game \ac{UTTT} is five \cite[p.~1-2]{web:amar2013}.
-In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$, and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts of all nodes can be calculated with the following equation:  $$a = \sum_{i=1}^{n} 	\delta^{i}$$
+In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$ and without the optimizations of the \ac{ABP} algorithm provides, the calculated amounts of all nodes can be calculated with the following equation:  $$a = \sum_{i=1}^{n} \delta^{i}$$
 
 \begin{center}
 $a$: amount of nodes,
@@ -232,7 +232,7 @@ Based on this information, the Alpha Beta Pruning decides which move to play.
 
 
 
-\subsection{Self Learning} \label{selflearning}
+\subsection{\acl*{SL} algorithm} \label{selflearning}
 To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the \ac{DNA}  is responsible for that. The \ac{DNA} dictates, which heuristic parameters are more important and it does that simply with a factor. The \ac{DNA} is also the only thing which changes, while learning.
 
 
@@ -241,7 +241,7 @@ To say it in easy terms, the self learning part learns how to estimate the game 
 Let's take a look at how our \ac{SL} algorithm is generated and how it gets better over time.
 To get started, we have to create a new \ac{era} and must set up a few things. An era can be compared to several \acp{generation} of humans. 
 The era contains all generations. In a human generation, we have several individuals. In our case, we will call our individuals of the generation \acp{organism}. We have to decide, how many organism per generation we want to create. But we have to keep in mind, the more organisms we create, the longer the evolution will take. That's because every organisms will play against every other organisms twice. They play two times, to make sure every organisms has once the possibility to start. It's crucial, that every organism has once the first turn, because from a statistical perspective, the player with the first move wins in 56.17\% of the cases. That is a difference of 12.34\% to the player that starts second, which is a statistically significant advantage \cite[p.~5]{web:tsurel2013}.
-The process of playing against each other is called selection. The organisms get rewarded with 3 points when they win, and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best organisms of a generation is actually very similar to a football cup.
+The process of playing against each other is called selection. The organisms get rewarded with 3 points when they win and get 1 point when they end in a draw. When they loose, they won't get any points. The whole process of finding the best organisms of a generation is actually very similar to a football cup.
 The amount of games that are played in that way with $n$ participants is $n^2-n$.\\
 
 \subsubsection{Search depth}
@@ -260,7 +260,7 @@ This cycle will continue as long as the creator of the era desires to. \\
 \end{fixedpic}
 
 
-The era which is shown on our website contains 70 generations and each generation consists of 16 organisms.
+The era which is shown on our \href{https://slaputtt.firebaseapp.com/advanced.html}{website} contains 70 generations and each generation consists of 16 organisms.
 
 It took a computer with 3.2GHz and 16 \acp{thread} 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
 
@@ -497,7 +497,7 @@ When designing a website, it's important to consider, that different end devices
 To meet that requirement, fortunately we had the Materialize CSS frame work. Despite that, it wasn't always easy to achieve a seamless design on different end devices. While we developed the website, some components were often displaced, when we accessed the unfinished website with different end devices. 
 In the end, even tough it was challenging, we had a well structured responsive design.
 
-\todo{review allenfalls ausführlicher, Edit Damian: Habe noch einzwei sätze hinzugefügt.}
+%\todo{review allenfalls ausführlicher, Edit Damian: Habe noch einzwei sätze hinzugefügt.}
 \section{Review}
 In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations. Through this project we could also learn a lot. Not only was the programming language new, but also hosting a website, implementing a self-learning algorithm or game. Both of us haven't done that yet.
 
@@ -505,4 +505,4 @@ In retrospect, it was a very interesting project to create. It was very motivati
 Our algorithm is far from perfect. One point that could be improved is the structure of DNA. Actually, the weighting of a condition is not so important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
 
 Another optimization point would be a variable search depth. Towards the end of the game the possible moves are always minimized. The average number of moves also reduces the number of games to be evaluated, see \autoref{abpalgo}. In order to evaluate the same number of games anyway, the search depth could be increased during the course of the game.
-\todo{Zeitformen beachten --> alles in past schreiben}
+%\todo{Zeitformen beachten --> alles in past schreiben}
