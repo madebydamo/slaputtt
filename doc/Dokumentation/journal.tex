@@ -234,7 +234,7 @@ Based on this information, the Alpha Beta Pruning decides which move to play.
 
 
 \subsection{\acl*{SL} algorithm} \label{selflearning}
-To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the \ac{DNA}  is responsible for that. The \ac{DNA} dictates, which heuristic parameters are more important and it does that simply with a factor. The \ac{DNA} is also the only thing which changes, while learning.
+To say it in easy terms, the self learning part learns how to estimate the game state in the most meaningful way. It learns which heuristic parameters are important in relation to the other heuristic parameters. In our case, the \ac{DNA}  is responsible for that. The \ac{DNA} dictates, which heuristic parameters are more important and it does that simply with factors. The \ac{DNA} is also the only thing which changes, while learning.
 
 
 \subsubsection{Era, generation, organism}
@@ -261,7 +261,7 @@ This cycle will continue as long as the creator of the era desires to. \\
 \end{fixedpic}
 
 
-The era which is shown on our \href{https://slaputtt.firebaseapp.com/advanced.html}{website} contains 70 generations and each generation consists of 16 organisms.
+The era which is shown on our \href{https://slaputtt.firebaseapp.com/advanced.html}{website} contains 70 generations and each generation consists of 16 organisms. The depth of the \ac{ABP} algorithm was set to 3.
 
 It took a computer with 3.2GHz and 16 \acp{thread} 8 hours to calculate everything. 14 of 16 threads were utilized. With the following equation, we can calculate the time it took for the computer to play one game:
 
@@ -272,7 +272,7 @@ The average duration of a game between two organisms with above-mentioned comput
 Both algorithms, the \ac{SL} algorithm and the \ac{ABP} algorithm, depend on different parameters. These influence the runtime in different ways. If the parameters are too small, we do not get an optimal result. If they are too large, the runtime could be too long.
 
 \subsubsection{Alpha Beta Pruning algorithm}
-The \ac{ABP} algorithm has several factors that influence the runtime. One factor is the average moves per game state, here $\delta$. We cannot influence this factor. The second factor is the search depth, here $n$. The deeper we search, the more games we have to evaluate. So we have to evaluate $\delta^n$ game states, which in the O-notation, which is used in computer science, corresponds to a runtime of $O(N^{m})$. This means that the parameter $n$ influences the runtime exponentially.
+The \ac{ABP} algorithm has several factors that influence the runtime. One factor is the average moves per game state, here $\delta$. We cannot influence this factor. The second factor is the search depth, here $n$. The deeper we search, the more games we have to evaluate. So we have to execute our heuristic on $\delta^n$ game states, which in the O-notation, which is used in computer science, corresponds to a runtime of $O(N^{m})$. This means that the parameter $n$ influences the runtime exponentially.
 
 \subsubsection{Self Learning algorithm}
 The \ac{SL} algorithm has two parameters. One parameter is the number of organisms per generation, $g$ for short. Since all organisms play against each other two times, the formula for the number of games is $g^2 - g$.  The second parameter is the search depth with which the organisms play against each other. We run the \ac{ABP} algorithm once for each move per game with our search depth $n$. Since we don't know the average number of moves per game, we use the variable $\omega$.  And we already know the runtime of the \ac{ABP} algorithm. So in the end we have we have to evaluate $(g^2 - g) \cdot \omega \cdot \delta^n$ game states. The first part $(g^2 - g) \cdot \omega$, which is influenced by the parameter $g$, has a runtime of $O(N^2)$. The second part, which represents the \ac{ABP} algorithm, is $O(N^m)$ as shown above. This means that the size of the generation affects the runtime quadratically, but the search depth exponentially. Therefore, the search depth of the era must be carefully selected when creating.
@@ -386,7 +386,7 @@ double evaluateForState(GameState state, State primaryState) {
 \end{lstlisting}
 
 \subsubsection{Alpha Beta Pruning Algorithm}
-Now we can describe how we implemented the Alpha Beta Pruning algorithm. Since we already prepared everything, from the heuristics to the game controller, this work was done relatively fast. Since we also built our program cleanly with interfaces, we could simply replace the random algorithm with the Alpha Beta Pruning algorithm and play against it. However, the prerequisite for this was that the heuristic was filled with a meaningful DNA object. We created this by hand, with values that we thought made sense. Afterwards we were able to play against our algorithm. What is striking is that it was already really hard to win against the algorithm, although the parameters were not defined by the computer but by us. That was of course a good sign that our approach could be successful.
+Now we implemented the Alpha Beta Pruning algorithm. Since we already prepared everything, from the heuristics to the game controller, this work was done relatively fast. Since we also built our program cleanly with interfaces, we could simply replace the random algorithm with the Alpha Beta Pruning algorithm and play against it. However, the prerequisite for this was that the heuristic was filled with a meaningful DNA object. We created this by hand, with values that we thought made sense. Afterwards we were able to play against our algorithm. What is striking is that it was already really hard to win against the algorithm, although the parameters were not defined by the computer but by us. That was of course a good sign that our approach could be successful.
 
 \subsubsection{Self Learning Algorithm}
 Since our program worked so far, we started with the \ac{SL} part. At first we didn't implement it on the website, but for the console. First we had to create the object that stores the whole process, the era. Then we had to implement the parts described in the \autoref{selflearning} and needed to call them in the correct order. Then we just had to be patient to train a few generations to see if there was any improvement.
@@ -397,7 +397,7 @@ Since our program worked so far, we started with the \ac{SL} part. At first we d
 Our main goal was achieved. The algorithm evolved itself and we could play against it. But we didn't want to be satisfied with that yet. That's why we added the self-learning algorithm to the website and added some nice features like color themes and compatibility on all devices. We also kept an eye on the performance and wrote the code as efficient as possible.
 
 \subsection{Website and User Interface} \label{websiteui}
-In order that our project is accessible all over the world with different end devices ranging from smartphones to Personal Computers running with different Operating Systems, we thought that it would be the most convenient solution to make a website. 
+In order that our project is accessible all over the world with different end devices ranging from smartphones to personal computers running with different operating systems, we thought that it would be the most convenient solution to make a website.
 
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part, which provides the functionality of the algorithm, was already discussed in the previous subsection. 
 Because CSS can be extremely time-consuming, we made use of a CSS Framework called \href{https://materializecss.com/}{Materialize} from Google, which provides cross browser compatible and responsible components such as navbars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website \href{http://animista.net/}{Animista}, which provides ready-to-use CSS animations.
@@ -412,9 +412,10 @@ The first part of the website contains an explanation of the rules of the game a
 Via a button in the navigation bar, it's possible to change to a more detailed  part of the website, we called it "Advanced View", which we designed for people who are interested in what's going on behind the scenes. It's possible to see the whole era with all generations and organisms and it's evident, how the algorithm has evolved. It's also possible to generate a new era and calculate everything from scratch. As one plays against a desired Organism, it's also possible to adjust the search depth of the current game dynamically. It's observable, that it takes much longer for the algorithm to make a turn if the search depth is deeper. %evtl zeit erwähnen wie lange es geht
 
 %evtl weglassen oder verbessern
-Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
+%Our Algorithm is separated from the part of the Web, that it is modular and reusable for any other applications like an app or something similar. In programming terms, things are separated with a thing called "Interface". Our Interface in dart is called the Player Interfacer. The Player Interface simply provides the information of our game state and is able to get input from the user interface on our website.
 
-In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implemented a function that shows the player, where he has to play his next turn. 
+%In HTML and CSS, we prepared a 9x9 grid, which we had to fill dynamically with the information of our Player Interface. When the algorithm made his turn, we also implemented a function that shows the player, where he has to play his next turn.
+
 We also had to make sure, that the calculations of the algorithm didn't run on the same thread as the UI thread of the website. Otherwise, the calculations of our algorithm would block the update of the UI. That would be a bad user experience. In order to prevent that scenario, we made two threads, which allowed the computer to work on both calculations at the same time. 
 
 
@@ -449,7 +450,7 @@ While in the first generation only the first organism more or less reproduced th
 \end{dnadiagram}
 \captionof{figure}{The best, an average and the last DNA of Generation 5}
 \end{fixedpic}
-In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but condition 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like the expected result. The striking difference to the others is also that the relative difference of condition 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role.
+In the tenth generation there is again a conspicuity. Slowly all organisms start to look the same, but the organisms 3 and 4 stand out. In these organisms, the fourth and fifth parameters are almost identical. Probably because the fourth parameter mutated strongly upwards. Although these organisms do not look like the expected result, they are better than many that look like our expections. The striking difference to the others is also that the relative difference of condition 3 and 4 is greater than for the others. Precisely because the fourth parameter has probably mutated strongly upwards. According to this observation, the ratio of the parameters plays an important role and not only whether they are bigger than the previous ones.
 
 \begin{fixedpic}
 \centering
@@ -483,7 +484,7 @@ The simple answer is no. Even our best organism didn't have a 100\% win rate. So
 
 An other approach which would surely lead to victory, however, certainly exists. But it is not very efficient. This approach would be to set the search depth of our algorithm to 81. 81 for the reason that the game has 81 fields and so even in the worst case the game would be finished after 81 moves. So the algorithm would evaluate every single possible game state. The disadvantage would be the runtime.
 
-The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game consists of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate most of them, but there would still be far too many game states to evaluate.
+The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game consists of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate many of them, but there would still be far too many game states to evaluate.
 
 \section{Challenges}
 Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we also had problems with bugs and unwanted behaviour. But only two cases really caused us problems.
