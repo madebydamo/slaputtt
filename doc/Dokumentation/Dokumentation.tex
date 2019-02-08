@@ -219,9 +219,13 @@ keepaspectratio]{background2.jpg}%
 
 \input{journal}
 \cleardoublepage
-\printacronyms[heading=section,include-classes=acro]
+\phantomsection
+\addcontentsline{toc}{section}{Acronyms}
+\printacronyms[include-classes=acro]
 \cleardoublepage
-\printacronyms[heading=section,exclude-classes=acro,name=Word definitions]
+\phantomsection
+\addcontentsline{toc}{section}{Word definitions}
+\printacronyms[exclude-classes=acro,name=Word definitions]
 \cleardoublepage
 \phantomsection
 \addcontentsline{toc}{section}{\listfigurename}
