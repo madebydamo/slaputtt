@@ -218,14 +218,21 @@ keepaspectratio]{background2.jpg}%
 % To have just one problem per page, simply put a \clearpage after each problem
 
 \input{journal}
-\clearpage
+\cleardoublepage
 \printacronyms[heading=section,include-classes=acro]
+\cleardoublepage
 \printacronyms[heading=section,exclude-classes=acro,name=Word definitions]
-\clearpage
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{section}{\listfigurename}
 \listoffigures
-\pagebreak
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{section}{\lstlistingname}
 \lstlistoflistings
-\pagebreak
+\cleardoublepage
+\phantomsection
+%\addcontentsline{toc}{section}{\bibname}
 \bibliographystyle{apacite}
 \bibliography{literatur}
 
