@@ -187,3 +187,7 @@ nav .sidenav {
 #opponent {
     margin-top: 5%;
 }
+
+#browserinfo {
+    color: red;
+}

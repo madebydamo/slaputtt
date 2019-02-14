@@ -5,12 +5,14 @@ import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 
+import 'components/BrowserInfo.dart';
 import 'components/Navbar.dart';
 import 'components/evolution/Evolution.dart';
 import 'controller/GameController.dart';
 
 void main() {
   Navbar();
+  BrowserInfo();
   GameController controller = GameController();
   EvolutionElement element = EvolutionElement();
   HttpRequest.getString('17_3G70.json').then((jsonString) {
