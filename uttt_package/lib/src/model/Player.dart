@@ -10,5 +10,5 @@ abstract class Player {
 
   ///Gets invoked, when the game has finished. [won] contains the information
   ///whether the [Player] have won the game. [state] is the current GameState.
-  terminate(GameState state, bool won);
+  terminate(GameState state, bool won, bool draw);
 }

@@ -38,8 +38,8 @@ class Game {
 
   void terminate() {
     winner = playerFromState[cache[gameState.value].winner];
-    _player1.terminate(gameState, winner == _player1);
-    _player2.terminate(gameState, winner == _player2);
+    _player1.terminate(gameState, winner == _player1, winner == null);
+    _player2.terminate(gameState, winner == _player2, winner == null);
     if (onTerminate != null)
       onTerminate(cache[gameState.value].winner);
   }

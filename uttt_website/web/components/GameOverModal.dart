@@ -54,12 +54,17 @@ class GameOverModal {
       initModal(_modal, ModalOptions(dismissible: false));
     }
 
-    void open(bool won) {
-      _header.innerHtml =
-      won ? "Congrats!" : "Game Over!";
-      _paragraph.innerHtml =
-      won ? "You have won." : "Maybe next time...";
-      print("terminate");
+    void open(bool won, bool draw) {
+      if(won) {
+        _header.innerHtml = "Congrats!";
+        _paragraph.innerHtml = "You won.";
+      } else if (draw) {
+        _header.innerHtml = "That was close!";
+        _paragraph.innerHtml = "You played tied.";
+      } else {
+        _header.innerHtml = "It's a great pity!";
+        _paragraph.innerHtml = "You lost.";
+      }
       getInstance(_modal).open();
     }
 

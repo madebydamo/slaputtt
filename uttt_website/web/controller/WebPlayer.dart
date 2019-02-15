@@ -36,10 +36,10 @@ class WebPlayer implements Player {
   }
 
   @override
-  terminate(GameState state, bool won) {
+  terminate(GameState state, bool won, bool draw) {
     print("Terminated, you have won: $won");
     _grid.visualize(state, false);
     GameOverModal modal = GameOverModal();
-    modal.open(won);
+    modal.open(won, draw);
   }
 }

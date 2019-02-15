@@ -7,6 +7,7 @@ import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
 
 import '../../controller/GameController.dart';
+import '../Opponent.dart';
 
 class RatingElement {
   DivElement root;
@@ -42,7 +43,7 @@ class RatingElement {
     play.classes.addAll(["waves-effect", "waves-light", "btn-flat"]);
     play.onClick.listen((event) {
       GameController()
-          .config(AlphaBetaPruning(3, HeuristicAlphaBeta(r.dna)), true);
+          .config(AlphaBetaPruning(OpponentElement().searchDepth, HeuristicAlphaBeta(r.dna)), true);
       window.scrollTo(0, 0, {"behavior": 'smooth'});
     });
     play.innerHtml = "Play";

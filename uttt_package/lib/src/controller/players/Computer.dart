@@ -15,7 +15,7 @@ class Computer implements Player {
   }
 
   @override
-  terminate(GameState state, bool won) {
+  terminate(GameState state, bool won, bool draw) {
     //Nothing to do here
   }
 }

@@ -47,7 +47,7 @@ class AlgorithmWorker implements Player {
   }
 
   @override
-  terminate(GameState state, bool won) {}
+  terminate(GameState state, bool won, bool draw) {}
 
   config(Algorithm algorithm, [void Function() startGame]) {
     dynamic json = Transmission.configAlgorithm(algorithm).toTransmittable();
