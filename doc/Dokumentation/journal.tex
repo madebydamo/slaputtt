@@ -115,7 +115,7 @@ Each game state has a certain number of moves that can be played. For example, w
 All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. 
 %This is how one score after the other is calculated. 
 This is how we get all different game states that we evaluate afterwards.
-This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is described in \autoref{heuristic}. For now we should know that each game state can be representet by a score. The bigger the number, the better the game state for us. And the better the game state, the better the chances we'll win.\\
+This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is described in \autoref{heuristic}. For now we should know that each game state can be represented by a score. The bigger the number, the better the game state for us. And the better the game state, the better the chances we'll win.\\
 
 Now the tree gets evaluated so that in the worst case, the score is as high as possible for us.
 That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. 
@@ -187,6 +187,7 @@ The following three conditions are checked in the large field.\\
 	\captionof{figure}{Condition five}
 \end{fixedpic}
 \end{itemize}
+\newpage
 In the following figure, all five occurring conditions are marked with different colors:
 \begin{description}
 \item[Condition one] Yellow
