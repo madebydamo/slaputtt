@@ -1,32 +1,31 @@
 \section{Introduction}
 %introduction of the topic
 Algorithms are everywhere. They are a part of our everyday lives without even realizing it. They can be found in general mathematics, or in practical applications such as  computers or smartphones. But what exactly is an algorithm? According to the Oxford Dictionary an algorithm is generally speaken "a process or set of rules to be followed in calculations or other problem-solving operations, especially by a computer" \cite{web:oxforddictionaries2018}.
-In our apprenticeship, we both have a lot to do with algorithms. Damian works as a software engineer, where he writes most of the time software. Stefan is an electronics engineer and his specialisation in the fourth year of education is also software. According to that, we both have a pretty good idea of what algorithms are and what they do. We found out, that each of us is fascinated by the concepts and possibilities algorithmic structures provide, especially in practical applications. So we came up with the idea, to implement an algorithm by ourselves. \\
+In our apprenticeship, we both have a lot to do with algorithms. Damian works as a software engineer, where he writes software most of the time. Stefan is an electronics engineer and his specialisation in the fourth year of education is software as well. According to that, we have a pretty good idea of what algorithms are and what they do. We discover, that both of us are fascinated by the concepts and possibilities algorithmic structures provide, especially in practical applications. So we came up with the idea to implement an algorithm by ourselves. \\
 
 %goals
-We set the goal, to program an algorithm, that can play the game \acl{UTTT} (\ac{UTTT}). \ac{UTTT} is a more complex and strategic version of the ordinary Tic-Tac-Toe. 
-Our approach to solve that problem is a so called \acl {SLAP}  algorithm, also known as \ac{SLAP} Algorithm. It's a combination of the already existing \acl{ABP} algorithm (\ac{ABP}) combined with an own made up extension which is, as the name suggests, self learning. We want to analyse the learning process of the algorithm in more detail and evaluate whether there is really an improvement. This will be the mathematical part of our work.
-To experience our project in action, we also want to create a website where everybody can play \ac{UTTT}  against our \ac{SLAP} algorithm.
+We set the goal to program an algorithm, that is able to play the game \acl{UTTT} (\ac{UTTT}). \ac{UTTT} is a more complex and strategic version of the ordinary Tic-Tac-Toe. 
+Our approach to solve that problem is a so called \hyperref[sec:slap]{\acl {SLAP}  algorithm}, also known as \ac{SLAP} Algorithm. It's a combination of the already existing \hyperref[abpalgo]{\acl{ABP} algorithm} (\ac{ABP}), combined with an own made up extension, which is, as the name suggests, \hyperref[selflearning]{self learning}. We want to analyse the learning process of the algorithm in more detail and evaluate whether there is really an improvement. This will be the mathematical part of our work.
+To experience our project in action, we also wanted to create a website where everybody can play \ac{UTTT}  against our \ac{SLAP} algorithm.
 Another intention of our project is to bring the seemingly complex subject in an easy understandable form to the interested reader. We aim to resume our approach of the solution in a comprehensible way. We want to give the reader an insight and a deeper understanding of algorithms, how they work and how they are implemented. With the website, we hope to create an interesting and interactive extension to this paper. To access the website, type \href{https://slaputtt.firebaseapp.com/}{slaputtt.firebaseapp.com} into your web browser. In order to meet the requirements to cover two subjects, we decided to write our paper and the website in English. \\
 
 %overview methodological approach
 The first part of our IDPA will be to implement the game itself and the corresponding SLAP algorithm. 
-That includes to find a way to value the \acp{game state} in the most efficient way. This will be the task of the \acl{SL} algorithm (\ac{SL}). Only if that part of the \ac{SLAP} algorithm works fine, the \ac{ABP} is able to work in our favour.
-We decided to realise all of that with a modern programming language called Dart from Google. Dart is a well-structured, object-oriented programming language that gives us the flexibility to write client and server-side code. All with one code base and one language. Once everything is set up, we will track the development of the \ac{SL} algorithm. We are also planning to integrate a function into the website where the user can evolve his own \ac{SLAP} algorithm and observe the progress themselves.
+That includes to find a way to value the \acp{game state} in the most efficient way. This will be the task of the \acl{SL} algorithm (\ac{SL}). Only if that part of the \ac{SLAP} algorithm works fine, the \ac{ABP} algorithm is able to work in our favour.
+We decided to implement this project with a modern programming language called Dart from Google. Dart is a well-structured, object-oriented programming language that gives us the flexibility to write client and server-side code, all with one code base and one language. Once everything is set up, we will track the development of the \ac{SL} algorithm. We are also planned to integrate a function into the website where the user can evolve his own \ac{SLAP} algorithm and observe the progress themselves.
 %overview structure of the paper
 %to do
 
 \section{Motivation}
-Since the beginning of searching a topic for our IDPA, we knew that we both were interested in a practical project rather than a  project work in written form. We both are interested in coding and have to work with software. Because of that, a software project was the most obvious option. Additionally, to create an own software project was for both of us a desirable idea.
-Damian came up with the idea, to create a kind of self learning algorithm which is able to play \ac{UTTT}. We both were really interested in a practical implementation of such an algorithm. We both knew that we could learn a lot with a project like this and that the context of the IDPA provides the perfect opportunity. \\
+Since the beginning of searching a topic for our IDPA, we knew that we were interested in a practical project rather than a project in written form. Since we earn our money with programming, a software project was the most obvious option. Additionally, creating an own software project from scratch was a desirable idea for both of us.
+Damian came up with the idea, to develop a kind of self learning algorithm, which is able to play \ac{UTTT}. We both were really interested in a practical implementation of such an algorithm. We knew we could learn a lot with a project like this and the context of the IDPA provides the perfect opportunity. \\
 
-We also knew, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
+We knew too, that we could integrate knowledge in our project, which we gained at our mathematics teaching during the last three years. To evaluate and describe certain behaviours of our algorithm, algebra and data analysis provide perfect tools.
 
-To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation. 
+To cover two subjects in our IDPA, we decided to apply our English knowledge, which we also improved during the last years at the BMS as well. Because we write all our software in English, we came up with the idea to keep language consistency throughout our whole project, including the website and this documentation.
 
 \subsection{Why we chose Dart}
-At the beginning of every project there is always the question which programming language to use. Since we didn't know exactly how we wanted to implement the program, we decided to use a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript and also runs on the server side and if necessary we could even build the code into an app. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. So Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Also the language is easier to read, because it is data type based and has many small features, which make the code more compact. Also, we both have no experience with Dart yet, what we would like to have changed.  And in this project we both saw our chance to 
-do that. All these little things let us decide for Dart. The following is a small example of what is meant by the small features that make the code more compact.
+At the beginning of every programming project there is always the question which language to use. Since we didn't know exactly how we wanted to implement the program, we decided to use a versatile language. Dart runs in the browser, respectively you can compile it in JavaScript, and it runs on the server side. If necessary we could even build the code into an app for Android or IOS. The only, just as versatile language and alternative would be JavaScript. However, Dart was designed to compete with JavaScript.  The main goal was to eliminate the errors and inconveniences of JavaScript. Thus Dart offers an excellent asynchronous language support, which is unfortunately missing in JavaScript. Furthermore the language is easier to read, because it's data type based and has many small features, which make the code more compact. Moreover, both of us have no experience with Dart yet, what we would like to change. And in this project we saw our chance to do that. All these little things let us decide for Dart. The following is a short example of what is meant by the small features that make the code of Dart more compact compared to JavaScript.
 
 \begin{lstlisting}[language=JavaScript,caption={Example in JavaScript}]
 // Returns obj2 if obj1 is null, otherwise returns obj1
@@ -59,7 +58,7 @@ void method2(Foo foo) {
 \end{lstlisting}
 
 \section{Rules}
-To understand how to play \ac{UTTT}, it is required to  know the rules of the ordinary Tic-Tac-Toe game. If you already know the rules of the ordinary Tic-Tac-Toe, you can continue reading \autoref{rulesuttt}. 
+To understand how to play \ac{UTTT}, it's necessary to know the rules of the ordinary Tic-Tac-Toe game. If you know them already, you can continue reading \autoref{rulesuttt}. 
 
 \subsection{Rules Tic-Tac-Toe}
 
@@ -68,7 +67,7 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while i
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.2\textwidth]{tictactoe}
-	\captionof{figure}{A random scenario of an ordinary Tic-Tac-Toe field.}
+	\captionof{figure}{A random scenario of an ordinary Tic-Tac-Toe board.}
 \end{fixedpic}
 
 
@@ -76,27 +75,27 @@ The game Tic-Tac-Toe consist of a 3-by-3 board. Two players are required while i
 \subsection{Rules \acl*{UTTT}} \label{rulesuttt}
 The board of \ac{UTTT} is made up from 9 ordinary Tic-Tac-Toe boards, hence there are 81 possible fields.
 Each small Tic Tac Toe board will be called a local board and the big Tic-Tac-Toe board will be called the global board.
-A player can start anywhere he would like to on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. \\
+A player can start anywhere on a local board. According to the location he played on a local board, his opponent will be sent to that relative position in the global board. The opponent can now mark a tile on that local board, keeping in mind that he will send the other player to the relative position on the global board. \\
 
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{rule1}
-	\captionof{figure}{The yellow player forced the blue player to make his turn somewhere in the light blue marked big tile. The relative position (top-left) of the yellow square on the small board is the same relative position (top-left) as the light blue marked tile on the global board.}
+	\captionof{figure}{The yellow player played the last move and forced the blue player to make his turn somewhere in the light blue marked local board. The relative position (top-left) of the yellow square on the small board is the same relative position (top-left) as the light blue marked local board on the global board.}
 \end{fixedpic}
 
 A victory on a local board is the equivalent to a marked tile on the global board. To win the game, one has to win 3 horizontally, vertically or diagonal aligned tiles of the global board.
 
-If a local board is won or draw, no more moves are allowed there. In case a player was sent to such a board, he is allowed to make his next turn on every other free local board. It's possible that the game ends in a draw, because  no more legal moves are allowed.
+If a local board is won or draw, no more moves are allowed there. In case a player is sent to such a board, he is allowed to make his next turn on every other free local board. It's possible the game ends in a draw, because no more legal moves are allowed and nobody won.
 
 \begin{fixedpic}
 	\centering
 	\includegraphics[width=0.6\textwidth]{uttt}
-	\captionof{figure}{A random scenario of an Ultimate Tic-Tac-Toe field}
+	\captionof{figure}{A random scenario of an Ultimate Tic-Tac-Toe board}
 \end{fixedpic}
 
 The yellow marked local fields are already won by the yellow party.
 
-\section{\acs*{SLAP} algorithm}
+\section{\acs*{SLAP} algorithm} \label{sec:slap}
 
 
 
@@ -111,14 +110,14 @@ The yellow marked local fields are already won by the yellow party.
 
 The \ac{ABP} algorithm always starts from one initial game state. This initial game state is represented by the top node. 
 %Each game state also corresponded to a value. 
-Each game state has a certain number of moves that can be played. For example, when the game starts and the field is empty, there are 81 possible moves that can be played.
-All the possible moves are now tried out one after the other. After each move we get a new game state, which also has possible moves again. Even after these moves, we have new game states again. 
+Each game state has a certain number of moves that can be played. For example, when the game starts and the board is empty, there are 81 possible moves which can be played.
+All possible moves are being tested one after the other. After each move we get a new game state, which leaves us with possible moves again. Even after these moves, we have new game states again. 
 %This is how one score after the other is calculated. 
 This is how we get all different game states that we evaluate afterwards.
 This can be represented as a tree structure. Each node (whether round or square) symbolizes a game state. The branches show the possible moves. Since evaluating all possible game states would be too computationally intensive, a search depth is defined. In the figure the search depth is 4, because four turns were evaluated from the initial node. Now the game states of the lowest row (hands) are evaluated. How this works is described in \autoref{heuristic}. For now we should know that each game state can be represented by a score. The bigger the number, the better the game state for us. And the better the game state, the better the chances we'll win.\\
 
-Now the tree gets evaluated so that in the worst case, the score is as high as possible for us.
-That means as much as assuming that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. 
+Now the tree gets evaluated to get a score as high as possible for us.
+We assume that the opponent always makes the move that would be worst for us, because a bad game state for us is a good game state for the opponent. 
 
 This is how the evaluation starts at the bottom of the tree. The fourth turn (branches between the last two levels) is played by the opponent (MIN stands for minimizing player, which is equal to our opponent). Therefore, the smallest score is always written in the upper node.\\
 \begin{fixedpic}
@@ -136,7 +135,7 @@ The search tree gets evaluated after every new turn. In other words, the \ac{ABP
 \end{fixedpic}
 
 The minimal average amount of options per move in the game \ac{UTTT} is five \cite[p.~1-2]{web:amar2013}.
-In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$ and without the optimizations the \ac{ABP} algorithm provides, the calculated amount of all nodes can be represented with the following equation:  $$a = \sum_{i=1}^{n} \delta^{i}$$
+In our case, for simplification purposes, the \ac{ABP} search tree can be pictured with five branches emerging from every new node. With a search depth of $n$ and without the optimizations the \ac{ABP} algorithm provides, the calculated amount of all nodes, respectively game states, can be represented with the following equation:  $$a = \sum_{i=1}^{n} \delta^{i}$$
 
 \begin{center}
 $a$: amount of nodes,
@@ -149,7 +148,7 @@ $\delta$: average move per node
 \subsection{Heuristic} \label{heuristic}
 The \ac{ABP} algorithm only decides which move is played. But without the heuristic, the \ac{ABP} algorithm would be pointless. The task of the heuristic is to fill the nodes in the \ac{ABP} search tree with meaningful numbers. The more accurate our heuristic will be, the better are the chances for our \ac{SLAP} algorithm to win. The heuristic has only the purpose to evaluate the score of the board, or in other words, calculate a score for each possible \ac{game state}. The better the game state, the higher the score.\\
 
-Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal line. The first two conditions are checked in the small fields.\\
+Now to how the evaluation of the game state works. We award points for certain  \acp{condition} on the board. There are exactly five of these conditions occurring on a board, which are important for our heuristic. The check always takes place in a row, a column or a diagonal line. The first two conditions are checked in the small boards.\\
 
 
 \begin{itemize}
@@ -166,7 +165,7 @@ Now to how the evaluation of the game state works. We award points for certain  
 	\captionof{figure}{Condition two}
 \end{fixedpic}
 \end{itemize}
-The following three conditions are checked in the large field.\\
+The following three conditions are checked in the large board.\\
 \begin{itemize}
 \item One local boards won, two local boards not yet determined. Here the condition occurs once in the top row. In this figure, the first two conditions in the won local board are no longer considered.\\
 \begin{fixedpic}
@@ -205,7 +204,7 @@ The conditions are determined separately for both players. We count all conditio
 If the difference is $<0$, the second player has an advantage with the corresponding condition
 (The following table will clarify this step).\\
 
-After the subtraction we have five certain numbers, which describe each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 fields. Each field stands for a factor by which the number, that represent a  condition, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our example DNA has the following Numbers. 
+After the subtraction we have five certain numbers, which describe each of the five conditions.  Now, we have to convert them into a meaningful number. This is where the DNA comes into play. The DNA is an object consisting of 5 values. Each value stands for a factor by which the number, that represent a  condition, is multiplied. Not all conditions should contribute the same value to the final game state evaluation. With the DNA, we are able to control the relative proportions of the five conditions. Let's do a sample calculation using the picture above. Our example DNA has the following Numbers. 
 \begin{center}
 \begin{description}
 \item[Factor condition one] 1
@@ -319,7 +318,7 @@ RevertMove playMove(GameState state, Move move) {
 	...
 }
 \end{lstlisting}
-Since these functions are needed for each individual move, we made these functions as efficient as possible. So we already evaluated every possible Tic-Tac-Toe field and stored it in a cache. If we now evaluate the \ac{UTTT} field, we can access this information and minimize the computing time per call.
+Since these functions are needed for each individual move, we made these functions as efficient as possible. So we already evaluated every possible Tic-Tac-Toe board and stored it in a cache. If we now evaluate the \ac{UTTT} board, we can access this information and minimize the computing time per call.
 
 \subsubsection{Game}
 Because we had all the necessary information for a game state at that point, we could start implementing the game. Therefore we created classes for the game itself and for the players. Since the whole program didn't yet run in the browser but in the console, we didn't implement any input options yet. Instead, we created the simplest algorithm. This algorithm chose a random playable move and played it. So we could let the computers play against each other for the first time. Since the moves were all completely random, the games weren't really exciting. However, it was enough to check that all the rules were followed and that the computer could not play any wrong moves. After that part, we could start with the next milestone.
@@ -346,7 +345,7 @@ class RandomMove extends Algorithm {
 Because we had a working game so far, we wanted to play it ourselves. That's why we started developing the website. First we had to make sure that the score was displayed correctly. Then we had to create the possibility that when we click into the grid, the correct move is played. After this implementation we were able to play against the computer, but only against the random algorithm. The further implementation of the website is described in more detail in the \autoref{websiteui}. For this milestone we only needed a playable version so that we were able to start implementing the \ac{ABP} algorithm.
 
 \subsubsection{Heuristic}
-Before we could start with the \ac{ABP} algorithm, we had to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first created the DNA, the basic component of the game state evaluation. Based on this DNA, the five occurring conditions on a board  are then added together and describe a game state with a meaningful number. In order to accelerate the game state evaluation, we already loaded the evaluation for all possible Tic-Tac-Toe fields in the background, as with the game controller. With this information we were able to efficiently evaluate even a large field without much computational effort. This optimization is needed because this function is called by the \ac{ABP} algorithm for every possible game state.
+Before we could start with the \ac{ABP} algorithm, we had to implement the heuristics. The heuristic is used by the Alpha Beta Pruning algorithm. For the heuristic we first created the DNA, the basic component of the game state evaluation. Based on this DNA, the five occurring conditions on a board  are then added together and describe a game state with a meaningful number. In order to accelerate the game state evaluation, we already loaded the evaluation for all possible Tic-Tac-Toe boards in the background, as with the game controller. With this information we were able to efficiently evaluate even a large board without much computational effort. This optimization is needed because this function is called by the \ac{ABP} algorithm for every possible game state.
 
 \begin{lstlisting}[language=Dart,caption={Implementation of the heuristic}]
 // Returns the evaluated score of the [state] from the
@@ -398,7 +397,7 @@ Since our program worked so far, we started with the \ac{SL} part. At first we d
 Our main goal was achieved. The algorithm evolved itself and we could play against it. But we didn't want to be satisfied with that yet. That's why we added the self-learning algorithm to the website and added some nice features like color themes and compatibility on all devices. We also kept an eye on the performance and wrote the code as efficient as possible.
 
 \subsection{Website and User Interface} \label{websiteui}
-In order that our project is accessible all over the world with different end devices ranging from smartphones to personal computers running with different operating systems, we thought that it would be the most convenient solution to make a website.
+In order that our project is accessible all over the world with different end-devices ranging from smartphones to personal computers running with different operating systems, we thought that it would be the most convenient solution to make a website.
 
 In general, the static part of the website is made with HTML (Hyper Text Markup Language) and CSS (Cascaded Style Sheets). HTML specifies the structure of a website.  CSS is then required to style everything. The dynamic part, which provides the functionality of the algorithm, was already discussed in the previous subsection. 
 Because CSS can be extremely time-consuming, we made use of a CSS Framework called \href{https://materializecss.com/}{Materialize} from Google, which provides cross browser compatible and responsible components such as navigation bars, buttons, dropdown-lists, cards, modals and many more. To make our website more appealing and fluid, we used CSS animations. For this purpose, we used the website \href{http://animista.net/}{Animista}, which provides ready-to-use CSS animations.
@@ -480,31 +479,31 @@ From the tenth generation onwards, these conditions are further developed. So th
 \subsection{Is our algorithm unbeatable?}
 The simple answer is no. Even our best organism didn't have a 100\% win rate. So even in his own generation there are organisms which were better or at least could defeat him. And whether we arrive at a point where we reach a 100\% win rate is questionable. During the whole training it never happened that one organism could defeat all the others of the generation. To achieve this, a different approach would have to be tried. For example, more information, such as the current round, could influence the heuristics. This would make sense under the assumption that the tactics are different at the beginning of the optimal game than at the end of the game.\\
 
-An other approach which would surely lead to victory, however, certainly exists. But it is not very efficient. This approach would be to set the search depth of our algorithm to 81. 81 for the reason that the game has 81 fields and so even in the worst case the game would be finished after 81 moves. So the algorithm would evaluate every single possible game state. The disadvantage would be the runtime.
+An other approach which would surely lead to victory, however, certainly exists. But it's not very efficient. This approach would be to set the search depth of our algorithm to 81. 81 for the reason that the game has 81 fields and so even in the worst case the game would be finished after 81 moves. So the algorithm would evaluate every single possible game state. The disadvantage would be the runtime.
 
 The fastest possible victory can be achieved after 17 moves \cite[p.~2]{web:amar2013}. This corresponds to a search depth of 17. The slowest victory would be possible after 81 moves if every square was occupied. So we can make a vague assumption that an average game consists of $\frac{17 + 81}{2} = 49$ moves. With the minimum average move possibility of 5 we have at least $5^{49} = 1.7 \cdot 10^{34}$ in the first move. Optimizing the ABP algorithm would eliminate many of them, but there would still be far too many game states to evaluate.
 
 \section{Challenges}
-Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we also had problems with bugs and unwanted behaviour. But only two cases really caused us problems.
+Errors always creep in during programming. Some are quickly noticed, others remain unnoticed. Of course we had some issues with bugs and unwanted behaviour, but only two cases really cost us time.
 
 \subsection{Worker}
-A worker is a feature of web development. You can outsource computational tasks to them so that the main thread, who is responsible for updating the UI, is not under load for too long. Otherwise, the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript. But Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. But we still wanted to use it in order to provide a better user experience.\\
-To create a worker, we had to link a JavaScript file, which would get executed in another thread. Our plan was to call a JavaScript file, which afterwards would execute a Dart file, compiled in JavaScript. The problem was that there is not an official way, how we could call a Dart file out of a JavaScript file. We had to look deep in the documentation of the Dart compilers in order to find relevant informations to solve this problems. In the end, the worker worked, even tough it puzzled us many hours.
+A worker is a feature of web development. You can outsource computational tasks to them so that the main thread, which is responsible for updating the UI, is not under load for to long. Otherwise the surface is no longer drawn cleanly and the use of the web application no longer feels fluid. Creating such a worker would not have been a problem with JavaScript, but Dart had his pitfalls. Since the programming language is still in development, this feature was not yet implemented cleanly. But we still wanted to use it in order to provide a better user experience.\\
+To create a worker, we had to link a JavaScript file, which gets executed in another thread. Our plan was to call a JavaScript file, which afterwards would execute a Dart file, compiled in JavaScript. The problem we faced: There is no official way, how to call a Dart file out of a JavaScript file. We had to look deep in the documentation of the Dart compilers in order to find relevant informations to solve this problems. In the end, the worker worked, even tough it puzzled us many hours.
 
 \subsection{Responsive design with CSS}
-When designing a website, it's important to consider, that different end devices are used to visit the website. The screen size and ratio of a normal desktop computer is extremely different from a smartphone. In order to render the website well on all end devices, \ac{responsive} design is required. 
+When designing a website, it's important to consider, that different end-devices are used to visit the website. The screen size and ratio of a normal desktop computer is extremely different from a smartphone. In order to render the website well on all end-devices, \ac{responsive} design is required. 
 
-To meet that requirement, fortunately we had the Materialize CSS frame work. Despite that, it wasn't always easy to achieve a seamless design on different end devices. While we developed the website, some components were often displaced, when we accessed the unfinished website with different end devices. 
-In the end, even tough it was challenging, we had a well structured responsive design.
+To meet this requirement, fortunately we had the Materialize CSS framework. It provided us useful tools to design the website for different screen sizes. Despite that, it wasn't always easy to achieve a seamless design on different end-devices. While developing the website, some components were often misplaced, when we accessed the unfinished website with different end-devices.
+Although it was challenging, we had a well structured responsive design on most devices.
 
 %\todo{review allenfalls ausführlicher, Edit Damian: Habe noch einzwei sätze hinzugefügt.}
 \section{Review}
-In retrospect, it was a very interesting project to create. It was very motivating to us, to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns that it would seamlessly work in a practical implementation. It was a relieve, when we both saw, that the self learning part of the algorithm evolved in accordance to our expectations. Through this project we could also learn a lot. Not only was the programming language new, but also hosting a website and implementing a self-learning algorithm which plays a game. Both of us haven't done that yet.
+In retrospect, the project was very interessting. For us, it was rewarding to see the project grow while achieving small goals. Despite the fact that the algorithm works in theory, we had our concerns it wouldn't work seamlessly in a practical implementation. It was a relieve, when we saw  the self learning part of the algorithm evolved in accordance to our expectations. Through this project we could learn a lot. Not only was the programming language new, but also hosting a website and implementing a self-learning algorithm which plays a game. Both of us haven't done that yet.
 
 All in all we are satisfied with our result. The SLAP algorithm works fine, the website is online and all the goals we set at the beginning are achieved. It was a fun project!
 
 \subsection{Potential for improvement}
-Our algorithm is far from perfect. One point that could be improved is the structure of the DNA. Actually, the weighting of a condition is not so important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
+Our algorithm is far from perfect. One point that could be improved is the structure of the DNA. Actually, the weighting of a condition is not that important. More important is the difference to the other parameters. Thus, the DNA could have been reduced to four parameters, which would have made training an era faster. Either by giving the first parameter a fixed number instead of mutating, or by describing DNA parameters not as a condition but as a difference to the previous parameter.
 
 Another optimization point would be a variable search depth. Towards the end of the game the possible moves are always minimized. The average number of moves also reduces the number of games to be evaluated, see \autoref{abpalgo}. In order to evaluate the same number of games anyway, the search depth could be increased during the course of the game.
 %\todo{Zeitformen beachten --> alles in past schreiben}
