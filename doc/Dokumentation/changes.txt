@@ -1,0 +1,17 @@
+Section Introduction
+section Motivation
+Subsection Why we chose Dart
+Section Rules
+Subsection Rules Ultimate Tic Tac Toe
+Subsection Alpha Beta Pruning Algorithm
+Subsection Heuristic
+Subsubsection Gamecontroller
+Subsection Website and User Interface
+Subsection Is our algorithm unbeatable?
+Section Challenges
+Subsection Worker
+Subsection Responsive design with CSS
+Section Review
+Subsection Potentintial of improvements
+
+Die meisten Änderungen sind wegen den Wörtern field und board damit sie in der ganzen Dokumentation immer die gleiche Bedeutung haben
