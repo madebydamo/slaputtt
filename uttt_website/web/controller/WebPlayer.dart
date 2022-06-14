@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:uttt_package/src/controller/GameStateController.dart'
     as GameController;

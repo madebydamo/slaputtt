@@ -1,12 +1,12 @@
-part of 'Evolution.dart';
+import 'dart:html';
 
-class _ProgressBar {
+class ProgressBar {
   DivElement bar;
   DivElement _done;
   DivElement _progress;
   DivElement _todo;
 
-  _ProgressBar() {
+  ProgressBar() {
     bar = DivElement();
     bar.classes.addAll(["bar"]);
     bar.style.display = "grid";

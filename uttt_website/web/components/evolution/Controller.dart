@@ -1,11 +1,24 @@
-part of 'Evolution.dart';
+import 'dart:html';
+import 'dart:core';
+import 'dart:convert';
 
-class _ControlElement {
+import 'package:uttt_package/src/model/Evolution.dart';
+
+import '../../controller/EvolutionWebController.dart';
+import '../../materializecss/modal/Modal.dart';
+import '../../materializecss/range/Range.dart';
+import '../../materializecss/M.dart';
+import 'Evolution.dart';
+import 'Progressbar.dart';
+
+class ControlElement {
   Era _era;
   AnchorElement _train;
   AnchorElement _mutate;
+  EvolutionWebController _webController;
 
-  _ControlElement(Element root, void Function() visualize) {
+  ControlElement(Element root, void Function() visualize) {
+    _webController = EvolutionWebController();
     DivElement leftWrapper = DivElement();
     leftWrapper.classes.add("left");
 
@@ -51,7 +64,7 @@ class _ControlElement {
 
     rightWrapper.children.addAll([_train, _mutate, repeatLabel]);
 
-    _ProgressBar bar = _ProgressBar();
+    ProgressBar bar = ProgressBar();
 
     DivElement modal = DivElement();
     modal.id = "newEra";
@@ -96,9 +109,9 @@ class _ControlElement {
     create.classes
         .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
-      /* era = EvolutionController.initialiseEra( */
-      /*     int.tryParse(population.value), int.tryParse(depth.value)); */
-      /* visualize(); */
+      era = _webController.initialiseEra(
+          int.tryParse(population.value), int.tryParse(depth.value));
+      visualize();
     });
     AnchorElement abort = AnchorElement();
     abort.innerHtml = "Abort";
@@ -132,7 +145,7 @@ class _ControlElement {
     _train.onClick.listen((e) async {
       _train.classes.add("disabled");
       bar.reset();
-      /* await EvolutionController.train(era, bar.showProgress); */
+      await _webController.train(era, bar.showProgress);
       visualize();
       _visualize();
       if (repeat.checked) _mutate.click();
@@ -140,7 +153,7 @@ class _ControlElement {
     _mutate.onClick.listen((e) {
       _mutate.classes.add("disabled");
       bar.reset();
-      /* EvolutionController.mutate(era); */
+      _webController.mutate(era);
       visualize();
       _visualize();
 

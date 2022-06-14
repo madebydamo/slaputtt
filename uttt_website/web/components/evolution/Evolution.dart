@@ -3,24 +3,16 @@ library evolution;
 import 'dart:async';
 import 'dart:html';
 import 'dart:core';
-import 'dart:convert';
 
 import 'package:uttt_package/src/model/Evolution.dart';
 
-/* import '../../controller/EvolutionWebController.dart' as EvolutionController; */
-import '../../materializecss/modal/Modal.dart';
-import '../../materializecss/range/Range.dart';
-import '../../materializecss/M.dart';
 import 'Rating.dart';
-
-part 'Controller.dart';
-
-part 'Progressbar.dart';
+import 'Controller.dart';
 
 class EvolutionElement {
   static EvolutionElement _evolutionElement;
   int _selectedGen;
-  _ControlElement evolutionController;
+  ControlElement evolutionController;
 
   EvolutionElement._() {
     UListElement pagination = UListElement();
@@ -32,7 +24,7 @@ class EvolutionElement {
     control.id = "control";
     querySelector("#evolution").children.add(control);
 
-    evolutionController = _ControlElement(control, _visualize);
+    evolutionController = ControlElement(control, _visualize);
 
     querySelector("#evolution").children.add(control);
 

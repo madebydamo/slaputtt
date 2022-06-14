@@ -1,6 +1,4 @@
 import 'dart:html';
-import 'dart:html';
-import 'dart:html';
 
 import '../controller/GameController.dart';
 import '../materializecss/modal/Modal.dart';
