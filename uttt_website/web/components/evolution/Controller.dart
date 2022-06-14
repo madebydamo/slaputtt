@@ -96,9 +96,9 @@ class _ControlElement {
     create.classes
         .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
-      era = EvolutionController.initialiseEra(
-          int.tryParse(population.value), int.tryParse(depth.value));
-      visualize();
+      /* era = EvolutionController.initialiseEra( */
+      /*     int.tryParse(population.value), int.tryParse(depth.value)); */
+      /* visualize(); */
     });
     AnchorElement abort = AnchorElement();
     abort.innerHtml = "Abort";
@@ -132,7 +132,7 @@ class _ControlElement {
     _train.onClick.listen((e) async {
       _train.classes.add("disabled");
       bar.reset();
-      await EvolutionController.train(era, bar.showProgress);
+      /* await EvolutionController.train(era, bar.showProgress); */
       visualize();
       _visualize();
       if (repeat.checked) _mutate.click();
@@ -140,7 +140,7 @@ class _ControlElement {
     _mutate.onClick.listen((e) {
       _mutate.classes.add("disabled");
       bar.reset();
-      EvolutionController.mutate(era);
+      /* EvolutionController.mutate(era); */
       visualize();
       _visualize();
 
