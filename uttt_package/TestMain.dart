@@ -1,15 +1,7 @@
 import 'dart:convert';
 
-import 'package:uttt_package/src/controller/Game.dart';
-import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
-import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruningIterative.dart';
-import 'package:uttt_package/src/controller/algorithms/RandomMove.dart';
 import 'package:uttt_package/src/controller/evolution/EvolutionController.dart';
-import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
-import 'package:uttt_package/src/controller/players/Computer.dart';
 import 'package:uttt_package/src/model/Evolution.dart';
-import 'package:uttt_package/src/model/GameState.dart';
-import 'package:uttt_package/src/model/Player.dart';
 
 main() {
 //  Player p1 = Computer(RandomMove());
@@ -24,11 +16,12 @@ main() {
 //    if(game.winner == p2) winners.add(State.p2);
 //  }
 //  winners.forEach((s) => print(s));
+  EvolutionController controller = EvolutionController();
 
-  Era era = initialiseEra(20, 3);
+  Era era = controller.initialiseEra(20, 3);
   do {
     int startTime = new DateTime.now().millisecondsSinceEpoch;
-    trainAndMutate(era);
+    controller.trainAndMutate(era);
     print("Gen: ${era.generations.length - 1}, Time = ${(new DateTime.now().millisecondsSinceEpoch - startTime) / 1000}");
     DNA dna = era.lastTrainedGen.best;
     print("DNA: ${dna.smallOne} ; ${dna.smallTwo} ; ${dna.bigOne} ; ${dna
