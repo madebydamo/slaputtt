@@ -4,10 +4,11 @@ targets:
       build_web_compilers:entrypoint:
         # These are globs for the entrypoints you want to compile.
         generate_for:
-        - web/beginner.dart
-        - web/main.dart
-        - web/worker/algorithm/AlgorithmBackgroundWorker.dart
-        - web/worker/game/BackgroundGameSimulator.dart
+          - web/beginner.dart
+          - web/main.dart
+          - web/particle.dart
+          - web/worker/algorithm/AlgorithmBackgroundWorker.dart
+          - web/worker/game/BackgroundGameSimulator.dart
         options:
           compiler: dart2js
           # List any dart2js specific args here, or omit it.

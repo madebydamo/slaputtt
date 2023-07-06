@@ -4,21 +4,21 @@ import 'dart:convert';
 
 import 'package:uttt_package/src/model/Evolution.dart';
 
-import '../../controller/EvolutionWebController.dart';
+import '../../controller/ParticleWebController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
 import '../../materializecss/M.dart';
-import 'Evolution.dart';
-import 'Progressbar.dart';
+import 'ParticleEvolution.dart';
+import '../evolution/Progressbar.dart';
 
-class ControlElement {
-  Era _era;
+class ParticleControlElement {
+  ParticleEra _era;
   AnchorElement _train;
   AnchorElement _mutate;
-  EvolutionWebController _webController;
+  ParticleWebController _webController;
 
-  ControlElement(Element root, void Function() visualize) {
-    _webController = EvolutionWebController();
+  ParticleControlElement(Element root, void Function() visualize) {
+    _webController = ParticleWebController();
     DivElement leftWrapper = DivElement();
     leftWrapper.classes.add("left");
 
@@ -79,6 +79,7 @@ class ControlElement {
         " to develop. Adjust the parameters on your computer.";
     FormElement form = FormElement();
     form.action = "";
+
     ParagraphElement populationParagraph = ParagraphElement();
     populationParagraph.innerHtml = "Populationsize";
     ParagraphElement populationWrapper = ParagraphElement();
@@ -89,6 +90,7 @@ class ControlElement {
     population.value = "35";
     population.step = "1";
     populationWrapper.children.add(population);
+
     ParagraphElement depthParagraph = ParagraphElement();
     depthParagraph.innerHtml = "Depth of search";
     ParagraphElement depthWrapper = ParagraphElement();
@@ -99,8 +101,52 @@ class ControlElement {
     depth.value = "3";
     depth.step = "1";
     depthWrapper.children.add(depth);
-    form.children.addAll(
-        [populationParagraph, populationWrapper, depthParagraph, depthWrapper]);
+
+    ParagraphElement wParagraph = ParagraphElement();
+    wParagraph.innerHtml = "Parameter w";
+    ParagraphElement wWrapper = ParagraphElement();
+    wWrapper.classes.add("range-field");
+    InputElement w = InputElement(type: "range");
+    w.max = "1";
+    w.min = "0";
+    w.value = "0.5";
+    w.step = "0.1";
+    wWrapper.children.add(w);
+
+    ParagraphElement c1Paragraph = ParagraphElement();
+    c1Paragraph.innerHtml = "Parameter c1";
+    ParagraphElement c1Wrapper = ParagraphElement();
+    c1Wrapper.classes.add("range-field");
+    InputElement c1 = InputElement(type: "range");
+    c1.max = "2";
+    c1.min = "0";
+    c1.value = "0.4";
+    c1.step = "0.1";
+    c1Wrapper.children.add(c1);
+
+    ParagraphElement c2Paragraph = ParagraphElement();
+    c2Paragraph.innerHtml = "Parameter c2";
+    ParagraphElement c2Wrapper = ParagraphElement();
+    c2Wrapper.classes.add("range-field");
+    InputElement c2 = InputElement(type: "range");
+    c2.max = "2";
+    c2.min = "0";
+    c2.value = "0.4";
+    c2.step = "0.1";
+    c2Wrapper.children.add(c2);
+
+    form.children.addAll([
+      populationParagraph,
+      populationWrapper,
+      depthParagraph,
+      depthWrapper,
+      wParagraph,
+      wWrapper,
+      c1Paragraph,
+      c1Wrapper,
+      c2Paragraph,
+      c2Wrapper
+    ]);
     content.children.addAll([header, description, form]);
     DivElement footer = DivElement();
     footer.classes.add("modal-footer");
@@ -110,7 +156,11 @@ class ControlElement {
         .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
       era = _webController.initialiseEra(
-          int.tryParse(population.value), int.tryParse(depth.value));
+          int.tryParse(population.value),
+          int.tryParse(depth.value),
+          double.tryParse(w.value),
+          double.tryParse(c1.value),
+          double.tryParse(c2.value));
       visualize();
     });
     AnchorElement abort = AnchorElement();
@@ -131,7 +181,8 @@ class ControlElement {
       FileReader r = FileReader();
       r.onLoad.listen((e) {
         try {
-          EvolutionElement().setEra(Era.fromJson(json.decode(r.result)));
+          ParticleEvolutionElement()
+              .setEra(ParticleEra.fromJson(json.decode(r.result)));
         } catch (e) {
           toast(ToastOptions(
               html: "File could not be parsed, probably some invalid JSON"));
@@ -166,14 +217,17 @@ class ControlElement {
     initModal(modal, ModalOptions());
     initRange(depth);
     initRange(population);
+    initRange(w);
+    initRange(c1);
+    initRange(c2);
   }
 
-  set era(Era era) {
+  set era(ParticleEra era) {
     _era = era;
     _visualize();
   }
 
-  Era get era => _era;
+  ParticleEra get era => _era;
 
   _visualize() {
     if (era.currentState == trained) {

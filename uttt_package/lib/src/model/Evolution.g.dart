@@ -74,3 +74,76 @@ Map<String, dynamic> _$StatsToJson(Stats instance) => <String, dynamic>{
       'draws': instance.draws,
       'loses': instance.loses
     };
+
+ParticleGeneration _$ParticleGenerationFromJson(Map<String, dynamic> json) {
+  return ParticleGeneration((json['ratings'] as List)
+      ?.map((e) =>
+          e == null ? null : ParticleRating.fromJson(e as Map<String, dynamic>))
+      ?.toList());
+}
+
+Map<String, dynamic> _$ParticleGenerationToJson(ParticleGeneration instance) =>
+    <String, dynamic>{'ratings': instance.ratings};
+
+ParticleEra _$ParticleEraFromJson(Map<String, dynamic> json) {
+  return ParticleEra(json['depth'] as int, json['w'] as double,
+      json['c1'] as double, json['c2'] as double)
+    ..generations = (json['generations'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ParticleGeneration.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..currentState = json['currentState'] as String;
+}
+
+Map<String, dynamic> _$ParticleEraToJson(ParticleEra instance) =>
+    <String, dynamic>{
+      'generations': instance.generations,
+      'depth': instance.depth,
+      'currentState': instance.currentState,
+      'w': instance.w,
+      'c1': instance.c1,
+      'c2': instance.c2,
+    };
+
+ParticleRating _$ParticleRatingFromJson(Map<String, dynamic> json) {
+  return ParticleRating(json['particle'] == null
+      ? null
+      : Particle.fromJson(json['particle'] as Map<String, dynamic>))
+    ..stats = json['stats'] == null
+        ? null
+        : Stats.fromJson(json['stats'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ParticleRatingToJson(ParticleRating instance) =>
+    <String, dynamic>{'stats': instance.stats, 'particle': instance.particle};
+
+Particle _$ParticleFromJson(Map<String, dynamic> json) {
+  return Particle(
+      (json['smallOne'] as num)?.toDouble(),
+      (json['smallTwo'] as num)?.toDouble(),
+      (json['bigOne'] as num)?.toDouble(),
+      (json['bigTwo'] as num)?.toDouble(),
+      (json['bigThree'] as num)?.toDouble(),
+      (json['mutation'] as num)?.toDouble() ?? 0.2)
+    ..bestKnownPosition = json['bestKnownPosition'] == null
+        ? null
+        : DNA.fromJson(json['bestKnownPosition'] as Map<String, dynamic>)
+    ..bestStats =
+        json['bestStats'] == null ? null : Stats.fromJson(json['bestStats'])
+    ..velocity = json['velocity'] == null
+        ? null
+        : DNA.fromJson(json['velocity'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ParticleToJson(Particle instance) => <String, dynamic>{
+      'smallOne': instance.smallOne,
+      'smallTwo': instance.smallTwo,
+      'bigOne': instance.bigOne,
+      'bigTwo': instance.bigTwo,
+      'bigThree': instance.bigThree,
+      'mutation': instance.mutation,
+      'bestKnownPosition': instance.bestKnownPosition,
+      'bestStats': instance.bestStats,
+      'velocity': instance.velocity,
+    };
