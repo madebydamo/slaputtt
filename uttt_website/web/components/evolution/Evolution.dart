@@ -6,6 +6,9 @@ import 'dart:core';
 
 import 'package:uttt_package/src/model/Evolution.dart';
 
+import '../Compare.dart';
+import '../Wrapper.dart';
+import 'Progressbar.dart';
 import 'Rating.dart';
 import 'Controller.dart';
 
@@ -142,5 +145,12 @@ class EvolutionElement {
             !child.classes.contains("disabled") &&
             !child.classes.contains("active"))
         .forEach((child) => child.classes.add("waves-effect"));
+  }
+
+  void compare(Wrapper other) async {
+    ProgressBar bar = ProgressBar();
+    bar.reset();
+    await Compare().compare(
+        EvolutionWrapper(evolutionController.era), other, bar.showProgress);
   }
 }

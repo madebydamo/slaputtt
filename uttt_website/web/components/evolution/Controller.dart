@@ -8,6 +8,7 @@ import '../../controller/EvolutionWebController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
 import '../../materializecss/M.dart';
+import '../Wrapper.dart';
 import 'Evolution.dart';
 import 'Progressbar.dart';
 
@@ -42,7 +43,19 @@ class ControlElement {
     download.classes
         .addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
 
-    leftWrapper.children.addAll([newEra, upload, uploadFacade, download]);
+    InputElement compare = InputElement(type: "file");
+    compare.id = "compare";
+    compare.style.display = "none";
+    compare.accept = ".json";
+    compare.classes.addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    AnchorElement compareFacade = AnchorElement();
+    compareFacade.innerHtml = "Compare Evolution";
+    compareFacade.classes
+        .addAll(["waves-effect", "waves-light", "btn-flat", "left"]);
+
+    leftWrapper.children.addAll(
+        [newEra, upload, uploadFacade, download, compare, compareFacade]);
 
     DivElement rightWrapper = DivElement();
     rightWrapper.classes.add("right");
@@ -142,7 +155,37 @@ class ControlElement {
       r.readAsText(f);
       upload.value = "";
     });
+    compare.onChange.listen((e) {
+      File f = upload.files[0];
+      FileReader r = FileReader();
+      r.onLoad.listen((e) async {
+        try {
+          Map<String, dynamic> parsedJson = json.decode(r.result);
+          Wrapper wrapper;
+          if (parsedJson.containsKey('w')) {
+            ParticleEra era = ParticleEra.fromJson(parsedJson);
+            wrapper = ParticleWrapper(era);
+          } else {
+            Era era = Era.fromJson(parsedJson);
+            wrapper = EvolutionWrapper(era);
+          }
+          _train.classes.add("disabled");
+          _mutate.classes.add("disabled");
+          await EvolutionElement().compare(wrapper);
+          visualize();
+          _visualize();
+        } catch (e) {
+          toast(ToastOptions(
+              html: "File could not be parsed, probably some invalid JSON"));
+        }
+      });
+      r.onError.listen((e) => toast(
+          ToastOptions(html: "File could not be readed, ${r.error.message}")));
+      r.readAsText(f);
+      upload.value = "";
+    });
     uploadFacade.onClick.listen((e) => upload.click());
+    compareFacade.onClick.listen((e) => compare.click());
     _train.onClick.listen((e) async {
       _train.classes.add("disabled");
       bar.reset();

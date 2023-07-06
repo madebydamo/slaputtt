@@ -6,6 +6,9 @@ import 'dart:core';
 
 import 'package:uttt_package/src/model/Evolution.dart';
 
+import '../Compare.dart';
+import '../Wrapper.dart';
+import '../evolution/Progressbar.dart';
 import '../evolution/Rating.dart';
 import 'ParticleController.dart';
 
@@ -147,5 +150,12 @@ class ParticleEvolutionElement {
             !child.classes.contains("disabled") &&
             !child.classes.contains("active"))
         .forEach((child) => child.classes.add("waves-effect"));
+  }
+
+  void compare(Wrapper other) async {
+    ProgressBar bar = ProgressBar();
+    bar.reset();
+    await Compare().compare(
+        ParticleWrapper(evolutionController.era), other, bar.showProgress);
   }
 }
