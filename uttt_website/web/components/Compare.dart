@@ -90,6 +90,7 @@ class Compare {
     }
     if (_finished && _evaluated == _inEvaluation) {
       _completer.complete();
+      print(_results);
     }
     showComparison(_results);
   }

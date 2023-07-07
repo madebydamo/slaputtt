@@ -85,7 +85,7 @@ class ParticleControlElement {
     DivElement content = DivElement();
     content.classes.add("modal-content");
     HeadingElement header = HeadingElement.h4();
-    header.innerHtml = "New Evolution";
+    header.innerHtml = "New Evolution for Particle Swarm Optimization";
     ParagraphElement description = ParagraphElement();
     description.innerHtml = "You can create your own Era. The larger the " +
         "population and the depth of search, the longer it takes for generations" +

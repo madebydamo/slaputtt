@@ -85,7 +85,7 @@ class ControlElement {
     DivElement content = DivElement();
     content.classes.add("modal-content");
     HeadingElement header = HeadingElement.h4();
-    header.innerHtml = "New Evolution";
+    header.innerHtml = "New Evolution for Genetic Algorithm";
     ParagraphElement description = ParagraphElement();
     description.innerHtml = "You can create your own Era. The larger the " +
         "population and the depth of search, the longer it takes for generations" +
@@ -156,7 +156,7 @@ class ControlElement {
       upload.value = "";
     });
     compare.onChange.listen((e) {
-      File f = upload.files[0];
+      File f = compare.files[0];
       FileReader r = FileReader();
       r.onLoad.listen((e) async {
         try {
@@ -182,7 +182,7 @@ class ControlElement {
       r.onError.listen((e) => toast(
           ToastOptions(html: "File could not be readed, ${r.error.message}")));
       r.readAsText(f);
-      upload.value = "";
+      compare.value = "";
     });
     uploadFacade.onClick.listen((e) => upload.click());
     compareFacade.onClick.listen((e) => compare.click());
