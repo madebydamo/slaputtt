@@ -1,0 +1,193 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+#output {
+     text-align: center;
+}
+
+.row .centerSection{
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav{
+        position: absolute;
+        top: 0;
+        left: 0;
+        closeOnClick: true;
+}
+
+.sidenav {
+    padding-top: 5vh !important;
+}
+
+.section {
+        min-height: 100vh !important;
+}
+
+h4 {
+    text-align: center;
+}
+
+#tileWrapper {
+/*  width: 360px;
+  height: 360px;*/
+  text-align: center;
+  margin: auto;
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: flex;                       /* establish flex container */
+  flex-wrap: wrap;                     /* enable flex items to wrap */
+  justify-content: space-around;
+}
+
+#control {
+    width: 100%;
+}
+
+#pagination {
+    overflow-x: auto;
+    height: 3em;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+
+nav .sidenav {
+    position: fixed !important;
+    width: 100%;
+}
+
+/*NOT WORKING ON IOS*/
+/*.square{
+	position: relative;
+	width: 100%;		/* desired width *//*
+}
+.square:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	*//* initial ratio of 1:1*//*
+}*/
+
+.square {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+}
+.maxw {
+    max-width: 500px !important;
+    max-height: 500px !important;
+    margin: 0 auto;
+
+    margin-top: 5%;
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: ". . ." ". . ." ". . .";
+}
+
+/*Set */
+.bigTile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    flex: 0 0 33.3%;
+}
+
+.bigTile:nth-child(3n) {
+}
+
+.tile {
+    flex: 0 0 33.3%;
+}
+
+.tile:nth-child(3n) {
+}
+
+.wrapper {
+    width: 90%;
+    margin: 5% auto;
+}
+
+.modal input {
+    width: 100%;
+}
+
+.card-content .bar {
+    display: grid;
+    height: 5px;
+}
+
+#control .bar {
+    display: grid;
+    height: 20px;
+    width: 100%;
+    border-radius:2px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    margin-bottom: 1em;
+    padding: 0 2%;
+}
+
+.bar > div {
+    height: inherit;
+}
+
+.title {
+ font-size: 1.5em !important;
+ margin-left: 1%;
+ margin-right: 1%;
+}
+
+.blackText li a {
+    color: black !important;
+}
+
+.blackText li a:hover {
+    color: white !important;
+}
+
+.rules {
+    max-width: 600px !important;
+    font-size: 15px;
+    text-align: center;
+    margin: auto;
+    padding-right: 5vw;
+    padding-left: 5vw;
+}
+
+.card .card-action a {
+    margin-right: 0 !important;
+    color: black ! important;
+}
+
+#level {
+    margin-bottom: 10px;
+}
+
+#opponent {
+    margin-top: 5%;
+}
+
+#browserinfo {
+    color: red;
+}

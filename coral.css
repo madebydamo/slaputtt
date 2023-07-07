@@ -1,0 +1,86 @@
+html, body{
+    background: lightgrey;
+    color: white;
+}
+
+.tile {
+    background-color: lightgrey;
+}
+
+.p1BigTile {
+    background-color: #E8E8E8;
+}
+
+.p2BigTile {
+    background-color: #444444;
+}
+
+.p1SmallTile {
+    background-color: #E8E8E8;
+}
+
+.p2SmallTile {
+    background-color: #444444;
+}
+
+.top.tile {
+    border-bottom: 1px  solid white;
+}
+
+.top.bigTile{
+    border-bottom: 3px solid white;
+}
+
+.bottom.tile{
+       border-top: 1px  solid white;
+}
+
+.bottom.bigTile{
+    border-top: 3px  solid white;
+}
+
+.left.tile{
+    border-right: 1px  solid white;
+ }
+
+.left.bigTile{
+     border-right: 3px  solid white;
+  }
+
+.right.tile{
+    border-left: 1px  solid white;
+}
+
+.right.bigTile{
+    border-left: 3px  solid white;
+}
+
+.lightRed {
+    animation: blinker 2s linear infinite;
+    background-color: #EE736E !important;
+}
+.modal-content{
+    color: black !important;
+}
+
+.btn {
+    background-color: #EE736E !important;
+}
+
+input[type=range]::-webkit-slider-thumb {
+background-color: #EE736E !important;
+}
+input[type=range]::-moz-range-thumb {
+background-color: #EE736E !important;
+}
+input[type=range]::-ms-thumb {
+background-color: #EE736E !important;
+}
+
+
+input[type=range] + .thumb {
+background-color: #EE736E !important;
+}
+input[type=range] + .thumb.active .value {
+white;
+}
