@@ -18,6 +18,6 @@ dependencies:
     path: ../uttt_package
   json_annotation: any
   chartjs:
-    git: https://github.com/google/chartjs.dart.git
+    path: ../third_party/chartjs
   platform_detect: any
 
