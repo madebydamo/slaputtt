@@ -23,6 +23,8 @@
               subdomain = "slaputtt";
               auth.enabled = false;
             }
+            # Served by the host nginx (default.nix); lets the neo UI show its status.
+            // lib.neo.mkSystemdUnits ["nginx"]
             // lib.neo.mkServiceMeta {
               icon = "https://upload.wikimedia.org/wikipedia/commons/3/32/Tic_tac_toe.svg";
               description = ''
