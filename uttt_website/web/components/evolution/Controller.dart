@@ -8,6 +8,7 @@ import '../../controller/EvolutionWebController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
 import '../../materializecss/M.dart';
+import '../Telemetry.dart';
 import '../Wrapper.dart';
 import 'Evolution.dart';
 import 'Progressbar.dart';
@@ -122,6 +123,7 @@ class ControlElement {
     create.classes
         .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
+      track('evo/ga/new');
       era = _webController.initialiseEra(
           int.tryParse(population.value), int.tryParse(depth.value));
       visualize();
@@ -137,9 +139,11 @@ class ControlElement {
       getInstance(modal).open();
     });
     download.onClick.listen((e) {
+      track('evo/ga/download');
       _download("evolution.json", json.encode(_era.toJson()));
     });
     upload.onChange.listen((e) {
+      track('evo/ga/upload');
       File f = upload.files[0];
       FileReader r = FileReader();
       r.onLoad.listen((e) {
@@ -156,6 +160,7 @@ class ControlElement {
       upload.value = "";
     });
     compare.onChange.listen((e) {
+      track('evo/ga/compare');
       File f = compare.files[0];
       FileReader r = FileReader();
       r.onLoad.listen((e) async {
@@ -187,6 +192,7 @@ class ControlElement {
     uploadFacade.onClick.listen((e) => upload.click());
     compareFacade.onClick.listen((e) => compare.click());
     _train.onClick.listen((e) async {
+      track('evo/ga/train');
       _train.classes.add("disabled");
       bar.reset();
       await _webController.train(era, bar.showProgress);
@@ -195,6 +201,7 @@ class ControlElement {
       if (repeat.checked) _mutate.click();
     });
     _mutate.onClick.listen((e) {
+      track('evo/ga/mutate');
       _mutate.classes.add("disabled");
       bar.reset();
       _webController.mutate(era);

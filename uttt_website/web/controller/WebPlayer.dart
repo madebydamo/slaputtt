@@ -7,6 +7,7 @@ import 'package:uttt_package/src/model/Player.dart';
 
 import '../components/GameOverModal.dart';
 import '../components/Grid.dart';
+import 'GameController.dart' as web;
 
 class WebPlayer implements Player {
   GameState _state;
@@ -36,7 +37,7 @@ class WebPlayer implements Player {
 
   @override
   terminate(GameState state, bool won, bool draw) {
-    print("Terminated, you have won: $won");
+    web.GameController().gameEnded(won, draw);
     _grid.visualize(state, false);
     GameOverModal modal = GameOverModal();
     modal.open(won, draw);

@@ -8,6 +8,7 @@ import 'package:uttt_package/src/controller/algorithms/AlphaBetaPruning.dart';
 import 'package:uttt_package/src/controller/heuristic/HeuristicAlphaBeta.dart';
 
 import '../../components/Opponent.dart';
+import '../../components/Telemetry.dart';
 import '../../transmission/Transmission.dart';
 
 void _log(e) => print("Frontend: $e");
@@ -21,6 +22,7 @@ class AlgorithmWorker implements Player {
   AlgorithmWorker({Algorithm algorithm, Function() afterConfiguration}) {
     _opponentElement = OpponentElement();
     _worker = new Worker("worker/algorithm/workerScript.js");
+    _worker.onError.listen((e) => trackError('worker'));
     _worker.onMessage.listen((e) {
       _log(e.data);
       Transmission transmission = Transmission.fromTransmittable(e.data);

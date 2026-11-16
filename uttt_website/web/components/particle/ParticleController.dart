@@ -8,6 +8,7 @@ import '../../controller/ParticleWebController.dart';
 import '../../materializecss/modal/Modal.dart';
 import '../../materializecss/range/Range.dart';
 import '../../materializecss/M.dart';
+import '../Telemetry.dart';
 import '../Wrapper.dart';
 import 'ParticleEvolution.dart';
 import '../evolution/Progressbar.dart';
@@ -168,6 +169,7 @@ class ParticleControlElement {
     create.classes
         .addAll(["modal-close", "waves-effect", "waves-light", "btn-flat"]);
     create.onClick.listen((e) {
+      track('evo/pso/new');
       era = _webController.initialiseEra(
           int.tryParse(population.value),
           int.tryParse(depth.value),
@@ -187,9 +189,11 @@ class ParticleControlElement {
       getInstance(modal).open();
     });
     download.onClick.listen((e) {
+      track('evo/pso/download');
       _download("evolution.json", json.encode(_era.toJson()));
     });
     upload.onChange.listen((e) {
+      track('evo/pso/upload');
       File f = upload.files[0];
       FileReader r = FileReader();
       r.onLoad.listen((e) {
@@ -207,6 +211,7 @@ class ParticleControlElement {
       upload.value = "";
     });
     compare.onChange.listen((e) {
+      track('evo/pso/compare');
       File f = compare.files[0];
       FileReader r = FileReader();
       r.onLoad.listen((e) async {
@@ -239,6 +244,7 @@ class ParticleControlElement {
     uploadFacade.onClick.listen((e) => upload.click());
     compareFacade.onClick.listen((e) => compare.click());
     _train.onClick.listen((e) async {
+      track('evo/pso/train');
       _train.classes.add("disabled");
       bar.reset();
       await _webController.train(era, bar.showProgress);
@@ -247,6 +253,7 @@ class ParticleControlElement {
       if (repeat.checked) _mutate.click();
     });
     _mutate.onClick.listen((e) {
+      track('evo/pso/mutate');
       _mutate.classes.add("disabled");
       bar.reset();
       _webController.mutate(era);

@@ -42,6 +42,7 @@ class RatingElement {
     AnchorElement play = AnchorElement();
     play.classes.addAll(["waves-effect", "waves-light", "btn-flat"]);
     play.onClick.listen((event) {
+      GameController().level = 'picked';
       GameController()
           .config(AlphaBetaPruning(OpponentElement().searchDepth, HeuristicAlphaBeta(r.dna)), true);
       window.scrollTo(0, 0, {"behavior": 'smooth'});

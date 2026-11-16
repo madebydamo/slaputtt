@@ -38,6 +38,7 @@ class LevelElement {
     _medium.classes.addAll(["waves-effect", "waves-color", "btn-flat"]);
     _medium.onClick.listen((e) {
       _highlight(_medium);
+      GameController().level = 'medium';
       int index = _era.generations.length ~/ 2;
       GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.generations[index].best)), true);
     });
@@ -47,6 +48,7 @@ class LevelElement {
     _hard.classes.addAll(["waves-effect", "waves-color", "btn-flat"]);
     _hard.onClick.listen((e) {
       _highlight(_hard);
+      GameController().level = 'hard';
       GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.lastTrainedGen.best)), true);
     });
 
@@ -66,6 +68,7 @@ class LevelElement {
 
   void _onClickEasy() {
     _highlight(_easy);
+    GameController().level = 'easy';
     GameController().config(AlphaBetaPruning(3, HeuristicAlphaBeta(_era.generations.first.best)), true);
   }
 

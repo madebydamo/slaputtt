@@ -44,6 +44,13 @@
                 add_header Cache-Control "no-cache";
               '';
             };
+            # Browser event beacon (monitoring.nix): an empty 204. SWAG's access
+            # log already records the request, so this nginx does not.
+            locations."^~ /_e/".extraConfig = ''
+              access_log off;
+              add_header Cache-Control "no-store";
+              return 204;
+            '';
           };
         };
       }
