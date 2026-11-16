@@ -1,29 +1,19 @@
-# Slaputtt reverse proxy configuration for SWAG.
+# Reverse proxy for SWAG: https://<subdomain>.<domain> → host nginx on loopback.
+# The browser event beacon /_e/ is answered by the host nginx (default.nix), so
+# it goes through `location /` like every other path.
 {...}: {
-  flake.modules.nixos.slaputtt-swag = {
+  neoPlugin.modules.slaputtt-swag = {
     config,
     lib,
+    plugin,
     ...
   }: let
-    cfg = config.neo.services.slaputtt;
+    name = plugin.name "slaputtt";
+    cfg = config.neo.services.${name};
   in {
-    config.neo.services.slaputtt.proxyConf = lib.mkDefault ''
-      server {
-        include /config/nginx/listen-https.conf;
-        http2 on;
-        server_name ${cfg.subdomain}.*;
-        include /config/nginx/ssl.conf;
-        include /config/nginx/geo-access.conf;
-        client_max_body_size 0;
-
-        location / {
-          include /config/nginx/proxy.conf;
-          proxy_pass http://host.docker.internal:${toString cfg.port}/;
-
-          ${lib.neo.authBlock config cfg}
-        }
-        ${lib.neo.authLocations config cfg}
-      }
-    '';
+    config.neo.services.${name}.proxyConf = lib.mkDefault (lib.neo.mkSubdomainProxyConf {
+      inherit config cfg;
+      proxyPass = "http://host.docker.internal:${toString cfg.port}/";
+    });
   };
 }

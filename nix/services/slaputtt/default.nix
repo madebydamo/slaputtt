@@ -1,124 +1,52 @@
-# Slaputtt service: build Dart web app and serve with nginx.
-{
-  inputs,
-  lib,
-  ...
-}: let
-  pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-  pkgsDart2 = inputs.nixpkgs-dart2.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-  projectRoot = ../../../.;
-
-  combinedSrc = pkgs.stdenv.mkDerivation {
-    name = "slaputtt-combined-src";
-    src = lib.cleanSource projectRoot;
-    dontConfigure = true;
-    dontBuild = true;
-    installPhase = ''
-      mkdir -p $out
-      cp -r uttt_website $out/
-      cp -r uttt_package $out/
-      cp -r third_party $out/
-    '';
-  };
-
-  pubCache = pkgs.stdenv.mkDerivation {
-    name = "slaputtt-pub-cache";
-    src = combinedSrc;
-
-    nativeBuildInputs = [
-      pkgsDart2.dart
-      pkgs.cacert
-      pkgs.findutils
-      pkgs.coreutils
-    ];
-
-    outputHashMode = "recursive";
-    outputHashAlgo = "sha256";
-    # Placeholder; updated after first successful build.
-    outputHash = "sha256-DPPZwUpGoNQUbCNigKRFEq1zwuZYNlqhWzuGsWDJ2GQ=";
-
-    buildPhase = ''
-      export PUB_CACHE=$out
-      export DART_VM_OPTIONS="--root-certs-file=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-      export HOME=$TMPDIR
-      cp -r $src work
-      chmod -R u+w work
-      cd work
-
-      dart --root-certs-file="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" \
-        pub get --directory=uttt_website
-
-      echo "Normalizing pub cache for deterministic builds..."
-      # Dart writes "_fetchedAt" timestamps in .cache/*-versions.json
-      rm -rf "$out/hosted/pub.dev/.cache" || true
-      rm -rf "$out/.cache" || true
-    '';
-    dontFixup = true;
-
-    installPhase = "true";
-  };
-
-  slaputttWeb = pkgs.stdenv.mkDerivation {
-    pname = "slaputtt-web";
-    version = "0.1.0";
-    src = combinedSrc;
-
-    nativeBuildInputs = [
-      pkgsDart2.dart
-    ];
-
-    buildPhase = ''
-      export PATH=${lib.makeBinPath [pkgsDart2.dart]}:$PATH
-      export PUB_CACHE=${pubCache}
-      export HOME=$TMPDIR
-
-      cp -r $src work
-      chmod -R u+w work
-      cd work
-
-      dart pub get --offline --directory=uttt_website
-
-      cd uttt_website
-      dart run build_runner build --release -o build
-
-      rm -f build/web/packages || true
-      cd ../..
-    '';
-
-    installPhase = ''
-      mkdir -p $out
-      cp -r work/uttt_website/build/web/. $out/
-    '';
-  };
-in {
-  perSystem = {...}: {
-    packages.pub = pubCache;
-    packages.web = slaputttWeb;
-  };
-
-  flake.modules.nixos.slaputtt = {
+# Ultimate Tic Tac Toe: a static site served by the host nginx on loopback.
+# SWAG reaches it through host.docker.internal (mkDockerToLocalhostForward).
+{withSystem, ...}: {
+  neoPlugin.modules.slaputtt = {
     config,
     lib,
+    pkgs,
+    plugin,
     ...
   }: let
-    cfg = config.neo.services.slaputtt;
+    name = plugin.name "slaputtt";
+    cfg = config.neo.services.${name};
+    site = withSystem pkgs.stdenv.hostPlatform.system ({config, ...}: config.packages.web);
+    # Other sites of the shared host nginx on the same port would answer for this one.
+    clashes = lib.attrNames (lib.filterAttrs (
+        n: v: n != name && lib.any (l: (l.port or null) == cfg.port) (v.listen or [])
+      )
+      config.services.nginx.virtualHosts);
   in {
-    config = lib.mkIf cfg.enabled {
-      services.nginx = {
-        enable = true;
-        virtualHosts."slaputtt.local" = {
-          listen = [
-            {
-              addr = "0.0.0.0";
-              port = cfg.port;
-            }
-          ];
-          root = slaputttWeb;
-          locations."/" = {
-            tryFiles = "$uri $uri/ /index.html";
+    config = lib.mkIf cfg.enabled (lib.mkMerge [
+      (lib.neo.mkDockerToLocalhostForward cfg.port)
+      {
+        warnings = lib.optional (clashes != []) "${name}: port ${toString cfg.port} is also used by ${lib.concatStringsSep ", " clashes}; give each site its own port.";
+
+        # nginx itself is switched on by nginx.nix (one per machine).
+        services.nginx = {
+          virtualHosts.${name} = {
+            listen = [
+              {
+                addr = "127.0.0.1";
+                port = cfg.port;
+              }
+            ];
+            root = site;
+            # Three real pages, no client routes: a missing file is a 404. With
+            # the old index.html fallback a missing AI worker or opponent file
+            # came back as 200, the AI never moved and no log showed it.
+            # The store files have mtime 1970, so make browsers revalidate (304)
+            # instead of caching them heuristically; a new build reaches
+            # visitors at once.
+            locations."/" = {
+              tryFiles = "$uri $uri/ =404";
+              extraConfig = ''
+                add_header Cache-Control "no-cache";
+              '';
+            };
           };
         };
-      };
-    };
+      }
+    ]);
   };
 }
