@@ -1,0 +1,7 @@
+Third-party files, downloaded by `just vendor` (pinned versions):
+
+materialize.min.css, materialize.min.js  Materialize 1.0.0       MIT         https://github.com/Dogfalo/materialize
+Chart.bundle.min.js                      Chart.js 2.7.3          MIT         https://github.com/chartjs/Chart.js
+d3.min.js                                D3 7.9.0                ISC         https://github.com/d3/d3
+material-icons.woff2, material-icons.css Material Icons (npm material-icons 1.13.14)  Apache-2.0  https://github.com/google/material-design-icons
+roboto-latin-400.woff2                   Roboto (npm @fontsource/roboto 5.1.0)       OFL-1.1     https://github.com/googlefonts/roboto-classic
