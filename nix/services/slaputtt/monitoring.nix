@@ -24,7 +24,14 @@
     countExpr = re: ''sum(count_over_time(${swag} | path=~`${re}` [$__range])) or vector(0)'';
     count = re: lib.neo.grafana.lq (countExpr re) // {queryType = "instant";};
     # Files without which the game or the computer opponent does not work.
-    gameFiles = ''/(beginner|main|particle)\.dart\.js|/worker/algorithm/.*|/[0-9]+_[0-9A-Za-z_]+\.json|/vendor/.*'';
+    # Exact names only: scanners probe paths like /vendor/.env or
+    # /worker/algorithm/.git/config, and their 404s must not fire the alert.
+    gameFiles = lib.concatStringsSep "|" [
+      ''/(beginner|main|particle)\.dart\.js''
+      ''/worker/algorithm/(workerScript\.js|AlgorithmBackgroundWorker\.dart\.js)''
+      ''/[0-9]+_[0-9A-Za-z_]+\.json''
+      ''/vendor/(Chart\.bundle\.min\.js|d3\.min\.js|materialize\.min\.(js|css)|material-icons\.(css|woff2)|roboto-latin-400\.woff2)''
+    ];
     red = lib.neo.grafana.thresholdsGreenRed [
       {
         color = "red";
